@@ -63,8 +63,8 @@ export class References {
   };
 
   readonly performanceStats: PerformanceStat[] = [
-    { value: '42+', label: 'Projets Réalisés' },
-    { value: '100%', label: 'Clients Satisfaits' },
+    { value: '6+', label: 'Projets Référencés' },
+    { value: '100%', label: 'Engagement Qualité' },
   ];
 
   readonly sideProjects: SideProject[] = [
@@ -88,6 +88,20 @@ export class References {
       description:
         "Automatisation avec architecture Schneider M340. Analyse fonctionnelle complète du processus hydraulique.",
       keySpec: 'M340 / Analyse fonctionnelle',
+    },
+    {
+      sector: 'Adduction • Province',
+      title: 'AEP Smir — Adduction d\'Eau Potable',
+      description:
+        "Système automatisé d'adduction d'eau potable. Configuration des automates, analyse fonctionnelle, intégration des instruments de mesure.",
+      keySpec: 'Configuration automate / Analyse fonctionnelle',
+    },
+    {
+      sector: 'Épuration • Béni Mellal',
+      title: 'STEP Béni Mellal — Station d\'Épuration',
+      description:
+        "Automatisation pour station d'épuration. Programmation PLC M580, analyse fonctionnelle, architecture d'automatisme.",
+      keySpec: 'M580 / Analyse fonctionnelle',
     },
   ];
 

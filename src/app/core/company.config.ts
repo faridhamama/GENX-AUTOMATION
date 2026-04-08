@@ -22,8 +22,8 @@ export interface CompanyConfig {
 export const COMPANY: CompanyConfig = {
   name: 'GENX AUTOMATION',
   tagline:
-    "Automatisation industrielle sur mesure. Un seul interlocuteur, de l'étude à la mise en service.",
-  email: 'contact@genx-automation.ma',
+    "Entreprise marocaine spécialisée en automatisation industrielle, traitement des eaux et télégestion. De l'étude à la mise en service, j'accompagne vos projets avec expertise et rigueur.",
+  email: 'contact@genxautomation.com',
   phone: '+212 662-886949',
   address: {
     city: 'Casablanca',
@@ -31,8 +31,8 @@ export const COMPANY: CompanyConfig = {
     zone: 'Zone Industrielle, Tit Mellil',
   },
   hours: [
-    { label: 'Lun - Ven', time: '08:30 - 18:00' },
+    { label: 'Lun - Ven', time: '08:00 - 18:00' },
     { label: 'Samedi', time: '09:00 - 12:30' },
   ],
-  founded: 2024,
+  founded: 2025,
 };

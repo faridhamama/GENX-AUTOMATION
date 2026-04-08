@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { IMAGES } from '../../core/images.config';
 
 export interface ServiceCard {
   icon: string;
@@ -34,6 +35,8 @@ interface TechStat {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Services {
+  readonly images = IMAGES.services;
+
   readonly serviceCards: ServiceCard[] = [
     {
       icon: 'architecture',
@@ -80,6 +83,8 @@ export class Services {
         "Un système maintenu, c'est un système qui ne vous lâche pas. Je propose du support réactif et de la maintenance préventive.",
       spec: 'Support réactif, préventif, mises à jour',
       isWide: true,
+      image: IMAGES.services.maintenance,
+      imageAlt: 'Industrial maintenance engineer working on a control panel',
     },
   ];
 

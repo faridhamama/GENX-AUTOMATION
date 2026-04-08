@@ -28,6 +28,12 @@ export const IMAGES = {
       'https://lh3.googleusercontent.com/aida-public/AB6AXuCKzR_s-yyWsjsUpRwDgUUkZPwWMUBmtEhvOTaXUUz13ZaAu_qxx8i1piz4GWht0LYxuuHONmsd0owM9OWYTjGImeK1vZWLnF80RXxtGAfsAEhoGWgamAC3md-OHxlKQN34wZCc4Pf5vHmcAsflIODGbToLuhCYHHwqoKWmfuqT7or55TWGcrZx4RxtDwy4RCkVWoWSEUcbPyUGUnIA1zWK-_Lc6ZubPGwm2NB2LW6pRb4FZwGMCBEqyTDLXfL2kPnQ34tQ4jlTfmw',
   },
 
+  services: {
+    /** Industrial maintenance / server room representing support infrastructure */
+    maintenance:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuAVGgjtmUOkUh3y-ZaUooSey3iicof2-cJkvvpOY9sSFONHZNoplaEo6v37IZHdkxgDrnOnZgGe-jYqUI0jmZoPdbxFZ5EGASRmPloVO1fOEwvMAvVuUYEElCXPpUm-u5yWIG-GptW3FYw1JMhq3kR9bG2uFLJQwYwtcBjq12d25bM-slRx6X__SeQGLRT8y1KHBuB3Qp5ySzOSGfE7pp6tYOgvMfwLd6m2OjF3MfioIt0EZV4AJ1OCaxTmzm_dI0zZZJPlscthqBY',
+  },
+
   about: {
     /** Industrial control panel with blue indicators — "À Propos" bento grid */
     controlPanel:
