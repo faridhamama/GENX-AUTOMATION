@@ -25,7 +25,7 @@ export class Contact {
 
   readonly contactStats: ContactStat[] = [
     { value: '150+', label: 'Systèmes déployés' },
-    { value: '24/7', label: 'Support technique' },
+    { value: '48h', label: 'Délai de réponse' },
   ];
 
   readonly projectTypes: string[] = [
@@ -78,7 +78,7 @@ export class Contact {
       this.toast.error();
     } else {
       this.submitStatus.set('success');
-      this.toast.success('Votre demande a bien été envoyée. Nous vous contacterons bientôt.');
+      this.toast.success("Votre demande a bien été envoyée. Je vous répondrai sous 48h.");
       this.quoteForm.reset({ projectType: this.projectTypes[0] });
       this.submitted.set(false);
     }

@@ -22,7 +22,7 @@ export interface CompanyConfig {
 export const COMPANY: CompanyConfig = {
   name: 'GENX AUTOMATION',
   tagline:
-    "L'excellence en ingénierie d'automatisation pour l'industrie marocaine et internationale.",
+    "Automatisation industrielle sur mesure. Un seul interlocuteur, de l'étude à la mise en service.",
   email: 'contact@genx-automation.ma',
   phone: '+212 662-886949',
   address: {
