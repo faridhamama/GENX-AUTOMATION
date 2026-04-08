@@ -1,4 +1,3 @@
-import { UpperCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { COMPANY, CompanyConfig } from '../../core/company.config';
@@ -12,7 +11,7 @@ interface ContactStat {
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule, UpperCasePipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

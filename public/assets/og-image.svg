@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#006876"/>
+  <text x="600" y="280" font-family="Space Grotesk, sans-serif" font-size="80" font-weight="800" fill="white" text-anchor="middle">GENX AUTOMATION</text>
+  <text x="600" y="370" font-family="Inter, sans-serif" font-size="32" fill="#a0efff" text-anchor="middle">Automatisation Industrielle &amp; Robotique</text>
+  <text x="600" y="430" font-family="Inter, sans-serif" font-size="24" fill="#85deef" text-anchor="middle">Casablanca, Maroc — genx-automation.ma</text>
+  <rect x="100" y="500" width="1000" height="2" fill="#a0efff" opacity="0.3"/>
+</svg>
