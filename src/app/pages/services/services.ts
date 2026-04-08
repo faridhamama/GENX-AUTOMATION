@@ -39,7 +39,7 @@ export class Services {
     {
       icon: 'architecture',
       number: '01',
-      title: 'Study & Design',
+      title: 'Étude & Conception',
       category: 'INGÉNIERIE',
       description:
         'Analyse fonctionnelle détaillée, architecture de réseaux industriels et conception électrique. Nous définissons le socle technique de votre automatisation.',
@@ -48,7 +48,7 @@ export class Services {
     {
       icon: 'terminal',
       number: '02',
-      title: 'PLC Programming',
+      title: 'Programmation PLC',
       category: 'AUTOMATISATION',
       description:
         'Développement de programmes automates (Siemens, Schneider, Rockwell) optimisés pour la performance, la sécurité et la modularité.',
@@ -57,7 +57,7 @@ export class Services {
     {
       icon: 'monitoring',
       number: '03',
-      title: 'SCADA Development',
+      title: 'Développement SCADA',
       category: 'SUPERVISION',
       description:
         "Interfaces Homme-Machine (HMI) intuitives et systèmes SCADA pour un pilotage en temps réel et une historisation précise de vos données.",
@@ -66,7 +66,7 @@ export class Services {
     {
       icon: 'verified',
       number: '04',
-      title: 'Commissioning & Tests',
+      title: 'Mise en Service & Tests',
       category: 'DÉPLOIEMENT',
       description:
         'Tests FAT/SAT rigoureux et mise en service sur site. Nous assurons une transition fluide vers la production opérationnelle.',
