@@ -87,7 +87,7 @@ export class Services {
     {
       number: '01',
       title: 'Échange',
-      description: "Je comprends votre process, vos contraintes, vos objectifs. Sans cette base, rien d'autre ne tient.",
+      description: "Je comprends votre processus, vos contraintes, vos objectifs. Sans cette base, rien d'autre ne tient.",
     },
     {
       number: '02',

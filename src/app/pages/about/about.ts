@@ -58,13 +58,13 @@ export class About {
       icon: 'handshake',
       title: 'Transparence totale',
       description:
-        "Si votre projet n'est pas adapté à une solution que je maîtrise, je vous le dis. Je ne vends pas ce que je ne connais pas.",
+        "Si votre projet n'est pas adapté à une solution que je maîtrise, je vous le dis. Je ne propose pas ce que je ne connais pas.",
     },
     {
       icon: 'workspace_premium',
       title: 'Savoir-faire concret',
       description:
-        "Pas de PowerPoint. Du code, des schémas, des tests en situation réelle. C'est ainsi que je fonctionne.",
+        "Pas de PowerPoint. Du code, des schémas, des tests en situation réelle. Voilà ma façon de travailler.",
     },
   ];
 }

@@ -44,7 +44,7 @@ export class Home {
       icon: 'water_drop',
       title: 'Traitement des Eaux',
       description:
-        "C'est mon domaine de prédilection. Stations d'épuration, adduction potable, dessalement — je connais les process hydrauliques autant que l'automatique qui les pilote.",
+        "C'est mon domaine de prédilection. Stations d'épuration, adduction potable, dessalement — je connais les processus hydrauliques autant que l'automatique qui les pilote.",
       tags: ['STEP / AEP', 'Dessalement', 'Régulation PID', 'Topkapi / PcVue'],
     },
     {

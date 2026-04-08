@@ -79,14 +79,14 @@ export class References {
       sector: "Adduction • Zagora",
       title: 'AEP Zagora — Adduction d\'Eau Potable',
       description:
-        "Programmation M580, M340 et M221, supervision Topkapi Vision, mise en service complète, tests et formation d'exploitation. Télégestion via Sofrel S500.",
+        "Programmation M580, M340 et M221, supervision Topkapi Vision, mise en service complète, tests et formation à l'exploitation. Télégestion par Sofrel S500.",
       keySpec: 'M580 & M340 & M221 / Topkapi Vision / Sofrel S500',
     },
     {
       sector: 'Épuration • Bouznika',
       title: 'STEP Bouznika — Station d\'Épuration',
       description:
-        "Automatisation avec architecture Schneider M340. Analyse fonctionnelle complète du process hydraulique.",
+        "Automatisation avec architecture Schneider M340. Analyse fonctionnelle complète du processus hydraulique.",
       keySpec: 'M340 / Analyse fonctionnelle',
     },
   ];
