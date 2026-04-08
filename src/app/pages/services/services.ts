@@ -92,7 +92,7 @@ export class Services {
     {
       number: '02',
       title: 'Conception',
-      description: "Architecture système, choix technologiques, planning. Tout est défini avant la première ligne de code.",
+      description: "Architecture système, choix technologiques, planification. Tout est défini avant la première ligne de code.",
     },
     {
       number: '03',
@@ -107,7 +107,7 @@ export class Services {
     {
       number: '05',
       title: 'Livraison',
-      description: "Documentation complète, formation de vos équipes, et je reste disponible si besoin.",
+      description: "Documentation complète, formation de vos équipes, et je reste disponible en cas de besoin.",
     },
   ];
 

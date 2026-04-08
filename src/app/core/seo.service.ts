@@ -96,7 +96,7 @@ const SEO_DATA: Record<string, PageSeo> = {
   home: {
     title: 'Automatisation Industrielle & Robotique',
     description:
-      "Farid Hamama — GENX AUTOMATION — accompagne les industriels marocains en automatisation, robotique et systèmes SCADA. Automates Schneider, Siemens,Allen Bradley.",
+      "Farid Hamama — GENX AUTOMATION — accompagne les industriels marocains en automatisation, robotique et systèmes SCADA. Automates Schneider, Siemens, Allen Bradley.",
     keywords:
       'automatisation industrielle, robotique, cobotique, SCADA, HMI, IoT, Industrie 4.0, Maroc, Casablanca',
     ogImage: '/assets/og-image.svg',

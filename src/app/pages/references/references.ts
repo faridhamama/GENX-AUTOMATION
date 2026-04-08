@@ -59,7 +59,7 @@ export class References {
     image: IMAGES.references.featuredProject,
     imageAlt: 'PLC control panel with colorful glowing status lights in an industrial setting',
     result:
-      "Automatisation complète de la station avec gestion d'alarmes en temps réel, tendances historiques et supervision distante. Le client a réduit son temps de diagnostic de 60%.",
+      "Automatisation complète de la station avec gestion d'alarmes en temps réel, tendances historiques et supervision distante. Temps de diagnostic réduit de 60%.",
   };
 
   readonly performanceStats: PerformanceStat[] = [
