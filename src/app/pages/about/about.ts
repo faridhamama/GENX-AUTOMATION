@@ -26,7 +26,7 @@ export class About {
 
   readonly capabilities: Capability[] = [
     {
-      value: '10+',
+      value: '5+',
       label: 'Années Terrain',
       description: "Des années sur le terrain, pas dans un bureau. Chaque projet m'a appris quelque chose qu'aucun manuel ne couvre.",
     },

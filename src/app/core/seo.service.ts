@@ -104,7 +104,7 @@ const SEO_DATA: Record<string, PageSeo> = {
   about: {
     title: 'À Propos — Mon Parcours',
     description:
-      "Farid Hamama, ingénieur automaticien fondateur de GENX AUTOMATION. 10 ans d'expérience terrain en automatisation industrielle, traitement des eaux et télégestion.",
+      "Farid Hamama, ingénieur automaticien fondateur de GENX AUTOMATION. 5 ans d'expérience terrain en automatisation industrielle, traitement des eaux et télégestion.",
     keywords:
       'à propos GENX AUTOMATION, équipe automatisation, ingénieurs robotique, Casablanca, Maroc',
     ogImage: '/assets/og-image.svg',

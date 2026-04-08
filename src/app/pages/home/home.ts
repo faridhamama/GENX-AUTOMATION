@@ -21,7 +21,7 @@ export class Home {
   readonly images = IMAGES.home;
 
   readonly heroStats: { label: string; value: string; sub: string; accentClass: string }[] = [
-    { label: 'Années d\'expérience terrain', value: '10+', sub: 'En industrie', accentClass: 'bg-tertiary' },
+    { label: 'Années d\'expérience terrain', value: '5+', sub: 'En industrie', accentClass: 'bg-tertiary' },
     { label: 'Taux de satisfaction client', value: '100%', sub: 'Clients accompagnés', accentClass: 'bg-tertiary-container' },
   ];
 
