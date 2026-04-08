@@ -38,12 +38,12 @@ export class About {
     {
       value: 'I4.0',
       label: 'Vision IT/OT',
-      description: "Je ne suis pas qu'automaticien. Je comprends aussi l'informatique industrielle et la convergence IT/OT.",
+      description: "Je ne suis pas qu'automaticien. Je comprends aussi l'informatique industrielle et la convergence entre automate et système.",
     },
     {
       value: 'Terrain',
       label: 'Pragmatique',
-      description: "Pas de surengineering. Je conçois des systèmes simples, maintenables, et qui fonctionnent en conditions réelles.",
+      description: "Pas de surdimensionnement. Je conçois des systèmes simples, maintenables, et qui fonctionnent en conditions réelles.",
     },
   ];
 

@@ -69,10 +69,10 @@ export class References {
 
   readonly sideProjects: SideProject[] = [
     {
-      sector: 'Dessalement • Laayoune',
+      sector: 'Dessalement • Laâyoune',
       title: 'Unité de Dessalement — Société Génération Maroc Technologie',
       description:
-        "Mise à jour des programmes PLC M580 et M340, mise à jour de la supervision Topkapi Vision et PcVue, instrumentation et calibration. Communication Modbus RTU.",
+        "Mise à jour des programmes PLC M580 et M340, de la supervision Topkapi Vision et PcVue, instrumentation et calibration. Communication Modbus RTU.",
       keySpec: 'M580 & M340 / Topkapi / PcVue / Modbus RTU',
     },
     {
