@@ -1,0 +1,178 @@
+<main class="pt-20 md:pt-24">
+  <!-- Hero Section -->
+  <section class="relative min-h-screen md:min-h-[870px] flex items-center px-4 sm:px-8 md:px-20 overflow-hidden bg-surface-container-low">
+    <div class="absolute inset-0 z-0 opacity-10">
+      <img
+        alt="Technical blueprint overlay"
+        class="w-full h-full object-cover"
+        [src]="images.heroBg"
+      >
+    </div>
+
+    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center w-full py-12 md:py-0">
+      <!-- Hero Copy -->
+      <div class="space-y-6 md:space-y-8">
+        <div class="inline-flex items-center gap-3 px-3 py-1 bg-tertiary-container text-on-tertiary-container text-xs font-bold tracking-[0.2em] uppercase">
+          <span class="w-2 h-2 bg-primary rounded-full"></span>
+          Industry 4.0 Ready
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] tracking-tighter text-on-surface">
+          L'ingénierie qui <br><span class="text-primary">connecte</span> l'industrie de demain
+        </h1>
+
+        <p class="text-base sm:text-lg text-on-surface-variant max-w-lg leading-relaxed font-body">
+          Solutions avancées en <strong class="font-bold text-on-surface">Automatisme Industriel</strong>,
+          Traitement des Eaux, SCADA et Télégestion pour une performance opérationnelle inégalée.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <a routerLink="/services"
+             class="bg-primary text-on-primary px-6 sm:px-8 py-3 sm:py-4 font-bold uppercase tracking-widest text-sm border-b-2 border-primary-fixed hover:bg-on-primary-fixed-variant transition-colors text-center">
+            Découvrir nos services
+          </a>
+          <a routerLink="/references"
+             class="border border-outline px-6 sm:px-8 py-3 sm:py-4 font-bold uppercase tracking-widest text-sm hover:bg-surface-container-high transition-colors text-center">
+            Nos Références
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 gap-3 md:gap-4">
+        @for (stat of heroStats; track stat.label) {
+          <div class="bg-surface-container-lowest p-5 md:p-8 relative">
+            <div class="absolute left-0 top-0 bottom-0 w-1 {{ stat.accentClass }}"></div>
+            <div class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-3 md:mb-4">{{ stat.label }}</div>
+            <div class="text-3xl sm:text-4xl md:text-5xl font-headline font-bold text-on-surface">{{ stat.value }}</div>
+            <div class="text-xs font-label uppercase tracking-widest text-tertiary mt-2">{{ stat.sub }}</div>
+          </div>
+        }
+
+        <div class="col-span-2 bg-surface-container-lowest h-48 sm:h-56 md:h-64 overflow-hidden relative group">
+          <img
+            alt="High-tech industrial circuit board"
+            class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+            [src]="images.circuitBoard"
+          >
+          <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-on-surface/80 to-transparent">
+            <div class="text-white text-xs sm:text-sm font-bold uppercase tracking-widest">Precision Hardware</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expertise Technique Section -->
+  <section class="py-12 md:py-24 px-4 sm:px-8 md:px-20 bg-surface">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-16 gap-6 md:gap-8">
+      <div class="max-w-2xl">
+        <div class="text-xs font-label uppercase tracking-[0.3em] text-primary mb-3 md:mb-4">Core Competencies</div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter text-on-surface">Expertise Technique</h2>
+      </div>
+      <div class="h-[1px] flex-grow bg-outline-variant/30 mb-4 hidden md:block"></div>
+      <div class="text-on-surface-variant font-body text-sm max-w-xs md:text-right">
+        Concevoir des systèmes robustes pour les environnements les plus exigeants.
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+      <!-- Industrial Automation — featured large card -->
+      <div class="md:col-span-2 group relative bg-surface-container-low h-72 sm:h-80 md:h-[400px] overflow-hidden">
+        <img
+          alt="Modern industrial production line with automated machinery"
+          class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-1000"
+          [src]="images.industrialLine"
+        >
+        <div class="absolute inset-0 bg-gradient-to-r from-on-surface to-transparent/10 opacity-60"></div>
+        <div class="relative h-full p-6 sm:p-8 md:p-12 flex flex-col justify-end text-white">
+          <div class="mb-3 md:mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-tertiary-container" style="font-variation-settings: 'FILL' 1;">settings</span>
+            <span class="text-xs font-label tracking-widest uppercase">Systèmes Critiques</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-bold mb-3 md:mb-4">Industrial Automation</h3>
+          <p class="max-w-md text-surface-container-highest text-sm leading-relaxed">
+            Programmation d'automates, conception d'armoires électriques et intégration de capteurs intelligents
+            pour une automatisation totale de vos lignes de production.
+          </p>
+        </div>
+      </div>
+
+      <!-- SCADA & HMI -->
+      <div class="group relative bg-surface-container-highest h-auto md:h-[400px] flex flex-col justify-between p-6 sm:p-8 md:p-12 border-t md:border-t-0 md:border-l border-outline-variant/20">
+        <div>
+          <span class="material-symbols-outlined text-primary text-4xl mb-4 md:mb-6 block">monitoring</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-3 md:mb-4">SCADA &amp; HMI</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed">
+            Interfaces de contrôle intuitives et monitoring en temps réel pour une supervision centralisée
+            et une aide à la décision performante.
+          </p>
+        </div>
+        <div class="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-outline-variant/30">
+          <ul class="space-y-3">
+            @for (feature of scadaFeatures; track feature.text) {
+              <li class="flex items-center gap-3 text-xs font-label uppercase tracking-widest text-on-surface">
+                <span class="w-1.5 h-1.5 bg-tertiary inline-block shrink-0"></span>
+                {{ feature.text }}
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Water Treatment -->
+      <div class="group relative bg-surface-container-low h-auto md:h-[400px] flex flex-col justify-between p-6 sm:p-8 md:p-12">
+        <div>
+          <span class="material-symbols-outlined text-primary text-4xl mb-4 md:mb-6 block">water_drop</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-3 md:mb-4">Water Treatment</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed">
+            Optimisation des processus de traitement d'eau potable et usée via des solutions de contrôle avancées.
+          </p>
+        </div>
+        <a routerLink="/services"
+           class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary group-hover:gap-4 transition-all mt-6 md:mt-0">
+          En savoir plus <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+
+      <!-- Télégestion & IoT — dark wide card -->
+      <div class="md:col-span-2 group relative bg-on-surface overflow-hidden">
+        <div class="relative h-full p-6 sm:p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center min-h-64 md:min-h-0 md:h-[400px]">
+          <div class="flex-grow">
+            <span class="material-symbols-outlined text-tertiary-container text-4xl mb-4 md:mb-6 block">router</span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 md:mb-4">Télégestion &amp; IoT</h3>
+            <p class="text-surface-variant/70 text-sm leading-relaxed max-w-sm">
+              Connectez vos équipements distants. Sécurisez la transmission de données via protocoles industriels
+              et solutions sans fil.
+            </p>
+          </div>
+          <div class="w-full sm:w-56 md:w-64 aspect-square border border-surface-variant/20 p-4 flex items-center justify-center bg-surface-variant/5 shrink-0">
+            <img
+              alt="Industrial telecommunication router with fiber optic cables"
+              class="w-full h-full object-cover grayscale brightness-75"
+              [src]="images.iotRouter"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-12 md:py-24 px-4 sm:px-8 md:px-20">
+    <div class="bg-primary-container p-6 sm:p-10 md:p-20 flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="text-center md:text-left">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-on-primary-container mb-3 md:mb-4 tracking-tighter">
+          Prêt à moderniser vos installations ?
+        </h2>
+        <p class="text-on-primary-container/80 font-body text-sm sm:text-base">
+          Nos experts vous accompagnent de la conception à la mise en service.
+        </p>
+      </div>
+      <a routerLink="/contact"
+         class="shrink-0 bg-on-primary-fixed text-white px-8 sm:px-10 py-4 sm:py-5 font-bold uppercase tracking-widest text-sm active:scale-95 transition-all text-center w-full sm:w-auto">
+        Démarrer un projet
+      </a>
+    </div>
+  </section>
+</main>

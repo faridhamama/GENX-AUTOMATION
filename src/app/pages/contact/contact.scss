@@ -1,0 +1,25 @@
+// Accessibility: screen-reader only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Smooth focus ring for keyboard navigation
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-tertiary-container);
+  outline-offset: 2px;
+}
+
+// Date input — match text input height
+input[type="date"] {
+  min-height: 44px;
+}

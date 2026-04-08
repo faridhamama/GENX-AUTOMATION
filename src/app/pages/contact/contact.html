@@ -1,0 +1,303 @@
+<main class="pt-20 md:pt-24 pb-12 md:pb-24 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 pt-8">
+
+    <!-- Left Column: Company Info -->
+    <div class="lg:col-span-5 space-y-8 md:space-y-10">
+      <header class="space-y-4">
+        <div class="inline-flex items-center gap-2 text-tertiary-container bg-primary px-3 py-1 text-xs font-label font-bold tracking-widest uppercase">
+          Ingénierie de précision
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-headline font-bold tracking-tighter leading-none text-on-surface">
+          Parlons de votre projet
+        </h1>
+        <p class="text-on-surface-variant text-base sm:text-lg leading-relaxed max-w-md">
+          Nos ingénieurs analysent vos besoins industriels pour concevoir des solutions d'automatisation sur mesure.
+        </p>
+      </header>
+
+      <div class="space-y-3 sm:space-y-4">
+        <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">location_on</span>
+          <div>
+            <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Localisation</h3>
+            <p class="text-on-surface-variant text-sm">
+              {{ company.address.city }}, {{ company.address.country }}<br>
+              {{ company.address.zone }}
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">call</span>
+          <div>
+            <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Téléphone</h3>
+            <a
+              [href]="'tel:' + company.phone"
+              class="text-on-surface-variant text-sm hover:text-primary transition-colors"
+            >{{ company.phone }}</a>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">mail</span>
+          <div>
+            <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Email</h3>
+            <a
+              [href]="'mailto:' + company.email"
+              class="text-on-surface-variant text-sm hover:text-primary transition-colors break-word"
+            >{{ company.email }}</a>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">schedule</span>
+          <div class="flex-1">
+            <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-2">Heures d'ouverture</h3>
+            <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-on-surface-variant text-sm">
+              @for (slot of company.hours; track slot.label) {
+                <span>{{ slot.label }} :</span>
+                <span class="text-right">{{ slot.time }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Quote Form -->
+    <div class="lg:col-span-7">
+      <div class="bg-surface-container-lowest p-6 sm:p-8 lg:p-10 xl:p-12 border-t-4 border-primary shadow-sm">
+
+        <h2 class="text-xl sm:text-2xl font-headline font-bold mb-6 sm:mb-8 flex items-center gap-3">
+          <span class="material-symbols-outlined text-tertiary-container shrink-0" style="font-variation-settings: 'FILL' 1;">
+            contract_edit
+          </span>
+          Demander un Devis
+        </h2>
+
+        @if (submitStatus() === 'success') {
+          <div
+            class="mb-6 p-5 sm:p-6 bg-surface-container-low border-l-4 border-tertiary-container"
+            role="status"
+            aria-live="polite"
+          >
+            <p class="font-bold text-sm uppercase tracking-widest mb-1">Demande envoyée !</p>
+            <p class="text-sm text-on-surface-variant">Nous vous répondrons sous 48h ouvrées.</p>
+          </div>
+        }
+
+        @if (showErrors()) {
+          <div
+            class="mb-6 p-4 bg-error-container text-on-error-container text-sm font-label tracking-wide border-l-4 border-error"
+            role="alert"
+            aria-live="assertive"
+          >
+            Veuillez remplir tous les champs obligatoires correctement.
+          </div>
+        }
+
+        <form
+          [formGroup]="quoteForm"
+          (ngSubmit)="onSubmit()"
+          novalidate
+          class="space-y-7 sm:space-y-8"
+          aria-label="Formulaire de demande de devis"
+        >
+          <!-- Row: Nom + Téléphone -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
+
+            <div class="space-y-2">
+              <label
+                for="fullName"
+                class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
+              >
+                Nom Complet <span class="text-error" aria-hidden="true">*</span>
+                <span class="sr-only">(obligatoire)</span>
+              </label>
+              <input
+                id="fullName"
+                formControlName="fullName"
+                type="text"
+                autocomplete="name"
+                autocapitalize="words"
+                placeholder="Jean Dupont"
+                aria-required="true"
+                [attr.aria-invalid]="isInvalid('fullName') ? 'true' : null"
+                [attr.aria-describedby]="isInvalid('fullName') ? 'fullName-error' : null"
+                class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none focus:border-tertiary-container rounded-t-sm"
+                [class]="isInvalid('fullName') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+              >
+              @if (isInvalid('fullName')) {
+                <p id="fullName-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
+                  Ce champ est requis
+                </p>
+              }
+            </div>
+
+            <div class="space-y-2">
+              <label
+                for="phone"
+                class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
+              >
+                Téléphone <span class="text-error" aria-hidden="true">*</span>
+                <span class="sr-only">(obligatoire)</span>
+              </label>
+              <input
+                id="phone"
+                formControlName="phone"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+212 6XX-XXXXXX"
+                aria-required="true"
+                [attr.aria-invalid]="isInvalid('phone') ? 'true' : null"
+                [attr.aria-describedby]="isInvalid('phone') ? 'phone-error' : null"
+                class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none focus:border-tertiary-container rounded-t-sm"
+                [class]="isInvalid('phone') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+              >
+              @if (isInvalid('phone')) {
+                <p id="phone-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
+                  Ce champ est requis
+                </p>
+              }
+            </div>
+          </div>
+
+          <!-- Row: Email + Date -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
+
+            <div class="space-y-2">
+              <label
+                for="email"
+                class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
+              >
+                Email Professionnel <span class="text-error" aria-hidden="true">*</span>
+                <span class="sr-only">(obligatoire)</span>
+              </label>
+              <input
+                id="email"
+                formControlName="email"
+                type="email"
+                autocomplete="email"
+                inputmode="email"
+                placeholder="contact@entreprise.com"
+                aria-required="true"
+                [attr.aria-invalid]="isInvalid('email') ? 'true' : null"
+                [attr.aria-describedby]="isInvalid('email') ? 'email-error' : null"
+                class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none focus:border-tertiary-container rounded-t-sm"
+                [class]="isInvalid('email') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+              >
+              @if (isInvalid('email')) {
+                <p id="email-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
+                  @if (quoteForm.get('email')?.hasError('required')) { Ce champ est requis }
+                  @else { Adresse email invalide }
+                </p>
+              }
+            </div>
+
+            <div class="space-y-2">
+              <label
+                for="desiredDate"
+                class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
+              >
+                Date Souhaitée
+              </label>
+              <input
+                id="desiredDate"
+                formControlName="desiredDate"
+                type="date"
+                autocomplete="off"
+                class="w-full bg-transparent border-b-2 border-outline-variant focus:border-tertiary-container transition-colors py-2.5 px-1 text-sm text-on-surface outline-none rounded-t-sm"
+              >
+            </div>
+          </div>
+
+          <!-- Type de Projet -->
+          <div class="space-y-2">
+            <label
+              for="projectType"
+              class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
+            >
+              Type de Projet
+            </label>
+            <div class="relative">
+              <select
+                id="projectType"
+                formControlName="projectType"
+                class="w-full bg-transparent border-b-2 border-outline-variant focus:border-tertiary-container transition-colors py-2.5 px-1 text-sm text-on-surface outline-none appearance-none cursor-pointer rounded-t-sm"
+              >
+                @for (type of projectTypes; track type) {
+                  <option [value]="type">{{ type }}</option>
+                }
+              </select>
+              <span
+                class="material-symbols-outlined absolute right-1 top-1/2 -translate-y-1/2 text-outline text-base pointer-events-none"
+                aria-hidden="true"
+              >expand_more</span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="space-y-2">
+            <label
+              for="description"
+              class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
+            >
+              Description du projet <span class="text-error" aria-hidden="true">*</span>
+              <span class="sr-only">(obligatoire)</span>
+            </label>
+            <textarea
+              id="description"
+              formControlName="description"
+              rows="4"
+              placeholder="Décrivez vos besoins techniques, contraintes et objectifs..."
+              aria-required="true"
+              [attr.aria-invalid]="isInvalid('description') ? 'true' : null"
+              [attr.aria-describedby]="isInvalid('description') ? 'description-error' : null"
+              class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 resize-none outline-none focus:border-tertiary-container rounded-t-sm"
+              [class]="isInvalid('description') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+            ></textarea>
+            @if (isInvalid('description')) {
+              <p id="description-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
+                Ce champ est requis
+              </p>
+            }
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-2 sm:pt-4">
+            <button
+              type="submit"
+              [disabled]="submitStatus() === 'loading'"
+              aria-disabled="submitStatus() === 'loading' ? true : null"
+              class="w-full bg-primary text-on-primary py-4 sm:py-5 font-headline font-bold text-sm sm:text-base tracking-wider flex items-center justify-center gap-3 hover:bg-on-primary-fixed-variant transition-all active:scale-[0.99] border-b-4 border-primary-fixed disabled:opacity-60 disabled:cursor-not-allowed rounded-sm"
+            >
+              @if (submitStatus() === 'loading') {
+                <span class="material-symbols-outlined animate-spin" aria-hidden="true">progress_activity</span>
+                <span>Envoi en cours…</span>
+              } @else {
+                <span>Envoyer ma demande</span>
+                <span class="material-symbols-outlined" aria-hidden="true">send</span>
+              }
+            </button>
+            <p class="mt-3 sm:mt-4 text-center text-[10px] sm:text-[11px] text-outline uppercase tracking-widest">
+              Réponse technique garantie sous 48h ouvrées
+            </p>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-6 sm:mt-8 md:mt-12 grid grid-cols-2 gap-4 sm:gap-6">
+        @for (stat of contactStats; track stat.label) {
+          <div class="p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary-container">
+            <p class="text-2xl sm:text-3xl font-headline font-bold text-primary">{{ stat.value }}</p>
+            <p class="font-label text-[10px] sm:text-xs font-bold uppercase tracking-widest text-on-surface-variant mt-1">
+              {{ stat.label }}
+            </p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</main>

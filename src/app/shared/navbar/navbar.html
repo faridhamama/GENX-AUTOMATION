@@ -1,0 +1,86 @@
+<!-- Full-screen overlay — always in DOM, fades in/out via CSS -->
+<div
+  class="fixed inset-0 z-40 bg-on-surface/50 backdrop-blur-sm transition-opacity duration-200"
+  [class]="menuOpen() ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+  (click)="closeMenu()"
+></div>
+
+<header class="fixed top-0 w-full z-50 bg-[#f7f9fb] border-b border-outline-variant/10">
+  <nav class="flex justify-between items-center w-full px-4 sm:px-8 py-4 font-headline tracking-tight">
+
+    <!-- Logo -->
+    <a routerLink="/" (click)="closeMenu()" class="text-lg sm:text-xl font-bold tracking-tighter text-slate-900 shrink-0">
+      {{ companyName }}
+    </a>
+
+    <!-- Desktop nav links -->
+    <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-widest">
+      @for (link of navLinks(); track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="!text-primary border-b-2 border-tertiary-container pb-1"
+          [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
+          class="text-slate-600 hover:text-slate-900 hover:bg-surface-container px-2 py-1 transition-colors duration-100 whitespace-nowrap"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+
+    <!-- Right side: CTA + hamburger -->
+    <div class="flex items-center gap-3">
+      <a
+        routerLink="/contact"
+        (click)="closeMenu()"
+        class="hidden sm:inline-flex bg-primary text-on-primary px-4 lg:px-6 py-2 border-b-2 border-primary-fixed active:scale-[0.98] transition-transform duration-75 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap"
+      >
+        Demander un devis
+      </a>
+
+      <!-- Hamburger button — mobile only -->
+      <button
+        (click)="toggleMenu()"
+        class="md:hidden flex items-center justify-center w-10 h-10 text-slate-900 transition-transform duration-150 active:scale-90"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Toggle navigation menu"
+      >
+        @if (menuOpen()) {
+          <span class="material-symbols-outlined text-2xl">close</span>
+        } @else {
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        }
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile sliding menu — always in DOM, slides via max-height + opacity -->
+  <div
+    class="md:hidden bg-[#f7f9fb] border-t border-outline-variant/20 shadow-xl overflow-hidden transition-all duration-200 ease-out"
+    [class]="menuOpen() ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'"
+  >
+    <ul class="flex flex-col py-2">
+      @for (link of navLinks(); track link.path) {
+        <li>
+          <a
+            [routerLink]="link.path"
+            (click)="closeMenu()"
+            routerLinkActive="text-primary bg-surface-container font-bold"
+            [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
+            class="flex items-center px-6 py-4 text-sm font-label uppercase tracking-widest text-slate-600 hover:bg-surface-container hover:text-slate-900 transition-colors duration-100 border-b border-outline-variant/10"
+          >
+            {{ link.label }}
+          </a>
+        </li>
+      }
+      <li class="p-4">
+        <a
+          routerLink="/contact"
+          (click)="closeMenu()"
+          class="flex items-center justify-center w-full bg-primary text-on-primary px-6 py-3 font-bold uppercase tracking-widest text-sm border-b-2 border-primary-fixed"
+        >
+          Demander un devis
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>

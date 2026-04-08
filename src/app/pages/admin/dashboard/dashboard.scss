@@ -1,0 +1,24 @@
+// Dashboard — responsive enhancements
+
+// Custom scrollbar for sidebar list
+aside ::-webkit-scrollbar {
+  width: 4px;
+}
+
+aside ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+aside ::-webkit-scrollbar-thumb {
+  background-color: var(--color-outline-variant);
+  border-radius: 9999px;
+}
+
+// Ensure touch targets meet 44px minimum on mobile
+@media (max-width: 640px) {
+  button,
+  a[href] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
