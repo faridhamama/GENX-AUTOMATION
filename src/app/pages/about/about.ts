@@ -64,7 +64,7 @@ export class About {
       icon: 'workspace_premium',
       title: 'Savoir-faire concret',
       description:
-        "Pas de PowerPoints. Du code, des schémas, des tests en situation réelle. C'est ainsi que je fonctionne.",
+        "Pas de PowerPoint. Du code, des schémas, des tests en situation réelle. C'est ainsi que je fonctionne.",
     },
   ];
 }

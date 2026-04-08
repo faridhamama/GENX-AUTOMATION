@@ -96,15 +96,15 @@ const SEO_DATA: Record<string, PageSeo> = {
   home: {
     title: 'Automatisation Industrielle & Robotique',
     description:
-      "GENX AUTOMATION conçoit des solutions d'automatisation sur mesure, robotique collaborative et systèmes SCADA pour l'industrie marocaine et internationale.",
+      "Farid Hamama — GENX AUTOMATION — accompagne les industriels marocains en automatisation, robotique et systèmes SCADA. Automates Schneider, Siemens,Allen Bradley.",
     keywords:
       'automatisation industrielle, robotique, cobotique, SCADA, HMI, IoT, Industrie 4.0, Maroc, Casablanca',
     ogImage: '/assets/og-image.svg',
   },
   about: {
-    title: 'À Propos — Notre Expertise',
+    title: 'À Propos — Mon Parcours',
     description:
-      "Découvrez l'équipe GENX AUTOMATION : ingénieurs spécialisés en automatisme industriel, robotique et systèmes de supervision. Basés à Casablanca, opérationnel partout.",
+      "Farid Hamama, ingénieur automaticien fondateur de GENX AUTOMATION. 10 ans d'expérience terrain en automatisation industrielle, traitement des eaux et télégestion.",
     keywords:
       'à propos GENX AUTOMATION, équipe automatisation, ingénieurs robotique, Casablanca, Maroc',
     ogImage: '/assets/og-image.svg',
@@ -112,7 +112,7 @@ const SEO_DATA: Record<string, PageSeo> = {
   services: {
     title: 'Services — Automatisme & Robotique',
     description:
-      'Automatisme industriel, robotique & cobotique, vision artificielle, supervision SCADA, maintenance & audit. Des solutions complètes pour votre compétitivité.',
+      'Étude, programmation PLC, développement SCADA, mise en service et maintenance. Automates Schneider, Siemens, Allen Bradley. Accompagnement de A à Z.',
     keywords:
       'services automatisation, robotique industrielle, cobotique, vision artificielle, SCADA, maintenance industrielle, Maroc',
     ogImage: '/assets/og-image.svg',
@@ -120,7 +120,7 @@ const SEO_DATA: Record<string, PageSeo> = {
   references: {
     title: 'Références & Projets Réalisés',
     description:
-      "Découvrez nos projets d'automatisation et robotique déployés dans l'industrie marocaine : agro-alimentaire, pharmaceutique, automobile et plus encore.",
+      "Projets concrets en automatisation industrielle : stations d'épuration, adduction, dessalement. Automates M580, M340, supervision Topkapi, PcVue.",
     keywords:
       'références automatisation, projets robotique, études de cas, GENX AUTOMATION Maroc',
     ogImage: '/assets/og-image.svg',
@@ -128,7 +128,7 @@ const SEO_DATA: Record<string, PageSeo> = {
   contact: {
     title: 'Contact — Demander un Devis',
     description:
-      'Contactez GENX AUTOMATION pour votre projet de automatisation ou robotique. Nos ingénieurs répondent sous 48h. Casablanca, Maroc.',
+      "Décrivez votre projet. Farid Hamama — GENX AUTOMATION — vous répond sous 48h. Automatisation industrielle, traitement des eaux, télégestion. Casablanca.",
     keywords:
       'contact GENX AUTOMATION, demande devis automatisation, engineer Morocco',
     ogImage: '/assets/og-image.svg',
