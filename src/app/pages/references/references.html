@@ -3,7 +3,7 @@
   <section class="px-4 sm:px-8 md:px-16 mb-12 md:mb-20 pt-8 md:pt-8">
     <div class="max-w-4xl">
       <p class="font-label text-tertiary font-bold tracking-[0.2em] mb-4 text-sm uppercase">Archive de Performance</p>
-      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tighter leading-none mb-6 md:mb-8">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6 md:mb-8">
         Projets Réalisés
       </h1>
       <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
@@ -27,7 +27,7 @@
           <span class="font-label text-xs tracking-widest text-outline mb-2 block uppercase">
             Secteur: {{ featuredProject.sector }}
           </span>
-          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 md:mb-4">{{ featuredProject.title }}</h2>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-3 md:mb-4">{{ featuredProject.title }}</h2>
         </div>
         <div class="flex flex-col sm:items-end shrink-0">
           <span class="font-label text-tertiary font-bold text-xl md:text-2xl">{{ featuredProject.technology }}</span>
@@ -38,8 +38,8 @@
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 mb-10 md:mb-16">
         @for (spec of featuredProject.specs; track spec.label) {
           <div class="border-l-2 border-outline-variant/30 pl-4 md:pl-6">
-            <p class="font-label text-xs text-on-surface-variant uppercase mb-1 md:mb-2">{{ spec.label }}</p>
-            <p class="font-medium text-sm md:text-base">{{ spec.value }}</p>
+            <p class="font-label text-xs text-on-surface-variant uppercase mb-1 md:mb-2 leading-tight">{{ spec.label }}</p>
+            <p class="font-medium text-sm md:text-base leading-tight">{{ spec.value }}</p>
           </div>
         }
       </div>
@@ -53,7 +53,7 @@
           >
         </div>
         <div class="flex-1">
-          <h4 class="font-bold uppercase text-sm mb-2 tracking-widest">Résultats</h4>
+          <h4 class="font-bold uppercase text-sm mb-2 tracking-widest leading-tight">Résultats</h4>
           <p class="text-on-surface-variant text-sm leading-relaxed mb-4 md:mb-6">{{ featuredProject.result }}</p>
           <button class="flex items-center gap-2 group/btn">
             <span class="text-xs font-bold uppercase tracking-widest">Spécifications Techniques</span>
@@ -78,8 +78,8 @@
       <div class="space-y-6 md:space-y-8">
         @for (stat of performanceStats; track stat.label) {
           <div class="flex justify-between items-end border-b border-white/20 pb-4">
-            <span class="font-label text-xs md:text-sm uppercase tracking-widest opacity-60">{{ stat.label }}</span>
-            <span class="text-3xl md:text-4xl font-bold">{{ stat.value }}</span>
+            <span class="font-label text-xs md:text-sm uppercase tracking-widest opacity-60 leading-tight">{{ stat.label }}</span>
+            <span class="text-3xl md:text-4xl font-bold leading-none">{{ stat.value }}</span>
           </div>
         }
       </div>
@@ -89,11 +89,11 @@
     @for (project of sideProjects; track project.title) {
       <div class="lg:col-span-4 bg-surface-container-highest p-6 sm:p-8 flex flex-col hover:bg-surface-container transition-colors duration-200">
         <span class="font-label text-[10px] tracking-widest text-outline mb-3 md:mb-4 uppercase">{{ project.sector }}</span>
-        <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">{{ project.title }}</h3>
-        <p class="text-on-surface-variant text-sm mb-6 md:mb-8 flex-grow">{{ project.description }}</p>
+        <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 leading-tight">{{ project.title }}</h3>
+        <p class="text-on-surface-variant text-sm mb-6 md:mb-8 flex-grow leading-relaxed">{{ project.description }}</p>
         <div class="bg-surface p-4 border-l-4 border-tertiary">
           <p class="text-[10px] font-bold uppercase tracking-tighter text-outline mb-1">Spécifications clés</p>
-          <p class="font-label text-xs">{{ project.keySpec }}</p>
+          <p class="font-label text-xs leading-tight">{{ project.keySpec }}</p>
         </div>
       </div>
     }
@@ -103,16 +103,16 @@
   <section class="mt-1 px-4 sm:px-8 md:px-16">
     <div class="bg-surface-container p-6 sm:p-10 md:p-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
       <div>
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 tracking-tighter">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 tracking-tight leading-tight">
           Pourquoi la Précision GENX?
         </h2>
         <div class="space-y-5 md:space-y-6">
           @for (point of qualityPoints; track point.title) {
             <div class="flex gap-4">
-              <span class="material-symbols-outlined text-tertiary shrink-0">{{ point.icon }}</span>
+              <span class="material-symbols-outlined text-tertiary shrink-0">check_circle</span>
               <div>
-                <p class="font-bold text-sm uppercase tracking-wide mb-1">{{ point.title }}</p>
-                <p class="text-sm text-on-surface-variant">{{ point.description }}</p>
+                <p class="font-bold text-sm uppercase tracking-wide mb-1 leading-tight">{{ point.title }}</p>
+                <p class="text-sm text-on-surface-variant leading-relaxed">{{ point.description }}</p>
               </div>
             </div>
           }
@@ -126,8 +126,8 @@
           [src]="images.serverRoom"
         >
         <div class="absolute -bottom-0 md:-bottom-8 left-0 md:-left-8 bg-tertiary-container p-5 sm:p-8 text-on-tertiary-container">
-          <p class="font-label font-black text-2xl sm:text-4xl italic">TESTÉ SUR LE TERRAIN</p>
-          <p class="text-[10px] uppercase tracking-widest font-bold">Validation Rigoureuse</p>
+          <p class="font-label font-black text-2xl sm:text-4xl italic leading-tight">TESTÉ SUR LE TERRAIN</p>
+          <p class="text-[10px] uppercase tracking-widest font-bold leading-tight">Validation Rigoureuse</p>
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@
 
   <!-- CTA Section -->
   <section class="px-4 sm:px-8 md:px-16 py-12 md:py-24 text-center">
-    <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8">Prêt à automatiser votre succès ?</h3>
+    <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 leading-tight">Prêt à automatiser votre succès ?</h3>
     <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
       <a routerLink="/contact"
          class="bg-primary text-on-primary px-8 sm:px-10 py-4 font-label font-bold uppercase tracking-widest hover:bg-slate-800 transition-all">

@@ -6,7 +6,7 @@
   >
     <div class="max-w-7xl mx-auto">
       <p class="font-label text-sm uppercase tracking-[0.2em] text-primary mb-4 font-bold">Solutions Industrielles</p>
-      <h1 class="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-extrabold tracking-tighter text-on-surface mb-6 md:mb-8 max-w-4xl">
+      <h1 class="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-on-surface mb-6 md:mb-8 leading-tight">
         PRESTATIONS <span class="text-outline-variant">/</span> SERVICES
       </h1>
       <div class="h-1 w-24 bg-tertiary-container mb-6 md:mb-8"></div>
@@ -30,7 +30,7 @@
                     <span class="material-symbols-outlined text-4xl text-primary">{{ service.icon }}</span>
                     <span class="font-label text-xs font-bold text-outline">{{ service.number }}</span>
                   </div>
-                  <h3 class="font-headline text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase tracking-tight">{{ service.title }}</h3>
+                  <h3 class="font-headline text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase tracking-tight leading-tight">{{ service.title }}</h3>
                   <p class="font-label text-xs text-primary mb-4 md:mb-6 font-bold tracking-widest">{{ service.category }}</p>
                   <p class="text-on-surface-variant leading-relaxed mb-6 md:mb-8 flex-grow text-sm md:text-base">{{ service.description }}</p>
                   <div class="border-t border-outline-variant/30 pt-4 group-hover:border-tertiary-container transition-colors">
@@ -54,7 +54,7 @@
                 <span class="material-symbols-outlined text-4xl text-primary">{{ service.icon }}</span>
                 <span class="font-label text-xs font-bold text-outline">{{ service.number }}</span>
               </div>
-              <h3 class="font-headline text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase tracking-tight">{{ service.title }}</h3>
+              <h3 class="font-headline text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase tracking-tight leading-tight">{{ service.title }}</h3>
               <p class="font-label text-xs text-primary mb-4 md:mb-6 font-bold tracking-widest">{{ service.category }}</p>
               <p class="text-on-surface-variant leading-relaxed mb-6 md:mb-8 flex-grow text-sm md:text-base">{{ service.description }}</p>
               <div class="border-t border-outline-variant/30 pt-4 group-hover:border-tertiary-container transition-colors">
@@ -70,10 +70,10 @@
   <!-- Methodology Section -->
   <section class="bg-surface-container-low border-t border-outline-variant/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 py-12 md:py-24">
-      <div class="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-16 gap-6 md:gap-8">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-6 md:gap-8">
         <div>
           <p class="font-label text-sm uppercase tracking-[0.2em] text-primary mb-3 md:mb-4 font-bold">Processus Rigoureux</p>
-          <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tighter uppercase">Méthodologie</h2>
+          <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight uppercase leading-tight">Méthodologie</h2>
         </div>
         <div class="font-label text-xs text-on-surface-variant tracking-widest uppercase pb-2 border-b border-primary">
           Approche systémique de projet
@@ -84,12 +84,12 @@
         @for (step of methodologySteps; track step.number) {
           <div class="relative group">
             <div class="mb-4 md:mb-6 flex items-center">
-              <span class="text-3xl md:text-4xl font-headline font-black text-surface-variant group-hover:text-tertiary-container transition-colors duration-300">
+              <span class="text-3xl md:text-4xl font-headline font-black text-surface-variant group-hover:text-tertiary-container transition-colors duration-300 leading-none">
                 {{ step.number }}
               </span>
               <div class="h-px flex-grow bg-outline-variant/30 ml-4"></div>
             </div>
-            <h4 class="font-headline font-bold text-lg md:text-xl mb-3 md:mb-4 uppercase">{{ step.title }}</h4>
+            <h4 class="font-headline font-bold text-lg md:text-xl mb-3 md:mb-4 uppercase tracking-tight leading-tight">{{ step.title }}</h4>
             <p class="text-sm text-on-surface-variant leading-relaxed">{{ step.description }}</p>
             <div class="mt-6 md:mt-8 h-1 w-0 group-hover:w-full bg-primary transition-all duration-300"></div>
           </div>
@@ -104,7 +104,7 @@
       <div class="w-full md:w-1/2">
         <div class="bg-surface-container p-6 sm:p-8 border-l-4 border-tertiary-container">
           <code class="text-xs text-primary block mb-3 md:mb-4 uppercase font-bold tracking-widest">// SYSTEM_STATUS: OPERATIONAL</code>
-          <h3 class="font-headline text-2xl sm:text-3xl font-bold mb-4 md:mb-6 tracking-tight">
+          <h3 class="font-headline text-2xl sm:text-3xl font-bold mb-4 md:mb-6 tracking-tight leading-tight">
             VOTRE PARTENAIRE EN PERFORMANCE INDUSTRIELLE
           </h3>
           <p class="text-on-surface-variant mb-6 md:mb-8 leading-relaxed italic text-sm sm:text-base">
@@ -129,7 +129,7 @@
               <span class="material-symbols-outlined text-4xl md:text-5xl" [class]="stat.textColorClass">{{ stat.value }}</span>
             } @else {
               <div class="flex flex-col p-5 sm:p-8 justify-end w-full h-full">
-                <span class="font-headline text-3xl md:text-4xl font-bold" [class]="stat.textColorClass">{{ stat.value }}</span>
+                <span class="font-headline text-3xl md:text-4xl font-bold leading-none" [class]="stat.textColorClass">{{ stat.value }}</span>
                 <span class="text-xs font-bold uppercase tracking-widest mt-2" [class]="stat.textColorClass">{{ stat.label }}</span>
               </div>
             }
