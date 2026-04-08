@@ -2,16 +2,14 @@
   <!-- Hero Section -->
   <section class="px-4 sm:px-8 md:px-16 mb-12 md:mb-20 pt-8 md:pt-8">
     <div class="max-w-4xl">
-      <p class="font-label text-tertiary font-bold tracking-[0.2em] mb-4 text-sm uppercase">Archive de Performance</p>
+      <p class="font-label text-tertiary font-bold tracking-[0.2em] mb-4 text-sm uppercase">Mes Réalisations</p>
       <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6 md:mb-8">
-        Projets Réalisés
+        Projets sur lesquels<br>j'ai travaillé
       </h1>
       <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
         <div class="w-1 bg-tertiary-container h-16 sm:h-24 shrink-0"></div>
         <p class="text-on-surface-variant text-base sm:text-lg max-w-2xl font-light leading-relaxed">
-          Chaque projet est une démonstration de précision technique. Nos interventions s'appuient sur l'expérience
-          terrain approfondie de notre fondateur, transformant des défis industriels complexes en systèmes automatisés
-          robustes et évolutifs.
+          Chaque projet listé ici reflète mon expérience directe. Programmation, mise en service, instrumentation, formation — je suis intervenu de bout en bout ou sur des phases spécifiques, selon les besoins.
         </p>
       </div>
     </div>
@@ -25,7 +23,7 @@
       <div class="flex flex-col sm:flex-row justify-between items-start mb-10 md:mb-16 gap-4 md:gap-8">
         <div>
           <span class="font-label text-xs tracking-widest text-outline mb-2 block uppercase">
-            Secteur: {{ featuredProject.sector }}
+            {{ featuredProject.sector }}
           </span>
           <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-3 md:mb-4">{{ featuredProject.title }}</h2>
         </div>
@@ -53,14 +51,13 @@
           >
         </div>
         <div class="flex-1">
-          <h4 class="font-bold uppercase text-sm mb-2 tracking-widest leading-tight">Résultats</h4>
+          <h4 class="font-bold uppercase text-sm mb-2 tracking-widest leading-tight">Résultat</h4>
           <p class="text-on-surface-variant text-sm leading-relaxed mb-4 md:mb-6">{{ featuredProject.result }}</p>
-          <button class="flex items-center gap-2 group/btn">
-            <span class="text-xs font-bold uppercase tracking-widest">Spécifications Techniques</span>
-            <span class="material-symbols-outlined text-tertiary group-hover/btn:translate-x-1 transition-transform">
-              arrow_forward
-            </span>
-          </button>
+          <a routerLink="/contact"
+             class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all">
+            Discuter de votre projet
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </a>
         </div>
       </div>
     </div>
@@ -68,11 +65,10 @@
     <!-- Performance Stats Panel -->
     <div class="lg:col-span-4 bg-primary p-6 sm:p-10 md:p-12 text-on-primary flex flex-col justify-center">
       <div class="mb-8 md:mb-12">
-        <span class="material-symbols-outlined text-4xl md:text-5xl mb-4 md:mb-6 block">precision_manufacturing</span>
-        <h3 class="text-2xl md:text-3xl font-bold leading-tight mb-3 md:mb-4">Expérience de Terrain</h3>
+        <span class="material-symbols-outlined text-4xl md:text-5xl mb-4 md:mb-6 block">workspace_premium</span>
+        <h3 class="text-2xl md:text-3xl font-bold leading-tight mb-3 md:mb-4">Expérience terrain</h3>
         <p class="text-primary-fixed-dim/80 font-light leading-relaxed text-sm md:text-base">
-          Nos solutions ne sont pas seulement théoriques. Elles sont forgées par des années de maintenance
-          et de mise en service sur des sites critiques.
+          Des années à travailler directement sur les process industriels. Pas du théorique — du concret.
         </p>
       </div>
       <div class="space-y-6 md:space-y-8">
@@ -92,7 +88,7 @@
         <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 leading-tight">{{ project.title }}</h3>
         <p class="text-on-surface-variant text-sm mb-6 md:mb-8 flex-grow leading-relaxed">{{ project.description }}</p>
         <div class="bg-surface p-4 border-l-4 border-tertiary">
-          <p class="text-[10px] font-bold uppercase tracking-tighter text-outline mb-1">Spécifications clés</p>
+          <p class="text-[10px] font-bold uppercase tracking-tighter text-outline mb-1"> Technologies</p>
           <p class="font-label text-xs leading-tight">{{ project.keySpec }}</p>
         </div>
       </div>
@@ -104,7 +100,7 @@
     <div class="bg-surface-container p-6 sm:p-10 md:p-20 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
       <div>
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 tracking-tight leading-tight">
-          Pourquoi la Précision GENX?
+          Pourquoi travailler avec moi ?
         </h2>
         <div class="space-y-5 md:space-y-6">
           @for (point of qualityPoints; track point.title) {
@@ -126,8 +122,8 @@
           [src]="images.serverRoom"
         >
         <div class="absolute -bottom-0 md:-bottom-8 left-0 md:-left-8 bg-tertiary-container p-5 sm:p-8 text-on-tertiary-container">
-          <p class="font-label font-black text-2xl sm:text-4xl italic leading-tight">TESTÉ SUR LE TERRAIN</p>
-          <p class="text-[10px] uppercase tracking-widest font-bold leading-tight">Validation Rigoureuse</p>
+          <p class="font-label font-black text-2xl sm:text-4xl italic leading-tight">PASSIONNÉ</p>
+          <p class="text-[10px] uppercase tracking-widest font-bold leading-tight">Par le métier</p>
         </div>
       </div>
     </div>
@@ -135,15 +131,15 @@
 
   <!-- CTA Section -->
   <section class="px-4 sm:px-8 md:px-16 py-12 md:py-24 text-center">
-    <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 leading-tight">Prêt à automatiser votre succès ?</h3>
+    <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 leading-tight">Besoin d'un interlocuteur fiable ?</h3>
     <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
       <a routerLink="/contact"
          class="bg-primary text-on-primary px-8 sm:px-10 py-4 font-label font-bold uppercase tracking-widest hover:bg-slate-800 transition-all">
-        Démarrer un Projet
+        Me contacter
       </a>
       <a routerLink="/services"
          class="border border-outline text-on-surface px-8 sm:px-10 py-4 font-label font-bold uppercase tracking-widest hover:bg-surface-container-high transition-all">
-        Voir les Services
+        Voir mes services
       </a>
     </div>
   </section>

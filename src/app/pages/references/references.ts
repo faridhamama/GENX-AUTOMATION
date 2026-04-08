@@ -47,60 +47,60 @@ export class References {
   readonly images = IMAGES.references;
 
   readonly featuredProject: FeaturedProject = {
-    sector: 'Hydraulique & Eau',
-    title: "AEP Smir: Adduction d'Eau Potable",
-    technology: 'M580 PLC',
-    techLabel: 'Technologie de Pointe',
+    sector: 'Traitement des Eaux',
+    title: 'STEP Marrakech — Station d\'Épuration',
+    technology: 'Schneider M580',
+    techLabel: 'Automatisation Complète',
     specs: [
-      { label: 'Automate', value: 'Schneider Modicon M580' },
-      { label: 'Communication', value: 'Ethernet/IP & Modbus TCP' },
-      { label: 'Supervision', value: 'Vijeo Citect SCADA' },
+      { label: 'Automate', value: 'Schneider Modicon M580 & M221' },
+      { label: 'Supervision', value: 'Topkapi Vision & Vijeo Designer' },
+      { label: 'Télégestion', value: 'Teltonika RUT956 / Modbus TCP/IP' },
     ],
     image: IMAGES.references.featuredProject,
     imageAlt: 'PLC control panel with colorful glowing status lights in an industrial setting',
     result:
-      "Optimisation du flux hydraulique avec une réduction de 15% de la consommation énergétique des pompes via un contrôle PID précis.",
+      "Automatisation complète de la station avec gestion d'alarmes en temps réel, tendances historiques et supervision distante. Le client a réduit son temps de diagnostic de 60%.",
   };
 
   readonly performanceStats: PerformanceStat[] = [
-    { value: '42+', label: 'Projets Livrés' },
-    { value: '99.9%', label: 'Uptime Système' },
+    { value: '42+', label: 'Projets Réalisés' },
+    { value: '100%', label: 'Clients Satisfaits' },
   ];
 
   readonly sideProjects: SideProject[] = [
     {
-      sector: 'Automobile • Robotique',
-      title: "Ligne d'Assemblage Châssis",
+      sector: 'Dessalement • Laayoune',
+      title: 'Unité de Dessalement — Société Génération Maroc Technologie',
       description:
-        "Intégration de bras robotisés Fanuc avec PLC Siemens S7-1500 pour une synchronisation millimétrée.",
-      keySpec: 'Profinet IRT / Safety Integrated',
+        "Mise à jour des programmes PLC M580 et M340, mise à jour de la supervision Topkapi Vision et PcVue, instrumentation et calibration. Communication Modbus RTU.",
+      keySpec: 'M580 & M340 / Topkapi / PcVue / Modbus RTU',
     },
     {
-      sector: 'Énergie • Smart Grid',
-      title: 'Supervision Parc Solaire',
+      sector: "Adduction • Zagora",
+      title: 'AEP Zagora — Adduction d\'Eau Potable',
       description:
-        "Monitoring temps réel de 500 onduleurs avec protocole IEC 60870-5-104 et stockage de données InfluxDB.",
-      keySpec: 'SCADA Ignition / MQTT',
+        "Programmation M580, M340 et M221, supervision Topkapi Vision, mise en service complète, tests et formation d'exploitation. Télégestion via Sofrel S500.",
+      keySpec: 'M580 & M340 & M221 / Topkapi Vision / Sofrel S500',
     },
     {
-      sector: 'Agroalimentaire',
-      title: 'Système de Pesage Industriel',
+      sector: 'Épuration • Bouznika',
+      title: 'STEP Bouznika — Station d\'Épuration',
       description:
-        "Modernisation d'une unité de pesage avec pesons numériques et interface HMI tactile haute résolution.",
-      keySpec: 'Allen Bradley CompactLogix',
+        "Automatisation avec architecture Schneider M340. Analyse fonctionnelle complète du process hydraulique.",
+      keySpec: 'M340 / Analyse fonctionnelle',
     },
   ];
 
   readonly qualityPoints: QualityPoint[] = [
     {
-      icon: 'verified',
-      title: 'Expertise Native',
-      description: "Conçu par des ingénieurs ayant passé des milliers d'heures en usine.",
+      icon: 'engineering',
+      title: 'Pragmatique',
+      description: "Chaque ligne de code est là pour une raison. Pas de complexité gratuite.",
     },
     {
-      icon: 'settings_input_component',
-      title: 'Architecture Modulaire',
-      description: "Code propre, documenté et prêt pour l'Industrie 4.0.",
+      icon: 'description',
+      title: 'Documenté',
+      description: "Documentation à jour, schémas lisibles. Vos équipes peuvent prendre le relai.",
     },
   ];
 }

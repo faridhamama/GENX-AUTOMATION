@@ -7,7 +7,6 @@ export interface ServiceCard {
   category: string;
   description: string;
   spec: string;
-  /** Spans two columns and displays a supplementary image */
   isWide?: boolean;
   image?: string;
   imageAlt?: string;
@@ -42,8 +41,8 @@ export class Services {
       title: 'Étude & Conception',
       category: 'INGÉNIERIE',
       description:
-        'Analyse fonctionnelle détaillée, architecture de réseaux industriels et conception électrique. Nous définissons le socle technique de votre automatisation.',
-      spec: 'Spécifications techniques',
+        "Avant de programmer, je comprends. Analyse fonctionnelle, architecture réseau, bilan de puissance — je pose les bases solides pour que tout le reste tienne.",
+      spec: 'Cahier des charges, notes de calcul, architecture',
     },
     {
       icon: 'terminal',
@@ -51,8 +50,8 @@ export class Services {
       title: 'Programmation PLC',
       category: 'AUTOMATISATION',
       description:
-        'Développement de programmes automates (Siemens, Schneider, Rockwell) optimisés pour la performance, la sécurité et la modularité.',
-      spec: 'Standard IEC 61131-3',
+        "Schneider, Siemens, Allen Bradley — peu importe la marque. Ce qui compte, c'est un code structuré, documenté et qui tient la route en production.",
+      spec: 'IEC 61131-3, Grafcet, Ladder, ST',
     },
     {
       icon: 'monitoring',
@@ -60,58 +59,55 @@ export class Services {
       title: 'Développement SCADA',
       category: 'SUPERVISION',
       description:
-        "Interfaces Homme-Machine (HMI) intuitives et systèmes SCADA pour un pilotage en temps réel et une historisation précise de vos données.",
-      spec: 'Visualisation de données',
+        "Une supervision mal conçue, c'est un opérateur qui ne comprend pas ce qui se passe. Je crée des IHM pensées pour le métier, pas pour l'automaticien.",
+      spec: 'Topkapi, PcVue, Vijeo Designer, WinCC',
     },
     {
       icon: 'verified',
       number: '04',
-      title: 'Mise en Service & Tests',
+      title: 'Mise en Service',
       category: 'DÉPLOIEMENT',
       description:
-        'Tests FAT/SAT rigoureux et mise en service sur site. Nous assurons une transition fluide vers la production opérationnelle.',
-      spec: 'Validation de conformité',
+        "Être sur site, c'est là que tout se valide. Tests FAT/SAT, calibration instrument, optimisation des régulations PID — je ne pars pas avant que ça fonctionne.",
+      spec: 'FAT/SAT, calibration, PID, formation',
     },
     {
       icon: 'support_agent',
       number: '05',
       title: 'Maintenance & Support',
-      category: 'SUPPORT TECHNIQUE',
+      category: 'ACCOMPAGNEMENT',
       description:
-        'Accompagnement continu, télémaintenance et optimisation post-mise en service pour garantir la pérennité de vos installations.',
-      spec: 'Disponibilité 24/7',
+        "Un système maintenu, c'est un système qui ne vous lâche pas. Je propose du support réactif et de la maintenance préventive.",
+      spec: 'Support réactif, préventif, mises à jour',
       isWide: true,
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAbXm5OWvhlZJYIQpRtcSIuQK-3Y0GIcyy1NIT-Y8qEA2ZSzxSu0T7Kh9xYERgGcjDCQ110PNsGx926R_CZjtVlYQEugcy1oeQIkQFfHfR_fqibQxrH2sjaDuYKCwC_egLtF_JDTUx6e8cGTTY4rS3CNzdnR6EgGKniKBgY9QwRJO3L2JlXpyj8Y7eBDHywd4m6tMF0Gc02TaC7rMcGp8G7RdfDsZCGLLibaS31D5A1SdtYSLTMO_N16m3LDhfS5IZnlEWs71xroS4',
-      imageAlt: 'High-tech circuit board with glowing blue indicator lights',
     },
   ];
 
   readonly methodologySteps: MethodologyStep[] = [
     {
       number: '01',
-      title: 'Analyse',
-      description: 'Étude des besoins, cahier des charges technique et faisabilité industrielle.',
+      title: 'Échange',
+      description: "Je comprends votre process, vos contraintes, vos objectifs. Sans cette base, rien d'autre ne tient.",
     },
     {
       number: '02',
       title: 'Conception',
-      description: "Design de l'architecture logicielle et schémas électriques détaillés.",
+      description: "Architecture système, choix technologiques, planning. Tout est défini avant la première ligne de code.",
     },
     {
       number: '03',
       title: 'Développement',
-      description: 'Codage des automates et configuration des systèmes de supervision.',
+      description: "Programmation, configuration, tests en atelier. Je vous tiens informé à chaque étape.",
     },
     {
       number: '04',
-      title: 'Tests',
-      description: "Validation en atelier (FAT) et vérification des protocoles de sécurité.",
+      title: 'Validation',
+      description: "Tests sur site (SAT), calibration, mise au point. Rien ne part en production sans validation.",
     },
     {
       number: '05',
-      title: 'Mise en service',
-      description: "Installation sur site (SAT), formation des opérateurs et transfert.",
+      title: 'Livraison',
+      description: "Documentation complète, formation de vos équipes, et je reste disponible si besoin.",
     },
   ];
 
@@ -125,7 +121,7 @@ export class Services {
     },
     {
       value: '100%',
-      label: 'Précision',
+      label: 'Sur Mesure',
       colorClass: 'bg-primary',
       textColorClass: 'text-on-primary',
     },
