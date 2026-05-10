@@ -8,7 +8,6 @@ export interface NavLink {
 export const NAV_LINKS: NavLink[] = [
   { label: 'Accueil', path: '/', exact: true },
   { label: 'Services', path: '/services' },
-  //{ label: 'Références', path: '/references' },
   { label: 'Société', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
