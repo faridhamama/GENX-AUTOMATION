@@ -1,0 +1,172 @@
+<div class="max-w-5xl mx-auto">
+  <!-- Tab navigation -->
+  <div class="flex gap-1 mb-8 border-b border-outline-variant">
+    <button
+      (click)="setTab('about')"
+      class="px-4 py-2 font-label text-sm uppercase tracking-widest transition-colors"
+      [class.text-primary]="activeTab() === 'about'"
+      [class.border-b-2]="activeTab() === 'about'"
+      [class.border-primary]="activeTab() === 'about'"
+      [class.text-outline]="activeTab() !== 'about'"
+    >À propos</button>
+    <button
+      (click)="setTab('contact')"
+      class="px-4 py-2 font-label text-sm uppercase tracking-widest transition-colors"
+      [class.text-primary]="activeTab() === 'contact'"
+      [class.border-b-2]="activeTab() === 'contact'"
+      [class.border-primary]="activeTab() === 'contact'"
+      [class.text-outline]="activeTab() !== 'contact'"
+    >Contact</button>
+  </div>
+
+  <!-- About Tab -->
+  @if (activeTab() === 'about') {
+    <div class="flex flex-col gap-12">
+
+      <!-- Services CRUD -->
+      <section>
+        <h2 class="text-xl font-headline font-bold text-on-surface mb-6">Services</h2>
+        <div class="flex flex-col gap-2">
+          @for (service of services(); track service.id) {
+            <div class="bg-surface-container-lowest border border-outline-variant/30 p-4 flex items-center gap-4">
+              @if (editingServiceId() === service.id) {
+                <div class="flex-1 flex flex-col sm:flex-row gap-3">
+                  <input [(ngModel)]="serviceForm.label" placeholder="Nom du service" class="flex-1 px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <input [(ngModel)]="serviceForm.description" placeholder="Description" class="flex-1 px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                </div>
+                <div class="flex gap-2 shrink-0">
+                  <button (click)="saveService()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+                  <button (click)="cancelEditService()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+                </div>
+              } @else {
+                <div class="flex items-center gap-2 shrink-0 text-outline text-sm">
+                  <button (click)="moveService(service.id, 'up')" class="p-1 hover:text-primary transition-colors">▲</button>
+                  <button (click)="moveService(service.id, 'down')" class="p-1 hover:text-primary transition-colors">▼</button>
+                  <span>{{ service.sort_order }}</span>
+                </div>
+                <div class="flex-1">
+                  <div class="font-headline font-bold text-on-surface">{{ service.label }}</div>
+                  <div class="text-sm text-on-surface-variant">{{ service.description }}</div>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                  <button (click)="startEditService(service.id)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors">Modifier</button>
+                  <button (click)="deleteService(service.id)" class="px-3 py-1 text-sm text-error border border-error rounded hover:bg-error hover:text-white transition-colors">Supprimer</button>
+                </div>
+              }
+            </div>
+          }
+
+          @if (showAddService()) {
+            <div class="bg-surface-container-low border border-primary/50 p-4 flex items-center gap-4">
+              <div class="flex-1 flex flex-col sm:flex-row gap-3">
+                <input [(ngModel)]="serviceForm.label" placeholder="Nom du service" class="flex-1 px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="serviceForm.description" placeholder="Description" class="flex-1 px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              </div>
+              <div class="flex gap-2 shrink-0">
+                <button (click)="saveService()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded">Ajouter</button>
+                <button (click)="showAddService.set(false)" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+              </div>
+            </div>
+          }
+
+          <button (click)="showAddServiceForm()" class="self-start mt-2 px-4 py-2 border border-dashed border-outline text-sm text-outline hover:border-primary hover:text-primary transition-colors rounded">
+            + Ajouter un service
+          </button>
+        </div>
+      </section>
+
+      <!-- Values Editor -->
+      <section>
+        <h2 class="text-xl font-headline font-bold text-on-surface mb-6">Engagements</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          @for (value of companyValues(); track value.id) {
+            <div class="bg-surface-container-lowest border border-outline-variant/30 p-6 flex flex-col gap-4">
+              @if (editingValueId() === value.id) {
+                <div class="flex flex-col gap-3">
+                  <div>
+                    <label class="font-label text-[10px] uppercase tracking-widest text-outline mb-1 block">Icône</label>
+                    <select [(ngModel)]="valueForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
+                      @for (icon of availableIcons; track icon) {
+                        <option [value]="icon">{{ icon }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div>
+                    <label class="font-label text-[10px] uppercase tracking-widest text-outline mb-1 block">Titre</label>
+                    <input [(ngModel)]="valueForm.title" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  </div>
+                  <div>
+                    <label class="font-label text-[10px] uppercase tracking-widest text-outline mb-1 block">Description</label>
+                    <textarea [(ngModel)]="valueForm.description" rows="3" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded resize-none"></textarea>
+                  </div>
+                  <div class="flex gap-2">
+                    <button (click)="saveValue()" class="flex-1 px-3 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+                    <button (click)="cancelEditValue()" class="flex-1 px-3 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+                  </div>
+                </div>
+              } @else {
+                <div class="w-10 h-10 border border-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'wght' 300;">{{ value.icon }}</span>
+                </div>
+                <div>
+                  <div class="font-headline font-bold text-on-surface mb-1">{{ value.title }}</div>
+                  <div class="text-sm text-on-surface-variant leading-relaxed">{{ value.description }}</div>
+                </div>
+                <button (click)="startEditValue(value.id)" class="mt-auto px-3 py-2 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors self-start">
+                  Modifier
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </section>
+    </div>
+  }
+
+  <!-- Contact Tab -->
+  @if (activeTab() === 'contact') {
+    <form (ngSubmit)="saveCompanyInfo(companyInfoForm)" #companyInfoForm="ngForm" class="flex flex-col gap-6 max-w-2xl">
+      <div class="flex flex-col gap-1">
+        <label class="font-label text-[10px] uppercase tracking-widest text-outline">Nom de l'entreprise</label>
+        <input name="company_name" [ngModel]="companyInfo()?.company_name" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="font-label text-[10px] uppercase tracking-widest text-outline">Tagline</label>
+        <textarea name="tagline" [ngModel]="companyInfo()?.tagline" rows="2" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded resize-none"></textarea>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="font-label text-[10px] uppercase tracking-widest text-outline">Label / Secteur</label>
+        <input name="label" [ngModel]="companyInfo()?.label" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded" />
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="flex flex-col gap-1">
+          <label class="font-label text-[10px] uppercase tracking-widest text-outline">Jours</label>
+          <input name="availability_days" [ngModel]="companyInfo()?.availability_days" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded" />
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="font-label text-[10px] uppercase tracking-widest text-outline">Horaires</label>
+          <input name="availability_hours" [ngModel]="companyInfo()?.availability_hours" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded" />
+        </div>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="font-label text-[10px] uppercase tracking-widest text-outline">Email</label>
+        <input name="contact_email" type="email" [ngModel]="companyInfo()?.contact_email" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="font-label text-[10px] uppercase tracking-widest text-outline">Téléphone</label>
+        <input name="contact_phone" type="tel" [ngModel]="companyInfo()?.contact_phone" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="font-label text-[10px] uppercase tracking-widest text-outline">Adresse</label>
+        <textarea name="contact_address" [ngModel]="companyInfo()?.contact_address" rows="2" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded resize-none"></textarea>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="font-label text-[10px] uppercase tracking-widest text-outline">Mission quote</label>
+        <textarea name="mission_quote" [ngModel]="companyInfo()?.mission_quote" rows="3" class="px-3 py-3 bg-surface border border-outline text-on-surface rounded resize-none"></textarea>
+      </div>
+      <button type="submit" class="self-start px-6 py-3 bg-primary text-white font-label text-sm uppercase tracking-widest font-bold rounded hover:brightness-110 transition-all">
+        Enregistrer
+      </button>
+    </form>
+  }
+</div>
