@@ -13,10 +13,10 @@ export const routes: Routes = [
     path: 'services',
     loadComponent: () => import('./pages/services/services').then((m) => m.Services),
   },
-  {
+  /*{
     path: 'references',
     loadComponent: () => import('./pages/references/references').then((m) => m.References),
-  },
+  },*/
   {
     path: 'contact',
     loadComponent: () => import('./pages/contact/contact').then((m) => m.Contact),
@@ -28,6 +28,10 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./pages/admin/dashboard/dashboard').then((m) => m.Dashboard),
+      },
+      {
+        path: 'company',
+        loadComponent: () => import('./pages/admin/company/company').then((m) => m.CompanyAdmin),
       },
     ],
   },
