@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, inject, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CompanyInfoService } from '../../../core/company-info.service';
@@ -39,12 +40,12 @@ export class CompanyAdmin implements OnInit {
     this.activeTab.set(tab);
   }
 
-  async saveCompanyInfo(form: any): Promise<void> {
-    const { error } = await this.companyInfoService.updateCompanyInfo(form);
+  async saveCompanyInfo(form: NgForm): Promise<void> {
+    const { error } = await this.companyInfoService.updateCompanyInfo(form.value);
     if (error) {
-      this.toast.show('Erreur lors de la sauvegarde', 'error');
+      this.toast.error('Erreur lors de la sauvegarde');
     } else {
-      this.toast.show('Modifications enregistrées', 'success');
+      this.toast.success('Modifications enregistrées');
     }
   }
 
@@ -68,10 +69,12 @@ export class CompanyAdmin implements OnInit {
 
     if (id) {
       const { error } = await this.companyInfoService.updateService(id, this.serviceForm.label, this.serviceForm.description);
-      if (!error) this.toast.show('Service mis à jour', 'success');
+      if (error) { this.toast.error('Erreur lors de la mise à jour'); return; }
+      this.toast.success('Service mis à jour');
     } else {
       const { error } = await this.companyInfoService.createService(this.serviceForm.label, this.serviceForm.description);
-      if (!error) this.toast.show('Service ajouté', 'success');
+      if (error) { this.toast.error('Erreur lors de l\'ajout'); return; }
+      this.toast.success('Service ajouté');
     }
     this.cancelEditService();
   }
@@ -79,7 +82,8 @@ export class CompanyAdmin implements OnInit {
   async deleteService(id: string): Promise<void> {
     if (!confirm('Supprimer ce service ?')) return;
     const { error } = await this.companyInfoService.deleteService(id);
-    if (!error) this.toast.show('Service supprimé', 'success');
+    if (error) { this.toast.error('Erreur lors de la suppression'); return; }
+    this.toast.success('Service supprimé');
   }
 
   showAddServiceForm(): void {
@@ -93,10 +97,12 @@ export class CompanyAdmin implements OnInit {
     const index = list.findIndex((s) => s.id === id);
     if (direction === 'up' && index > 0) {
       const newOrder = [list[index - 1].id, list[index].id];
-      await this.companyInfoService.reorderServices(newOrder);
+      const { error } = await this.companyInfoService.reorderServices(newOrder);
+      if (error) { this.toast.error('Erreur lors du réordonnancement'); return; }
     } else if (direction === 'down' && index < list.length - 1) {
       const newOrder = [list[index].id, list[index + 1].id];
-      await this.companyInfoService.reorderServices(newOrder);
+      const { error } = await this.companyInfoService.reorderServices(newOrder);
+      if (error) { this.toast.error('Erreur lors du réordonnancement'); return; }
     }
   }
 
@@ -118,7 +124,8 @@ export class CompanyAdmin implements OnInit {
     if (!id || !this.valueForm.title.trim()) return;
 
     const { error } = await this.companyInfoService.updateCompanyValue(id, this.valueForm.icon, this.valueForm.title, this.valueForm.description);
-    if (!error) this.toast.show('Engagement mis à jour', 'success');
+    if (error) { this.toast.error('Erreur lors de la mise à jour'); return; }
+    this.toast.success('Engagement mis à jour');
     this.cancelEditValue();
   }
 
