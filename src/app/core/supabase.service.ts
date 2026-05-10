@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
+import type { CompanyInfo, CompanyValue, Service } from './company-info.service';
 
 export interface QuoteRequest {
   full_name: string;
@@ -60,6 +61,51 @@ export class SupabaseService {
       .from('quote_requests')
       .update({ read: true })
       .eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async getCompanyInfo(): Promise<{ data: CompanyInfo | null; error: string | null }> {
+    const { data, error } = await this._client.from('company_info').select('*').eq('id', 1).single();
+    return { data: data as CompanyInfo, error: error ? error.message : null };
+  }
+
+  async updateCompanyInfo(info: Partial<CompanyInfo>): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('company_info').update({ ...info, updated_at: new Date().toISOString() }).eq('id', 1);
+    return { error: error ? error.message : null };
+  }
+
+  async getServices(): Promise<{ data: Service[]; error: string | null }> {
+    const { data, error } = await this._client.from('services').select('*').order('sort_order', { ascending: true });
+    return { data: (data as Service[]) ?? [], error: error ? error.message : null };
+  }
+
+  async createService(label: string, description: string, sortOrder: number): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('services').insert({ label, description, sort_order: sortOrder });
+    return { error: error ? error.message : null };
+  }
+
+  async updateService(id: string, label: string, description: string): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('services').update({ label, description, updated_at: new Date().toISOString() }).eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async deleteService(id: string): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('services').delete().eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async updateServiceOrder(id: string, sortOrder: number): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('services').update({ sort_order: sortOrder, updated_at: new Date().toISOString() }).eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async getCompanyValues(): Promise<{ data: CompanyValue[]; error: string | null }> {
+    const { data, error } = await this._client.from('company_values').select('*').order('sort_order', { ascending: true });
+    return { data: (data as CompanyValue[]) ?? [], error: error ? error.message : null };
+  }
+
+  async updateCompanyValue(id: string, data: { icon: string; title: string; description: string }): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('company_values').update({ ...data, updated_at: new Date().toISOString() }).eq('id', id);
     return { error: error ? error.message : null };
   }
 }
