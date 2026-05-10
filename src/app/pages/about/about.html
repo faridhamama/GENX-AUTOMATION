@@ -82,9 +82,9 @@
           Un accompagnement complet, de l'étude à la mise en service.
         </p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 bg-outline-variant/20">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 bg-outline-variant/20">
         @for (service of services; track service.label) {
-          <div class="bg-surface-container-lowest p-6 sm:p-8 md:p-10 flex flex-col gap-3">
+          <div class="bg-surface-container-lowest p-6 sm:p-8 md:p-10 flex flex-col gap-3 min-h-40">
             <div class="text-tertiary font-headline font-bold text-lg md:text-xl leading-tight">{{ service.label }}</div>
             <p class="text-on-surface-variant text-sm leading-relaxed">{{ service.description }}</p>
           </div>
