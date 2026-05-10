@@ -25,32 +25,32 @@ export class About {
 
   readonly services: Service[] = [
     {
-      label: 'Automatisme industriel',
-      description: 'Programmation et mise en service d\'automates (PLC) — toute marque et technologie',
+      label: 'Assistance technique & formation',
+      description: 'Conseil, audits, études de faisabilité, formation du personnel technique, AMO dans l\'automatisme et l\'électricité industrielle',
     },
     {
-      label: 'Supervision (SCADA/IHM)',
-      description: 'Conception, intégration et exploitation de systèmes de supervision et interfaces homme-machine',
+      label: 'Automatisme industriel',
+      description: 'Programmation and mise en service d\'automates (PLC) — toute marque et technologie',
     },
     {
       label: 'Génie électrique (BT/MT)',
-      description: 'Études, fourniture, installation et mise en service — tableaux électriques, armoires, postes de transformation',
+      description: 'Études, fourniture, installation et mise en service — tableaux électriques, armoires de puissance et de commande, postes de transformation',
     },
     {
       label: 'Instrumentation industrielle',
-      description: 'Fourniture, installation, étalonnage et maintenance d\'instruments de mesure et capteurs',
+      description: 'Fourniture, installation, étalonnage et maintenance d\'instruments de mesure, capteurs, transmetteurs, analyseurs et régulateurs',
     },
     {
       label: 'Intégration de systèmes',
-      description: 'Architectures complètes, communication industrielle (Modbus, Profibus, Profinet, OPC-UA), liaison MES/ERP',
+      description: 'Architectures complètes, intégration de sous-systèmes, communication industrielle (Modbus, Profibus, Profinet, OPC-UA), liaison MES/ERP',
     },
     {
-      label: 'Assistance technique & formation',
-      description: 'Conseil, audits, études de faisabilité, formation du personnel, AMO',
+      label: 'Supervision (SCADA/IHM)',
+      description: 'Conception, intégration et exploitation de systèmes de supervision (SCADA), interfaces homme-machine (IHM/HMI) et Topkapi, Vijeo Designer, WinCC, Ignition',
     },
     {
       label: 'Commercialisation & distribution',
-      description: 'Importation et distribution de matériel d\'automatisme, instrumentation et électricité industrielle',
+      description: 'Importation et distribution de matériels, équipements, composants et logiciels relatifs à l\'automatisme industriel et l\'instrumentation',
     },
   ];
 
