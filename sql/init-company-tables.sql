@@ -35,7 +35,7 @@ insert into services (sort_order, label, description) values
   (5, 'Intégration de systèmes', 'Architectures complètes, intégration de sous-systèmes, communication industrielle (Modbus, Profibus, Profinet, OPC-UA), liaison MES/ERP'),
   (6, 'Supervision (SCADA/IHM)', 'Conception, intégration et exploitation de systèmes de supervision (SCADA), interfaces homme-machine (IHM/HMI) et Topkapi, Vijeo Designer, WinCC, Ignition'),
   (7, 'Commercialisation & distribution', 'Importation et distribution de matériels, équipements, composants et logiciels relatifs à l''automatisme industriel et l''instrumentation')
-on conflict do nothing;
+on conflict (sort_order) do nothing;
 
 -- company_values: exactly 3 rows
 create table if not exists company_values (
@@ -48,8 +48,8 @@ create table if not exists company_values (
 );
 
 -- Insert default values
-insert into company_values (sort_order, icon, title, description) values
-  (1, 'engineering', 'Rigueur industrielle', 'Une discipline forgée par des années d''expérience terrain sur des sites où la précision est une nécessité absolue'),
-  (2, 'handshake', 'Transparence totale', 'Offrir ce dont le client a vraiment besoin — sans surdimensionnement ni promesses impossibles à tenir'),
-  (3, 'workspace_premium', 'Savoir-faire concret', 'Du code, des schémas, des tests en situation réelle. Nous livrons ce que nous promettons')
-on conflict do nothing;
+insert into company_values (id, sort_order, icon, title, description) values
+  (gen_random_uuid(), 1, 'engineering', 'Rigueur industrielle', 'Une discipline forgée par des années d''expérience terrain sur des sites où la précision est une nécessité absolue'),
+  (gen_random_uuid(), 2, 'handshake', 'Transparence totale', 'Offrir ce dont le client a vraiment besoin — sans surdimensionnement ni promesses impossibles à tenir'),
+  (gen_random_uuid(), 3, 'workspace_premium', 'Savoir-faire concret', 'Du code, des schémas, des tests en situation réelle. Nous livrons ce que nous promettons')
+on conflict (sort_order) do nothing;
