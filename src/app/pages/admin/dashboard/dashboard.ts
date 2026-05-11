@@ -9,7 +9,7 @@ import { CompanyInfoService } from '../../../core/company-info.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { QuoteRequestRow } from '../../../core/supabase.service';
 
-type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references' | 'services';
+type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references' | 'services' | 'about';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,6 +46,14 @@ export class Dashboard implements OnInit {
   readonly servicesMethodology = this.companyInfo.servicesMethodology;
   readonly methodologySteps = this.companyInfo.methodologySteps;
   readonly servicesImages = this.companyInfo.servicesImages;
+  readonly aboutHero = this.companyInfo.aboutHero;
+  readonly aboutAvailability = this.companyInfo.aboutAvailability;
+  readonly aboutMission = this.companyInfo.aboutMission;
+  readonly aboutCompany = this.companyInfo.aboutCompany;
+  readonly aboutServicesSection = this.companyInfo.aboutServicesSection;
+  readonly aboutValuesSection = this.companyInfo.aboutValuesSection;
+  readonly aboutCtaSection = this.companyInfo.aboutCtaSection;
+  readonly aboutImages = this.companyInfo.aboutImages;
 
   readonly activeSection = signal<AdminSection>('emails');
   readonly searchQuery = signal('');
@@ -82,6 +90,8 @@ export class Dashboard implements OnInit {
   refImageForm = { key: '', url: '', alt_text: '' };
   readonly editingServicesImageKey = signal<string | null>(null);
   servicesImageForm = { key: '', url: '', alt_text: '' };
+  readonly editingAboutImageKey = signal<string | null>(null);
+  aboutImageForm = { key: '', url: '', alt_text: '' };
 
   // References forms
   referencesHeroForm = { label: '', headline: '', body: '' };
@@ -98,6 +108,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchHomepageContent();
       this.companyInfo.fetchReferencesContent();
       this.companyInfo.fetchServicesContent();
+      this.companyInfo.fetchAboutContent();
     }
   }
 
@@ -127,6 +138,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchHomepageContent();
       this.companyInfo.fetchReferencesContent();
       this.companyInfo.fetchServicesContent();
+      this.companyInfo.fetchAboutContent();
     }
   }
 
@@ -291,6 +303,90 @@ export class Dashboard implements OnInit {
     if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
     this.toast.success('Image mise à jour');
     this.cancelEditRefImage();
+  }
+
+  // CMS: About Hero
+  aboutHeroForm = { label: '', headline: '', body: '' };
+  async saveAboutHero(): Promise<void> {
+    const h = this.aboutHero();
+    if (!h) return;
+    const { error } = await this.companyInfo.updateAboutHero({ ...h, ...this.aboutHeroForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Hero mis à jour');
+  }
+
+  // CMS: About Availability
+  aboutAvailForm = { label: '', days: '', hours: '' };
+  async saveAboutAvailability(): Promise<void> {
+    const a = this.aboutAvailability();
+    if (!a) return;
+    const { error } = await this.companyInfo.updateAboutAvailability({ ...a, ...this.aboutAvailForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Disponibilité mise à jour');
+  }
+
+  // CMS: About Mission
+  aboutMissionForm = { label: '', quote: '' };
+  async saveAboutMission(): Promise<void> {
+    const m = this.aboutMission();
+    if (!m) return;
+    const { error } = await this.companyInfo.updateAboutMission({ ...m, ...this.aboutMissionForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Mission mise à jour');
+  }
+
+  // CMS: About Company
+  aboutCompanyForm = { label: '', body: '' };
+  async saveAboutCompany(): Promise<void> {
+    const c = this.aboutCompany();
+    if (!c) return;
+    const { error } = await this.companyInfo.updateAboutCompany({ ...c, ...this.aboutCompanyForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Description mise à jour');
+  }
+
+  // CMS: About Services Section
+  aboutServicesSectionForm = { headline: '', subtext: '' };
+  async saveAboutServicesSection(): Promise<void> {
+    const s = this.aboutServicesSection();
+    if (!s) return;
+    const { error } = await this.companyInfo.updateAboutServicesSection({ ...s, ...this.aboutServicesSectionForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Section services mise à jour');
+  }
+
+  // CMS: About Values Section
+  aboutValuesSectionForm = { headline: '', subtext: '' };
+  async saveAboutValuesSection(): Promise<void> {
+    const v = this.aboutValuesSection();
+    if (!v) return;
+    const { error } = await this.companyInfo.updateAboutValuesSection({ ...v, ...this.aboutValuesSectionForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Section engagements mise à jour');
+  }
+
+  // CMS: About CTA Section
+  aboutCtaSectionForm = { headline: '', subtext: '', cta_primary_label: '', cta_primary_link: '', cta_secondary_label: '', cta_secondary_link: '' };
+  async saveAboutCtaSection(): Promise<void> {
+    const c = this.aboutCtaSection();
+    if (!c) return;
+    const { error } = await this.companyInfo.updateAboutCtaSection({ ...c, ...this.aboutCtaSectionForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Section CTA mise à jour');
+  }
+
+  async startEditAboutImage(key: string): Promise<void> {
+    const img = this.aboutImages().find(i => i.image_key === key);
+    this.aboutImageForm = img ? { key: img.image_key, url: img.url, alt_text: img.alt_text } : { key, url: '', alt_text: '' };
+    this.editingAboutImageKey.set(key);
+  }
+  cancelEditAboutImage(): void { this.editingAboutImageKey.set(null); this.aboutImageForm = { key: '', url: '', alt_text: '' }; }
+  async saveAboutImage(): Promise<void> {
+    if (!this.aboutImageForm.url.trim()) { this.toast.error('L\'URL est requise'); return; }
+    const { error } = await this.companyInfo.upsertAboutImage(this.aboutImageForm.key, this.aboutImageForm.url, this.aboutImageForm.alt_text);
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Image mise à jour');
+    this.cancelEditAboutImage();
   }
 
   readonly availableIcons = ['engineering', 'handshake', 'workspace_premium', 'precision_manufacturing', 'monitoring', 'support_agent', 'verified', 'security'];

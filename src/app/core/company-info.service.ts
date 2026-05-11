@@ -11,6 +11,14 @@ import type {
   ServicesMethodologyRow,
   MethodologyStepRow,
   ServicesImageRow,
+  AboutHeroRow,
+  AboutAvailabilityRow,
+  AboutMissionRow,
+  AboutCompanyRow,
+  AboutServicesSectionRow,
+  AboutValuesSectionRow,
+  AboutCtaSectionRow,
+  AboutImageRow,
 } from './supabase.service';
 
 export interface CompanyInfo {
@@ -412,6 +420,116 @@ export class CompanyInfoService {
   async upsertServicesImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
     const { error } = await this.supabase.upsertServicesImage(key, url, alt);
     if (!error) await this.fetchServicesImages();
+    return { error };
+  }
+
+  // --- About ---
+  readonly aboutHero = signal<AboutHeroRow | null>(null);
+  readonly aboutAvailability = signal<AboutAvailabilityRow | null>(null);
+  readonly aboutMission = signal<AboutMissionRow | null>(null);
+  readonly aboutCompany = signal<AboutCompanyRow | null>(null);
+  readonly aboutServicesSection = signal<AboutServicesSectionRow | null>(null);
+  readonly aboutValuesSection = signal<AboutValuesSectionRow | null>(null);
+  readonly aboutCtaSection = signal<AboutCtaSectionRow | null>(null);
+  readonly aboutImages = signal<AboutImageRow[]>([]);
+  readonly aboutImagesMap = computed(() => {
+    const map: Record<string, { url: string; alt_text: string }> = {};
+    for (const img of this.aboutImages()) {
+      map[img.image_key] = { url: img.url, alt_text: img.alt_text };
+    }
+    return map;
+  });
+
+  async fetchAboutContent(): Promise<void> {
+    await Promise.all([
+      this.fetchAboutHero(),
+      this.fetchAboutAvailability(),
+      this.fetchAboutMission(),
+      this.fetchAboutCompany(),
+      this.fetchAboutServicesSection(),
+      this.fetchAboutValuesSection(),
+      this.fetchAboutCtaSection(),
+      this.fetchAboutImages(),
+    ]);
+  }
+
+  private async fetchAboutHero(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutHero();
+    if (!error && data) this.aboutHero.set(data);
+  }
+  async updateAboutHero(hero: AboutHeroRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutHero(hero);
+    if (!error) await this.fetchAboutHero();
+    return { error };
+  }
+
+  private async fetchAboutAvailability(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutAvailability();
+    if (!error && data) this.aboutAvailability.set(data);
+  }
+  async updateAboutAvailability(avail: AboutAvailabilityRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutAvailability(avail);
+    if (!error) await this.fetchAboutAvailability();
+    return { error };
+  }
+
+  private async fetchAboutMission(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutMission();
+    if (!error && data) this.aboutMission.set(data);
+  }
+  async updateAboutMission(mission: AboutMissionRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutMission(mission);
+    if (!error) await this.fetchAboutMission();
+    return { error };
+  }
+
+  private async fetchAboutCompany(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutCompany();
+    if (!error && data) this.aboutCompany.set(data);
+  }
+  async updateAboutCompany(company: AboutCompanyRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutCompany(company);
+    if (!error) await this.fetchAboutCompany();
+    return { error };
+  }
+
+  private async fetchAboutServicesSection(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutServicesSection();
+    if (!error && data) this.aboutServicesSection.set(data);
+  }
+  async updateAboutServicesSection(section: AboutServicesSectionRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutServicesSection(section);
+    if (!error) await this.fetchAboutServicesSection();
+    return { error };
+  }
+
+  private async fetchAboutValuesSection(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutValuesSection();
+    if (!error && data) this.aboutValuesSection.set(data);
+  }
+  async updateAboutValuesSection(section: AboutValuesSectionRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutValuesSection(section);
+    if (!error) await this.fetchAboutValuesSection();
+    return { error };
+  }
+
+  private async fetchAboutCtaSection(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutCtaSection();
+    if (!error && data) this.aboutCtaSection.set(data);
+  }
+  async updateAboutCtaSection(cta: AboutCtaSectionRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutCtaSection(cta);
+    if (!error) await this.fetchAboutCtaSection();
+    return { error };
+  }
+
+  private async fetchAboutImages(): Promise<void> {
+    const { data, error } = await this.supabase.getAboutImages();
+    if (!error && data) this.aboutImages.set(data as AboutImageRow[]);
+  }
+  async upsertAboutImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertAboutImage(key, url, alt);
+    if (!error) await this.fetchAboutImages();
     return { error };
   }
 }

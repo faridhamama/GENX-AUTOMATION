@@ -73,6 +73,11 @@
           Services
         </button>
 
+        <button (click)="setSection('about')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'about'" [class.text-primary]="activeSection() === 'about'" [class.text-on-surface]="activeSection() !== 'about'">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">info</span>
+          À propos
+        </button>
+
         <div class="mt-6 pt-4 border-t border-outline-variant/30">
           <button (click)="signOut()" class="w-full text-left px-3 py-2 rounded text-sm text-outline hover:text-on-surface transition-colors flex items-center gap-3 cursor-pointer">
             <span class="material-symbols-outlined text-lg" aria-hidden="true">logout</span>
@@ -96,6 +101,7 @@
               @case ('contact') { Contact }
               @case ('references') { Références }
               @case ('services') { Services }
+              @case ('about') { À propos }
             }
           </h1>
         </div>
@@ -645,6 +651,140 @@
                       <div class="flex gap-2">
                         <button (click)="saveServicesImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">OK</button>
                         <button (click)="cancelEditServicesImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
+                      </div>
+                    </div>
+                  } @else {
+                    @if (img.url) {
+                      <img [src]="img.url" [alt]="img.alt_text" class="h-20 object-cover rounded mt-2" />
+                    }
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
+      }
+
+      <!-- About Section -->
+      @if (activeSection() === 'about') {
+        <div class="p-6 max-w-5xl mx-auto space-y-6">
+
+          <!-- Hero -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Hero</h2>
+            @if (aboutHero(); as h) {
+              <div class="space-y-4">
+                <input [(ngModel)]="aboutHeroForm.label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="aboutHeroForm.headline" placeholder="Titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <textarea [(ngModel)]="aboutHeroForm.body" placeholder="Texte d'introduction" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded"></textarea>
+                <button (click)="saveAboutHero()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
+
+          <!-- Availability -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Disponibilité</h2>
+            @if (aboutAvailability(); as a) {
+              <div class="space-y-4">
+                <input [(ngModel)]="aboutAvailForm.label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="aboutAvailForm.days" placeholder="Jours" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="aboutAvailForm.hours" placeholder="Heures" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <button (click)="saveAboutAvailability()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
+
+          <!-- Mission -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Mission</h2>
+            @if (aboutMission(); as m) {
+              <div class="space-y-4">
+                <input [(ngModel)]="aboutMissionForm.label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <textarea [(ngModel)]="aboutMissionForm.quote" placeholder="Citation" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded"></textarea>
+                <button (click)="saveAboutMission()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
+
+          <!-- Company Description -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Description Entreprise</h2>
+            @if (aboutCompany(); as c) {
+              <div class="space-y-4">
+                <input [(ngModel)]="aboutCompanyForm.label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <textarea [(ngModel)]="aboutCompanyForm.body" placeholder="Texte" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded"></textarea>
+                <button (click)="saveAboutCompany()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
+
+          <!-- Services Section -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Section Services</h2>
+            @if (aboutServicesSection(); as s) {
+              <div class="space-y-4">
+                <input [(ngModel)]="aboutServicesSectionForm.headline" placeholder="Titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="aboutServicesSectionForm.subtext" placeholder="Sous-texte" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <button (click)="saveAboutServicesSection()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
+
+          <!-- Values Section -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Section Engagements</h2>
+            @if (aboutValuesSection(); as v) {
+              <div class="space-y-4">
+                <input [(ngModel)]="aboutValuesSectionForm.headline" placeholder="Titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="aboutValuesSectionForm.subtext" placeholder="Sous-texte" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <button (click)="saveAboutValuesSection()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
+
+          <!-- CTA Section -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Section CTA</h2>
+            @if (aboutCtaSection(); as c) {
+              <div class="space-y-4">
+                <input [(ngModel)]="aboutCtaSectionForm.headline" placeholder="Titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="aboutCtaSectionForm.subtext" placeholder="Sous-texte" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="space-y-2">
+                    <label class="text-xs font-label uppercase tracking-widest text-outline">Bouton Principal</label>
+                    <input [(ngModel)]="aboutCtaSectionForm.cta_primary_label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                    <input [(ngModel)]="aboutCtaSectionForm.cta_primary_link" placeholder="Lien" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-xs font-label uppercase tracking-widest text-outline">Bouton Secondaire</label>
+                    <input [(ngModel)]="aboutCtaSectionForm.cta_secondary_label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                    <input [(ngModel)]="aboutCtaSectionForm.cta_secondary_link" placeholder="Lien" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                  </div>
+                </div>
+                <button (click)="saveAboutCtaSection()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
+
+          <!-- Images -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Images</h2>
+            <div class="space-y-3">
+              @for (img of aboutImages(); track img.image_key) {
+                <div class="bg-surface-container-low border border-outline p-4 rounded">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="font-label text-xs uppercase tracking-widest text-outline">{{ img.image_key }}</span>
+                    <button (click)="startEditAboutImage(img.image_key)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Modifier</button>
+                  </div>
+                  @if (editingAboutImageKey() === img.image_key) {
+                    <div class="space-y-2 mt-2">
+                      <input [(ngModel)]="aboutImageForm.url" placeholder="URL" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                      <input [(ngModel)]="aboutImageForm.alt_text" placeholder="Texte alternatif" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                      <div class="flex gap-2">
+                        <button (click)="saveAboutImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">OK</button>
+                        <button (click)="cancelEditAboutImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
                       </div>
                     </div>
                   } @else {
