@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { COMPANY, CompanyConfig } from '../../core/company.config';
+import { CompanyInfoService } from '../../core/company-info.service';
 import { QuoteRequest, SupabaseService } from '../../core/supabase.service';
 import { ToastService } from '../../shared/toast/toast.service';
 
@@ -16,12 +16,13 @@ interface ContactStat {
   styleUrl: './contact.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Contact {
+export class Contact implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
+  private readonly companyInfoService = inject(CompanyInfoService);
 
-  readonly company: CompanyConfig = COMPANY;
+  readonly companyInfo = this.companyInfoService.companyInfo;
 
   readonly contactStats: ContactStat[] = [
     { value: '150+', label: 'Systèmes déployés' },
@@ -49,6 +50,10 @@ export class Contact {
   readonly submitStatus = signal<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   readonly showErrors = computed(() => this.submitted() && this.quoteForm.invalid);
+
+  ngOnInit(): void {
+    this.companyInfoService.fetchCompanyInfo();
+  }
 
   isInvalid(field: string): boolean {
     return this.submitted() && (this.quoteForm.get(field)?.invalid ?? false);

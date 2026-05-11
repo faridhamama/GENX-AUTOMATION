@@ -15,14 +15,13 @@
         </p>
       </header>
 
-      <div class="space-y-3 sm:space-y-4">
+      @if (companyInfo(); as info) {
         <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
           <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">location_on</span>
           <div>
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Localisation</h3>
             <p class="text-on-surface-variant text-sm">
-              {{ company.address.city }}, {{ company.address.country }}<br>
-              {{ company.address.zone }}
+              {{ info.contact_address }}
             </p>
           </div>
         </div>
@@ -32,9 +31,9 @@
           <div>
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Téléphone</h3>
             <a
-              [href]="'tel:' + company.phone"
+              [href]="'tel:' + info.contact_phone"
               class="text-on-surface-variant text-sm hover:text-primary transition-colors"
-            >{{ company.phone }}</a>
+            >{{ info.contact_phone }}</a>
           </div>
         </div>
 
@@ -43,9 +42,9 @@
           <div>
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Email</h3>
             <a
-              [href]="'mailto:' + company.email"
+              [href]="'mailto:' + info.contact_email"
               class="text-on-surface-variant text-sm hover:text-primary transition-colors break-word"
-            >{{ company.email }}</a>
+            >{{ info.contact_email }}</a>
           </div>
         </div>
 
@@ -53,15 +52,12 @@
           <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">schedule</span>
           <div class="flex-1">
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-2">Heures d'ouverture</h3>
-            <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-on-surface-variant text-sm">
-              @for (slot of company.hours; track slot.label) {
-                <span>{{ slot.label }} :</span>
-                <span class="text-right">{{ slot.time }}</span>
-              }
-            </div>
+            <p class="text-on-surface-variant text-sm">
+              {{ info.availability_days }} : {{ info.availability_hours }}
+            </p>
           </div>
         </div>
-      </div>
+      }
     </div>
 
     <!-- Right Column: Quote Form -->
