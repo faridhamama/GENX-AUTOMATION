@@ -148,7 +148,9 @@ export class CompanyInfoService {
   }
 
   async swapServiceOrder(id1: string, id2: string): Promise<{ error: string | null }> {
-    return this.supabase.swapServiceOrder(id1, id2);
+    const { error } = await this.supabase.swapServiceOrder(id1, id2);
+    if (!error) await this.fetchServices();
+    return { error };
   }
 
   // --- Company Values ---

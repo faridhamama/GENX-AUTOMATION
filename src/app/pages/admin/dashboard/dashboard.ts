@@ -150,14 +150,13 @@ export class Dashboard implements OnInit {
     if (direction === 'up' && index > 0) {
       const prev = list[index - 1];
       const curr = list[index];
-      // Swap sort_orders: temporarily set prev to 0 to break the conflict chain
-      await this.companyInfo.swapServiceOrder(curr.id, prev.id);
-      await this.companyInfo.fetchServices();
+      const { error } = await this.companyInfo.swapServiceOrder(curr.id, prev.id);
+      if (error) { this.toast.error('Erreur lors du réordonnancement'); return; }
     } else if (direction === 'down' && index < list.length - 1) {
       const curr = list[index];
       const next = list[index + 1];
-      await this.companyInfo.swapServiceOrder(curr.id, next.id);
-      await this.companyInfo.fetchServices();
+      const { error } = await this.companyInfo.swapServiceOrder(curr.id, next.id);
+      if (error) { this.toast.error('Erreur lors du réordonnancement'); return; }
     }
   }
 
