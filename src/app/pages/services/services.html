@@ -5,14 +5,10 @@
     style="background-image: radial-gradient(#bac9cc 1px, transparent 1px); background-size: 32px 32px;"
   >
     <div class="max-w-7xl mx-auto">
-      <p class="font-label text-sm uppercase tracking-[0.2em] text-primary mb-4 font-bold">GENX AUTOMATION</p>
-      <h1 class="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-on-surface mb-6 md:mb-8 leading-tight">
-        De l'idée à la <span class="text-outline-variant">mise en service</span>
-      </h1>
+      <p class="font-label text-sm uppercase tracking-[0.2em] text-primary mb-4 font-bold">{{ heroLabel() }}</p>
+      <h1 class="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-on-surface mb-6 md:mb-8 leading-tight" [innerHTML]="heroHeadline()"></h1>
       <div class="h-1 w-24 bg-tertiary-container mb-6 md:mb-8"></div>
-      <p class="max-w-2xl text-on-surface-variant text-base sm:text-lg leading-relaxed">
-        Nous couvrons l'ensemble de la chaîne : étude, conception, programmation, supervision et mise en service. Un interlocuteur unique, de A à Z.
-      </p>
+      <p class="max-w-2xl text-on-surface-variant text-base sm:text-lg leading-relaxed">{{ heroBody() }}</p>
     </div>
   </section>
 
@@ -38,11 +34,11 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-8 py-12 md:py-24">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 gap-6 md:gap-8">
         <div>
-          <p class="font-label text-sm uppercase tracking-[0.2em] text-primary mb-3 md:mb-4 font-bold">Comment nous travaillons</p>
-          <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight uppercase leading-tight">Notre Processus</h2>
+          <p class="font-label text-sm uppercase tracking-[0.2em] text-primary mb-3 md:mb-4 font-bold">{{ methodologySectionLabel() }}</p>
+          <h2 class="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight uppercase leading-tight">{{ methodologyHeadline() }}</h2>
         </div>
         <div class="font-label text-xs text-on-surface-variant tracking-widest uppercase pb-2 border-b border-primary">
-          Transparence à chaque étape
+          {{ methodologySubtext() }}
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { CompanyInfoService } from '../../core/company-info.service';
 
 @Component({
@@ -9,39 +9,28 @@ import { CompanyInfoService } from '../../core/company-info.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Services implements OnInit {
-  private readonly companyInfoService = inject(CompanyInfoService);
+  private readonly companyInfo = inject(CompanyInfoService);
 
-  readonly services = this.companyInfoService.services;
+  readonly services = this.companyInfo.services;
 
-  readonly methodologySteps = [
-    {
-      number: '01',
-      title: 'Échange',
-      description: 'Nous comprenons votre processus, vos contraintes, vos objectifs. Sans cette base, rien ne tient.',
-    },
-    {
-      number: '02',
-      title: 'Conception',
-      description: 'Architecture système, choix technologiques, planification. Tout est défini avant la première ligne de code.',
-    },
-    {
-      number: '03',
-      title: 'Développement',
-      description: "Programmation, configuration, tests en atelier. Nous vous tenons informé à chaque étape.",
-    },
-    {
-      number: '04',
-      title: 'Validation',
-      description: 'Tests sur site (SAT), calibration, mise au point. Rien ne part en production sans validation.',
-    },
-    {
-      number: '05',
-      title: 'Livraison',
-      description: 'Documentation complète, formation de vos équipes, et nous restons disponibles en cas de besoin.',
-    },
-  ];
+  readonly heroLabel = computed(() => this.companyInfo.servicesPageHero()?.label ?? 'GENX AUTOMATION');
+  readonly heroHeadline = computed(() => this.companyInfo.servicesPageHero()?.headline ?? "De l'idée à la <span class=\"text-outline-variant\">mise en service</span>");
+  readonly heroBody = computed(() => this.companyInfo.servicesPageHero()?.body ?? "Nous couvrons l'ensemble de la chaîne : étude, conception, programmation, supervision et mise en service. Un interlocuteur unique, de A à Z.");
+
+  readonly methodologySectionLabel = computed(() => this.companyInfo.servicesMethodology()?.section_label ?? 'Comment nous travaillons');
+  readonly methodologyHeadline = computed(() => this.companyInfo.servicesMethodology()?.headline ?? 'Notre Processus');
+  readonly methodologySubtext = computed(() => this.companyInfo.servicesMethodology()?.subtext ?? 'Transparence à chaque étape');
+
+  readonly methodologySteps = computed(() =>
+    this.companyInfo.methodologySteps().map(s => ({
+      number: String(s.step_number).padStart(2, '0'),
+      title: s.title,
+      description: s.description,
+    }))
+  );
 
   ngOnInit(): void {
-    this.companyInfoService.fetchServices();
+    this.companyInfo.fetchServices();
+    this.companyInfo.fetchServicesContent();
   }
 }

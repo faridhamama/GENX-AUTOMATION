@@ -7,6 +7,10 @@ import type {
   ReferencesSideProjectRow,
   ReferencesQualityPointRow,
   ReferencesImageRow,
+  ServicesPageHeroRow,
+  ServicesMethodologyRow,
+  MethodologyStepRow,
+  ServicesImageRow,
 } from './supabase.service';
 
 export interface CompanyInfo {
@@ -342,6 +346,72 @@ export class CompanyInfoService {
   async upsertReferencesImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
     const { error } = await this.supabase.upsertReferencesImage(key, url, alt);
     if (!error) await this.fetchReferencesImages();
+    return { error };
+  }
+
+  // --- Services ---
+  readonly servicesPageHero = signal<ServicesPageHeroRow | null>(null);
+  readonly servicesMethodology = signal<ServicesMethodologyRow | null>(null);
+  readonly methodologySteps = signal<MethodologyStepRow[]>([]);
+  readonly servicesImages = signal<ServicesImageRow[]>([]);
+  readonly servicesImagesMap = computed(() => {
+    const map: Record<string, { url: string; alt_text: string }> = {};
+    for (const img of this.servicesImages()) {
+      map[img.image_key] = { url: img.url, alt_text: img.alt_text };
+    }
+    return map;
+  });
+
+  async fetchServicesContent(): Promise<void> {
+    await Promise.all([
+      this.fetchServicesPageHero(),
+      this.fetchServicesMethodology(),
+      this.fetchMethodologySteps(),
+      this.fetchServicesImages(),
+    ]);
+  }
+
+  private async fetchServicesPageHero(): Promise<void> {
+    const { data, error } = await this.supabase.getServicesPageHero();
+    if (!error && data) this.servicesPageHero.set(data);
+  }
+
+  async updateServicesPageHero(hero: ServicesPageHeroRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertServicesPageHero(hero);
+    if (!error) await this.fetchServicesPageHero();
+    return { error };
+  }
+
+  private async fetchServicesMethodology(): Promise<void> {
+    const { data, error } = await this.supabase.getServicesMethodology();
+    if (!error && data) this.servicesMethodology.set(data);
+  }
+
+  async updateServicesMethodology(methodology: ServicesMethodologyRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertServicesMethodology(methodology);
+    if (!error) await this.fetchServicesMethodology();
+    return { error };
+  }
+
+  private async fetchMethodologySteps(): Promise<void> {
+    const { data, error } = await this.supabase.getMethodologySteps();
+    if (!error && data) this.methodologySteps.set(data as MethodologyStepRow[]);
+  }
+
+  async updateMethodologyStep(id: string, step: Partial<MethodologyStepRow>): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertMethodologyStep(id, step);
+    if (!error) await this.fetchMethodologySteps();
+    return { error };
+  }
+
+  private async fetchServicesImages(): Promise<void> {
+    const { data, error } = await this.supabase.getServicesImages();
+    if (!error && data) this.servicesImages.set(data as ServicesImageRow[]);
+  }
+
+  async upsertServicesImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertServicesImage(key, url, alt);
+    if (!error) await this.fetchServicesImages();
     return { error };
   }
 }

@@ -68,6 +68,11 @@
           Références
         </button>
 
+        <button (click)="setSection('services')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'services'" [class.text-primary]="activeSection() === 'services'" [class.text-on-surface]="activeSection() !== 'services'">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">miscellaneous_services</span>
+          Services
+        </button>
+
         <div class="mt-6 pt-4 border-t border-outline-variant/30">
           <button (click)="signOut()" class="w-full text-left px-3 py-2 rounded text-sm text-outline hover:text-on-surface transition-colors flex items-center gap-3 cursor-pointer">
             <span class="material-symbols-outlined text-lg" aria-hidden="true">logout</span>
@@ -90,6 +95,7 @@
               @case ('home') { Page d'accueil }
               @case ('contact') { Contact }
               @case ('references') { Références }
+              @case ('services') { Services }
             }
           </h1>
         </div>
@@ -556,6 +562,89 @@
                       <div class="flex gap-2">
                         <button (click)="saveRefImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">OK</button>
                         <button (click)="cancelEditRefImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
+                      </div>
+                    </div>
+                  } @else {
+                    @if (img.url) {
+                      <img [src]="img.url" [alt]="img.alt_text" class="h-20 object-cover rounded mt-2" />
+                    }
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
+      }
+
+      <!-- Services Section -->
+      @if (activeSection() === 'services') {
+        <div class="p-6 max-w-5xl mx-auto space-y-6">
+
+          <!-- Hero -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Hero</h2>
+            @if (servicesPageHero(); as hero) {
+              <div class="space-y-4">
+                <input [(ngModel)]="servicesHeroForm.label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="servicesHeroForm.headline" placeholder="Titre (HTML autorisé)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <textarea [(ngModel)]="servicesHeroForm.body" placeholder="Texte d'introduction" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded"></textarea>
+                <button (click)="saveServicesHero()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else {
+              <p class="text-sm text-on-surface-variant">Chargement...</p>
+            }
+          </div>
+
+          <!-- Methodology -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Méthodologie</h2>
+            @if (servicesMethodology(); as meth) {
+              <div class="space-y-4">
+                <input [(ngModel)]="servicesMethodologyForm.section_label" placeholder="Label de section" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="servicesMethodologyForm.headline" placeholder="Titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="servicesMethodologyForm.subtext" placeholder="Sous-texte" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <button (click)="saveServicesMethodology()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else {
+              <p class="text-sm text-on-surface-variant">Chargement...</p>
+            }
+          </div>
+
+          <!-- Methodology Steps -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Étapes</h2>
+            <div class="space-y-3">
+              @for (step of methodologySteps(); track step.id) {
+                <div class="bg-surface-container-low border border-outline p-4 rounded space-y-2">
+                  <div class="flex gap-4 items-center">
+                    <span class="font-label text-xs text-outline w-8">#{{ step.step_number }}</span>
+                    <input [(ngModel)]="step.title" placeholder="Titre" class="flex-1 px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  </div>
+                  <textarea [(ngModel)]="step.description" placeholder="Description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
+                  <button (click)="saveMethodologyStep(step)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Enregistrer</button>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Images -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Images</h2>
+            <div class="space-y-3">
+              @for (img of servicesImages(); track img.image_key) {
+                <div class="bg-surface-container-low border border-outline p-4 rounded">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="font-label text-xs uppercase tracking-widest text-outline">{{ img.image_key }}</span>
+                    <button (click)="startEditServicesImage(img.image_key)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Modifier</button>
+                  </div>
+                  @if (editingServicesImageKey() === img.image_key) {
+                    <div class="space-y-2 mt-2">
+                      <input [(ngModel)]="servicesImageForm.url" placeholder="URL" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                      <input [(ngModel)]="servicesImageForm.alt_text" placeholder="Texte alternatif" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                      <div class="flex gap-2">
+                        <button (click)="saveServicesImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">OK</button>
+                        <button (click)="cancelEditServicesImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
                       </div>
                     </div>
                   } @else {

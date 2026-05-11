@@ -9,7 +9,7 @@ import { CompanyInfoService } from '../../../core/company-info.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { QuoteRequestRow } from '../../../core/supabase.service';
 
-type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references';
+type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references' | 'services';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,6 +42,10 @@ export class Dashboard implements OnInit {
   readonly referencesSideProjects = this.companyInfo.referencesSideProjects;
   readonly referencesQualityPoints = this.companyInfo.referencesQualityPoints;
   readonly referencesImages = this.companyInfo.referencesImages;
+  readonly servicesPageHero = this.companyInfo.servicesPageHero;
+  readonly servicesMethodology = this.companyInfo.servicesMethodology;
+  readonly methodologySteps = this.companyInfo.methodologySteps;
+  readonly servicesImages = this.companyInfo.servicesImages;
 
   readonly activeSection = signal<AdminSection>('emails');
   readonly searchQuery = signal('');
@@ -76,6 +80,8 @@ export class Dashboard implements OnInit {
   readonly editingCardId = signal<string | null>(null);
   readonly editingRefImageKey = signal<string | null>(null);
   refImageForm = { key: '', url: '', alt_text: '' };
+  readonly editingServicesImageKey = signal<string | null>(null);
+  servicesImageForm = { key: '', url: '', alt_text: '' };
 
   // References forms
   referencesHeroForm = { label: '', headline: '', body: '' };
@@ -91,6 +97,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchCompanyValues();
       this.companyInfo.fetchHomepageContent();
       this.companyInfo.fetchReferencesContent();
+      this.companyInfo.fetchServicesContent();
     }
   }
 
@@ -119,6 +126,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchCompanyValues();
       this.companyInfo.fetchHomepageContent();
       this.companyInfo.fetchReferencesContent();
+      this.companyInfo.fetchServicesContent();
     }
   }
 
