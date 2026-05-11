@@ -245,6 +245,23 @@ export interface FormLabelsRow {
   updated_at: string;
 }
 
+export interface HomepageHeroContentRow {
+  id: number;
+  hero_badge: string;
+  hero_headline: string;
+  hero_body: string;
+  cta_primary_label: string;
+  cta_secondary_label: string;
+  stats_image_caption: string;
+  expertise_label: string;
+  expertise_headline: string;
+  expertise_subtext: string;
+  cta_section_headline: string;
+  cta_section_body: string;
+  cta_section_label: string;
+  updated_at: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private readonly _client: SupabaseClient = createClient(
@@ -600,6 +617,16 @@ export class SupabaseService {
 
   async upsertReferencesImage(imageKey: string, url: string, altText: string): Promise<{ error: string | null }> {
     const { error } = await this._client.from('references_images').upsert({ image_key: imageKey, url, alt_text: altText, updated_at: new Date().toISOString() });
+    return { error: error ? error.message : null };
+  }
+
+  // --- Homepage Hero Content ---
+  async getHomepageHeroContent(): Promise<{ data: HomepageHeroContentRow | null; error: string | null }> {
+    const { data, error } = await this._client.from('homepage_hero_content').select('*').eq('id', 1).maybeSingle();
+    return { data: data as HomepageHeroContentRow ?? null, error: error ? error.message : null };
+  }
+  async upsertHomepageHeroContent(content: HomepageHeroContentRow): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('homepage_hero_content').upsert({ ...content, id: 1, updated_at: new Date().toISOString() }).eq('id', 1);
     return { error: error ? error.message : null };
   }
 }

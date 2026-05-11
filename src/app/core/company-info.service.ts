@@ -24,6 +24,7 @@ import type {
   ProjectTypeRow,
   ContactFormContentRow,
   FormLabelsRow,
+  HomepageHeroContentRow,
 } from './supabase.service';
 
 export interface CompanyInfo {
@@ -602,6 +603,19 @@ export class CompanyInfoService {
   async updateFormLabels(labels: FormLabelsRow): Promise<{ error: string | null }> {
     const { error } = await this.supabase.upsertFormLabels(labels);
     if (!error) await this.fetchFormLabels();
+    return { error };
+  }
+
+  // --- Homepage Hero Content ---
+  readonly homepageHeroContent = signal<HomepageHeroContentRow | null>(null);
+
+  async fetchHomepageHeroContent(): Promise<void> {
+    const { data, error } = await this.supabase.getHomepageHeroContent();
+    if (!error && data) this.homepageHeroContent.set(data);
+  }
+  async updateHomepageHeroContent(content: HomepageHeroContentRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertHomepageHeroContent(content);
+    if (!error) await this.fetchHomepageHeroContent();
     return { error };
   }
 }

@@ -83,6 +83,11 @@
           Contenu Contact
         </button>
 
+        <button (click)="setSection('homepage_hero')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'homepage_hero'" [class.text-primary]="activeSection() === 'homepage_hero'" [class.text-on-surface]="activeSection() !== 'homepage_hero'">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">home</span>
+          Hero Page d'accueil
+        </button>
+
         <div class="mt-6 pt-4 border-t border-outline-variant/30">
           <button (click)="signOut()" class="w-full text-left px-3 py-2 rounded text-sm text-outline hover:text-on-surface transition-colors flex items-center gap-3 cursor-pointer">
             <span class="material-symbols-outlined text-lg" aria-hidden="true">logout</span>
@@ -108,6 +113,7 @@
               @case ('services') { Services }
               @case ('about') { À propos }
               @case ('contact_content') { Contenu Contact }
+              @case ('homepage_hero') { Hero Page d'accueil }
             }
           </h1>
         </div>
@@ -912,6 +918,61 @@
             } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
           </div>
 
+        </div>
+      }
+
+      <!-- Homepage Hero Section -->
+      @if (activeSection() === 'homepage_hero') {
+        <div class="p-6 max-w-5xl mx-auto space-y-6">
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Contenu Hero Page d'accueil</h2>
+            @if (homepageHeroContent(); as h) {
+              <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-2">
+                    <label class="text-xs font-label uppercase tracking-widest text-outline">Badge</label>
+                    <input [(ngModel)]="heroContentForm.hero_badge" placeholder="Badge" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-xs font-label uppercase tracking-widest text-outline">Légende stats image</label>
+                    <input [(ngModel)]="heroContentForm.stats_image_caption" placeholder="Caption" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                  </div>
+                </div>
+                <div>
+                  <label class="text-xs font-label uppercase tracking-widest text-outline">Titre (HTML autorisé)</label>
+                  <input [(ngModel)]="heroContentForm.hero_headline" placeholder="Titre hero" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                </div>
+                <div>
+                  <label class="text-xs font-label uppercase tracking-widest text-outline">Corps (HTML autorisé)</label>
+                  <textarea [(ngModel)]="heroContentForm.hero_body" placeholder="Corps hero" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded"></textarea>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input [(ngModel)]="heroContentForm.cta_primary_label" placeholder="Bouton principal" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                  <input [(ngModel)]="heroContentForm.cta_secondary_label" placeholder="Bouton secondaire" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                </div>
+
+                <div class="border-t border-outline pt-4 mt-4">
+                  <h3 class="text-sm font-bold text-outline uppercase mb-3">Section Expertise</h3>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input [(ngModel)]="heroContentForm.expertise_label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                    <input [(ngModel)]="heroContentForm.expertise_headline" placeholder="Titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded md:col-span-2" />
+                  </div>
+                  <input [(ngModel)]="heroContentForm.expertise_subtext" placeholder="Sous-texte" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded mt-3" />
+                </div>
+
+                <div class="border-t border-outline pt-4 mt-4">
+                  <h3 class="text-sm font-bold text-outline uppercase mb-3">Section CTA</h3>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input [(ngModel)]="heroContentForm.cta_section_headline" placeholder="Titre CTA" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                    <input [(ngModel)]="heroContentForm.cta_section_body" placeholder="Corps CTA" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                    <input [(ngModel)]="heroContentForm.cta_section_label" placeholder="Bouton CTA" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                  </div>
+                </div>
+
+                <button (click)="saveHomepageHeroContent()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else { <p class="text-sm text-on-surface-variant">Chargement...</p> }
+          </div>
         </div>
       }
 

@@ -9,7 +9,7 @@ import { CompanyInfoService } from '../../../core/company-info.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { QuoteRequestRow } from '../../../core/supabase.service';
 
-type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references' | 'services' | 'about' | 'contact_content';
+type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references' | 'services' | 'about' | 'contact_content' | 'homepage_hero';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,6 +59,8 @@ export class Dashboard implements OnInit {
   readonly projectTypes = this.companyInfo.projectTypes;
   readonly contactFormContent = this.companyInfo.contactFormContent;
   readonly formLabels = this.companyInfo.formLabels;
+  readonly homepageHeroContent = this.companyInfo.homepageHeroContent;
+
   readonly searchQuery = signal('');
 
   readonly filteredRequests = computed(() => {
@@ -100,6 +102,7 @@ export class Dashboard implements OnInit {
   contactHeroForm = { label: '', headline: '', body: '' };
   contactFormContentForm = { form_title: '', success_title: '', success_body: '', error_message: '', footer_note: '', submit_label: '', loading_label: '' };
   formLabelsForm = { full_name_label: '', full_name_error: '', full_name_placeholder: '', phone_label: '', phone_error: '', phone_placeholder: '', email_label: '', email_error: '', email_placeholder: '', desired_date_label: '', desired_date_placeholder: '', project_type_label: '', description_label: '', description_error: '', description_placeholder: '' };
+  heroContentForm = { hero_badge: '', hero_headline: '', hero_body: '', cta_primary_label: '', cta_secondary_label: '', stats_image_caption: '', expertise_label: '', expertise_headline: '', expertise_subtext: '', cta_section_headline: '', cta_section_body: '', cta_section_label: '' };
 
   // References forms
   referencesHeroForm = { label: '', headline: '', body: '' };
@@ -118,6 +121,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchServicesContent();
       this.companyInfo.fetchAboutContent();
       this.companyInfo.fetchContactContent();
+      this.companyInfo.fetchHomepageHeroContent();
     }
   }
 
@@ -149,6 +153,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchServicesContent();
       this.companyInfo.fetchAboutContent();
       this.companyInfo.fetchContactContent();
+      this.companyInfo.fetchHomepageHeroContent();
     }
   }
 
@@ -438,6 +443,15 @@ export class Dashboard implements OnInit {
     const { error } = await this.companyInfo.updateFormLabels({ ...f, ...this.formLabelsForm });
     if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
     this.toast.success('Labels mis à jour');
+  }
+
+  // CMS: Homepage Hero Content
+  async saveHomepageHeroContent(): Promise<void> {
+    const h = this.homepageHeroContent();
+    if (!h) return;
+    const { error } = await this.companyInfo.updateHomepageHeroContent({ ...h, ...this.heroContentForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Contenu hero mis à jour');
   }
 
   readonly availableIcons = ['engineering', 'handshake', 'workspace_premium', 'precision_manufacturing', 'monitoring', 'support_agent', 'verified', 'security'];
