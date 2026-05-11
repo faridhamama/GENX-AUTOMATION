@@ -13,6 +13,15 @@ create table if not exists company_info (
   updated_at timestamptz default now()
 );
 
+-- Disable RLS for company_info (public read for anon key, full access for authenticated)
+alter table company_info enable row level security;
+drop policy if exists "Allow anon read" on company_info;
+drop policy if exists "Allow anon update" on company_info;
+drop policy if exists "Allow anon insert" on company_info;
+create policy "Allow anon read" on company_info for select using (true);
+create policy "Allow anon update" on company_info for update using (true);
+create policy "Allow anon insert" on company_info for insert with check (true);
+
 -- Insert default row if not exists
 insert into company_info (id) values (1) on conflict (id) do nothing;
 
@@ -25,6 +34,14 @@ create table if not exists services (
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
+
+alter table services enable row level security;
+drop policy if exists "Allow anon read" on services;
+drop policy if exists "Allow anon update" on services;
+drop policy if exists "Allow anon insert" on services;
+create policy "Allow anon read" on services for select using (true);
+create policy "Allow anon update" on services for update using (true);
+create policy "Allow anon insert" on services for insert with check (true);
 
 -- Insert default services
 insert into services (sort_order, label, description) values
@@ -46,6 +63,14 @@ create table if not exists company_values (
   description text not null,
   updated_at timestamptz default now()
 );
+
+alter table company_values enable row level security;
+drop policy if exists "Allow anon read" on company_values;
+drop policy if exists "Allow anon update" on company_values;
+drop policy if exists "Allow anon insert" on company_values;
+create policy "Allow anon read" on company_values for select using (true);
+create policy "Allow anon update" on company_values for update using (true);
+create policy "Allow anon insert" on company_values for insert with check (true);
 
 -- Insert default values
 insert into company_values (id, sort_order, icon, title, description) values
