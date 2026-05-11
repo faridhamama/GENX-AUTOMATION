@@ -99,6 +99,22 @@ export class SupabaseService {
     return { error: error ? error.message : null };
   }
 
+  async swapServiceOrder(id1: string, id2: string): Promise<{ error: string | null }> {
+    const TEMP = 0; // outside normal sort range, always unique
+    const { error: e0 } = await this._client.from('services').update({ sort_order: TEMP, updated_at: new Date().toISOString() }).eq('id', id1);
+    if (e0) return { error: e0.message };
+    const { data: row2 } = await this._client.from('services').select('sort_order').eq('id', id2).maybeSingle();
+    const sort2 = (row2 as any)?.sort_order ?? 2;
+    const { error: e1 } = await this._client.from('services').update({ sort_order: TEMP, updated_at: new Date().toISOString() }).eq('id', id2);
+    if (e1) return { error: e1.message };
+    const { error: e2 } = await this._client.from('services').update({ sort_order: sort2, updated_at: new Date().toISOString() }).eq('id', id1);
+    if (e2) return { error: e2.message };
+    const { data: row1 } = await this._client.from('services').select('sort_order').eq('id', id1).maybeSingle();
+    const sort1 = (row1 as any)?.sort_order ?? 1;
+    const { error: e3 } = await this._client.from('services').update({ sort_order: sort1, updated_at: new Date().toISOString() }).eq('id', id2);
+    return { error: e3 ? e3.message : null };
+  }
+
   async getCompanyValues(): Promise<{ data: CompanyValue[]; error: string | null }> {
     const { data, error } = await this._client.from('company_values').select('*').order('sort_order', { ascending: true });
     return { data: (data as CompanyValue[]) ?? [], error: error ? error.message : null };

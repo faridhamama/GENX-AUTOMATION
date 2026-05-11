@@ -140,11 +140,15 @@ export class CompanyInfoService {
 
   async reorderServices(orderedIds: string[]): Promise<{ error: string | null }> {
     for (let i = 0; i < orderedIds.length; i++) {
-      const { error } = await this.supabase.updateServiceOrder(orderedIds[i], i + 1);
+      const { error } = await this.supabase.updateService(orderedIds[i], '', '');
       if (error) return { error };
     }
     await this.fetchServices();
     return { error: null };
+  }
+
+  async swapServiceOrder(id1: string, id2: string): Promise<{ error: string | null }> {
+    return this.supabase.swapServiceOrder(id1, id2);
   }
 
   // --- Company Values ---

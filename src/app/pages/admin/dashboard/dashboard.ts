@@ -148,11 +148,16 @@ export class Dashboard implements OnInit {
     const list = this.services();
     const index = list.findIndex(s => s.id === id);
     if (direction === 'up' && index > 0) {
-      const { error } = await this.companyInfo.reorderServices([list[index - 1].id, list[index].id]);
-      if (error) { this.toast.error('Erreur lors du réordonnancement'); return; }
+      const prev = list[index - 1];
+      const curr = list[index];
+      // Swap sort_orders: temporarily set prev to 0 to break the conflict chain
+      await this.companyInfo.swapServiceOrder(curr.id, prev.id);
+      await this.companyInfo.fetchServices();
     } else if (direction === 'down' && index < list.length - 1) {
-      const { error } = await this.companyInfo.reorderServices([list[index].id, list[index + 1].id]);
-      if (error) { this.toast.error('Erreur lors du réordonnancement'); return; }
+      const curr = list[index];
+      const next = list[index + 1];
+      await this.companyInfo.swapServiceOrder(curr.id, next.id);
+      await this.companyInfo.fetchServices();
     }
   }
 
