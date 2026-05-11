@@ -1,40 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CompanyInfoService } from '../../core/company-info.service';
 import { IMAGES } from '../../core/images.config';
-
-export interface ProjectSpec {
-  label: string;
-  value: string;
-}
-
-export interface SideProject {
-  sector: string;
-  title: string;
-  description: string;
-  keySpec: string;
-}
-
-export interface FeaturedProject {
-  sector: string;
-  title: string;
-  technology: string;
-  techLabel: string;
-  specs: ProjectSpec[];
-  image: string;
-  imageAlt: string;
-  result: string;
-}
-
-interface QualityPoint {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-interface PerformanceStat {
-  value: string;
-  label: string;
-}
 
 @Component({
   selector: 'app-references',
@@ -43,78 +10,35 @@ interface PerformanceStat {
   styleUrl: './references.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class References {
+export class References implements OnInit {
+  private readonly companyInfo = inject(CompanyInfoService);
+
   readonly images = IMAGES.references;
 
-  readonly featuredProject: FeaturedProject = {
-    sector: 'Traitement des Eaux',
-    title: 'STEP Marrakech — Station d\'Épuration',
-    technology: 'Schneider M580',
-    techLabel: 'Automatisation Complète',
-    specs: [
-      { label: 'Automate', value: 'Schneider Modicon M580 & M221' },
-      { label: 'Supervision', value: 'Topkapi Vision & Vijeo Designer' },
-      { label: 'Télégestion', value: 'Teltonika RUT956 / Modbus TCP/IP' },
-    ],
-    image: IMAGES.references.featuredProject,
-    imageAlt: 'PLC control panel with colorful glowing status lights in an industrial setting',
-    result:
-      "Automatisation complète de la station avec gestion d'alarmes en temps réel, tendances historiques et supervision distante. Temps de diagnostic réduit de 60%.",
-  };
+  readonly heroLabel = computed(() => this.companyInfo.referencesHero()?.label ?? 'Mes Réalisations');
+  readonly heroHeadline = computed(() => this.companyInfo.referencesHero()?.headline ?? 'Projets sur lesquels<br>j\'ai travaillé');
+  readonly heroBody = computed(() => this.companyInfo.referencesHero()?.body ?? "Chaque projet listé ici reflète mon expérience directe. Programmation, mise en service, instrumentation, formation — je suis intervenu de bout en bout ou sur des phases spécifiques, selon les besoins.");
 
-  readonly performanceStats: PerformanceStat[] = [
-    { value: '6+', label: 'Projets Référencés' },
-    { value: '100%', label: 'Engagement Qualité' },
-  ];
+  readonly featuredProject = computed(() => this.companyInfo.referencesFeaturedProject());
+  readonly featuredProjectSpecs = computed(() => {
+    const fp = this.featuredProject();
+    if (!fp) return [];
+    try { return JSON.parse(fp.specs_json) as { label: string; value: string }[]; } catch { return []; }
+  });
+  readonly featuredProjectImageUrl = computed(() => {
+    const fp = this.featuredProject();
+    if (!fp) return IMAGES.references.featuredProject;
+    return this.companyInfo.referencesImagesMap()[fp.image_key]?.url ?? IMAGES.references.featuredProject;
+  });
 
-  readonly sideProjects: SideProject[] = [
-    {
-      sector: 'Dessalement • Laâyoune',
-      title: 'Unité de Dessalement — Société Génération Maroc Technologie',
-      description:
-        "Mise à jour des programmes PLC M580 et M340, de la supervision Topkapi Vision et PcVue, instrumentation et calibration. Communication Modbus RTU.",
-      keySpec: 'M580 & M340 / Topkapi / PcVue / Modbus RTU',
-    },
-    {
-      sector: "Adduction • Zagora",
-      title: 'AEP Zagora — Adduction d\'Eau Potable',
-      description:
-        "Programmation M580, M340 et M221, supervision Topkapi Vision, mise en service complète, tests et formation à l'exploitation. Télégestion par Sofrel S500.",
-      keySpec: 'M580 & M340 & M221 / Topkapi Vision / Sofrel S500',
-    },
-    {
-      sector: 'Épuration • Bouznika',
-      title: 'STEP Bouznika — Station d\'Épuration',
-      description:
-        "Automatisation avec architecture Schneider M340. Analyse fonctionnelle complète du processus hydraulique.",
-      keySpec: 'M340 / Analyse fonctionnelle',
-    },
-    {
-      sector: 'Adduction • Province',
-      title: 'AEP Smir — Adduction d\'Eau Potable',
-      description:
-        "Système automatisé d'adduction d'eau potable. Configuration des automates, analyse fonctionnelle, intégration des instruments de mesure.",
-      keySpec: 'Configuration automate / Analyse fonctionnelle',
-    },
-    {
-      sector: 'Épuration • Béni Mellal',
-      title: 'STEP Béni Mellal — Station d\'Épuration',
-      description:
-        "Automatisation pour station d'épuration. Programmation PLC M580, analyse fonctionnelle, architecture d'automatisme.",
-      keySpec: 'M580 / Analyse fonctionnelle',
-    },
-  ];
+  readonly performanceStats = computed(() => this.companyInfo.referencesPerformanceStats());
+  readonly sideProjects = computed(() => this.companyInfo.referencesSideProjects());
+  readonly qualityPoints = computed(() => this.companyInfo.referencesQualityPoints());
+  readonly qualitySectionImageUrl = computed(() => {
+    return this.companyInfo.referencesImagesMap()['serverRoom']?.url ?? IMAGES.references.serverRoom;
+  });
 
-  readonly qualityPoints: QualityPoint[] = [
-    {
-      icon: 'engineering',
-      title: 'Pragmatique',
-      description: "Chaque ligne de code est là pour une raison. Pas de complexité gratuite.",
-    },
-    {
-      icon: 'description',
-      title: 'Documenté',
-      description: "Documentation à jour, schémas lisibles. Vos équipes peuvent prendre le relai.",
-    },
-  ];
+  ngOnInit(): void {
+    this.companyInfo.fetchReferencesContent();
+  }
 }

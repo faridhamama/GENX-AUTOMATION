@@ -63,6 +63,11 @@
           Contact
         </button>
 
+        <button (click)="setSection('references')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'references'" [class.text-primary]="activeSection() === 'references'" [class.text-on-surface]="activeSection() !== 'references'">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">workspace_premium</span>
+          Références
+        </button>
+
         <div class="mt-6 pt-4 border-t border-outline-variant/30">
           <button (click)="signOut()" class="w-full text-left px-3 py-2 rounded text-sm text-outline hover:text-on-surface transition-colors flex items-center gap-3 cursor-pointer">
             <span class="material-symbols-outlined text-lg" aria-hidden="true">logout</span>
@@ -84,6 +89,7 @@
               @case ('company') { Entreprise }
               @case ('home') { Page d'accueil }
               @case ('contact') { Contact }
+              @case ('references') { Références }
             }
           </h1>
         </div>
@@ -450,6 +456,118 @@
           } @else {
             <p class="text-on-surface-variant text-sm">Chargement...</p>
           }
+        </div>
+      }
+
+      <!-- References Section -->
+      @if (activeSection() === 'references') {
+        <div class="p-6 max-w-5xl mx-auto space-y-6">
+
+          <!-- Hero -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Hero</h2>
+            <div class="space-y-4">
+              <input [(ngModel)]="referencesHeroForm.label" placeholder="Label (ex: Mes Réalisations)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+              <input [(ngModel)]="referencesHeroForm.headline" placeholder="Titre principal" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+              <textarea [(ngModel)]="referencesHeroForm.body" placeholder="Texte d'introduction" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded"></textarea>
+              <button (click)="saveReferencesHero()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+            </div>
+          </div>
+
+          <!-- Featured Project -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Projet en vedette</h2>
+            @if (referencesFeaturedProject(); as fp) {
+              <div class="space-y-4">
+                <input [(ngModel)]="featuredProjectForm.sector" placeholder="Secteur" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="featuredProjectForm.title" placeholder="Titre du projet" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="featuredProjectForm.technology" placeholder="Technologie (ex: Schneider M580)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="featuredProjectForm.tech_label" placeholder="Label technologie" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="featuredProjectForm.specs_json" placeholder="Specs JSON" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="featuredProjectForm.image_key" placeholder="Clé image" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <input [(ngModel)]="featuredProjectForm.image_alt" placeholder="Texte alternatif image" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+                <textarea [(ngModel)]="featuredProjectForm.result" placeholder="Résultat" rows="2" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded"></textarea>
+                <button (click)="saveFeaturedProject()" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+              </div>
+            } @else {
+              <p class="text-sm text-on-surface-variant">Chargement...</p>
+            }
+          </div>
+
+          <!-- Performance Stats -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Statistiques de performance</h2>
+            <div class="space-y-3">
+              @for (stat of referencesPerformanceStats(); track stat.id) {
+                <div class="bg-surface-container-low border border-outline p-4 rounded flex gap-4 items-center">
+                  <input [(ngModel)]="stat.value" placeholder="Valeur" class="w-24 px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <input [(ngModel)]="stat.label" placeholder="Label" class="flex-1 px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <button (click)="savePerfStat(stat)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">OK</button>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Side Projects -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Projets secondaires</h2>
+            <div class="space-y-3">
+              @for (project of referencesSideProjects(); track project.id) {
+                <div class="bg-surface-container-low border border-outline p-4 rounded space-y-2">
+                  <input [(ngModel)]="project.sector" placeholder="Secteur" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <input [(ngModel)]="project.title" placeholder="Titre" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <textarea [(ngModel)]="project.description" placeholder="Description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
+                  <input [(ngModel)]="project.key_spec" placeholder="Technologies" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <button (click)="saveSideProject(project)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Enregistrer</button>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Quality Points -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Points qualité</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              @for (point of referencesQualityPoints(); track point.id) {
+                <div class="bg-surface-container-low border border-outline p-4 rounded space-y-2">
+                  <input [(ngModel)]="point.icon" placeholder="Icône" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <input [(ngModel)]="point.title" placeholder="Titre" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                  <textarea [(ngModel)]="point.description" placeholder="Description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
+                  <button (click)="saveQualityPoint(point)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Enregistrer</button>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Images -->
+          <div class="bg-surface border border-outline rounded p-6">
+            <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Images</h2>
+            <div class="space-y-3">
+              @for (img of referencesImages(); track img.image_key) {
+                <div class="bg-surface-container-low border border-outline p-4 rounded">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="font-label text-xs uppercase tracking-widest text-outline">{{ img.image_key }}</span>
+                    <button (click)="startEditRefImage(img.image_key)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Modifier</button>
+                  </div>
+                  @if (editingRefImageKey() === img.image_key) {
+                    <div class="space-y-2 mt-2">
+                      <input [(ngModel)]="refImageForm.url" placeholder="URL" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                      <input [(ngModel)]="refImageForm.alt_text" placeholder="Texte alternatif" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+                      <div class="flex gap-2">
+                        <button (click)="saveRefImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">OK</button>
+                        <button (click)="cancelEditRefImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
+                      </div>
+                    </div>
+                  } @else {
+                    @if (img.url) {
+                      <img [src]="img.url" [alt]="img.alt_text" class="h-20 object-cover rounded mt-2" />
+                    }
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
         </div>
       }
 

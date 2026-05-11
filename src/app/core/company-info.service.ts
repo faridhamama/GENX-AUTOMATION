@@ -1,5 +1,13 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { SupabaseService } from './supabase.service';
+import type {
+  ReferencesHeroRow,
+  ReferencesFeaturedProjectRow,
+  ReferencesPerformanceStatRow,
+  ReferencesSideProjectRow,
+  ReferencesQualityPointRow,
+  ReferencesImageRow,
+} from './supabase.service';
 
 export interface CompanyInfo {
   id: number;
@@ -232,6 +240,108 @@ export class CompanyInfoService {
     if (!error) {
       await this.fetchHomepageImages();
     }
+    return { error };
+  }
+
+  // --- References ---
+  readonly referencesHero = signal<ReferencesHeroRow | null>(null);
+  readonly referencesFeaturedProject = signal<ReferencesFeaturedProjectRow | null>(null);
+  readonly referencesPerformanceStats = signal<ReferencesPerformanceStatRow[]>([]);
+  readonly referencesSideProjects = signal<ReferencesSideProjectRow[]>([]);
+  readonly referencesQualityPoints = signal<ReferencesQualityPointRow[]>([]);
+  readonly referencesImages = signal<ReferencesImageRow[]>([]);
+  readonly referencesLoading = signal(false);
+
+  readonly referencesImagesMap = computed(() => {
+    const map: Record<string, { url: string; alt_text: string }> = {};
+    for (const img of this.referencesImages()) {
+      map[img.image_key] = { url: img.url, alt_text: img.alt_text };
+    }
+    return map;
+  });
+
+  async fetchReferencesContent(): Promise<void> {
+    this.referencesLoading.set(true);
+    await Promise.all([
+      this.fetchReferencesHero(),
+      this.fetchReferencesFeaturedProject(),
+      this.fetchReferencesPerformanceStats(),
+      this.fetchReferencesSideProjects(),
+      this.fetchReferencesQualityPoints(),
+      this.fetchReferencesImages(),
+    ]);
+    this.referencesLoading.set(false);
+  }
+
+  private async fetchReferencesHero(): Promise<void> {
+    const { data, error } = await this.supabase.getReferencesHero();
+    if (!error && data) this.referencesHero.set(data);
+  }
+
+  async updateReferencesHero(hero: ReferencesHeroRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertReferencesHero(hero);
+    if (!error) await this.fetchReferencesHero();
+    return { error };
+  }
+
+  private async fetchReferencesFeaturedProject(): Promise<void> {
+    const { data, error } = await this.supabase.getReferencesFeaturedProject();
+    if (!error && data) this.referencesFeaturedProject.set(data);
+  }
+
+  async updateReferencesFeaturedProject(project: ReferencesFeaturedProjectRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertReferencesFeaturedProject(project);
+    if (!error) await this.fetchReferencesFeaturedProject();
+    return { error };
+  }
+
+  private async fetchReferencesPerformanceStats(): Promise<void> {
+    const { data, error } = await this.supabase.getReferencesPerformanceStats();
+    if (!error && data) this.referencesPerformanceStats.set(data as ReferencesPerformanceStatRow[]);
+  }
+
+  async updateReferencesPerformanceStat(stat: Partial<ReferencesPerformanceStatRow> & { id: string }): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertReferencesPerformanceStat(stat);
+    if (!error) await this.fetchReferencesPerformanceStats();
+    return { error };
+  }
+
+  private async fetchReferencesSideProjects(): Promise<void> {
+    const { data, error } = await this.supabase.getReferencesSideProjects();
+    if (!error && data) this.referencesSideProjects.set(data as ReferencesSideProjectRow[]);
+  }
+
+  async updateReferencesSideProject(id: string, project: Partial<ReferencesSideProjectRow>): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertReferencesSideProject(id, project);
+    if (!error) await this.fetchReferencesSideProjects();
+    return { error };
+  }
+
+  async deleteReferencesSideProject(id: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.deleteReferencesSideProject(id);
+    if (!error) await this.fetchReferencesSideProjects();
+    return { error };
+  }
+
+  private async fetchReferencesQualityPoints(): Promise<void> {
+    const { data, error } = await this.supabase.getReferencesQualityPoints();
+    if (!error && data) this.referencesQualityPoints.set(data as ReferencesQualityPointRow[]);
+  }
+
+  async updateReferencesQualityPoint(id: string, point: Partial<ReferencesQualityPointRow>): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertReferencesQualityPoint(id, point);
+    if (!error) await this.fetchReferencesQualityPoints();
+    return { error };
+  }
+
+  private async fetchReferencesImages(): Promise<void> {
+    const { data, error } = await this.supabase.getReferencesImages();
+    if (!error && data) this.referencesImages.set(data as ReferencesImageRow[]);
+  }
+
+  async upsertReferencesImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertReferencesImage(key, url, alt);
+    if (!error) await this.fetchReferencesImages();
     return { error };
   }
 }

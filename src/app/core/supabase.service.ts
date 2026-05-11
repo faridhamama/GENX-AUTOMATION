@@ -18,6 +18,91 @@ export interface QuoteRequestRow extends QuoteRequest {
   created_at: string;
 }
 
+export interface ReferencesImageRow {
+  image_key: string;
+  url: string;
+  alt_text: string;
+  updated_at: string;
+}
+
+export interface ReferencesHeroRow {
+  id: number;
+  label: string;
+  headline: string;
+  body: string;
+  updated_at: string;
+}
+
+export interface ReferencesFeaturedProjectRow {
+  id: number;
+  sector: string;
+  title: string;
+  technology: string;
+  tech_label: string;
+  specs_json: string;
+  image_key: string;
+  image_alt: string;
+  result: string;
+  updated_at: string;
+}
+
+export interface ReferencesPerformanceStatRow {
+  id: string;
+  sort_order: number;
+  value: string;
+  label: string;
+  updated_at: string;
+}
+
+export interface ReferencesSideProjectRow {
+  id: string;
+  sort_order: number;
+  sector: string;
+  title: string;
+  description: string;
+  key_spec: string;
+  updated_at: string;
+}
+
+export interface ReferencesQualityPointRow {
+  id: string;
+  sort_order: number;
+  icon: string;
+  title: string;
+  description: string;
+  updated_at: string;
+}
+
+export interface HomepageHeroStatsRow {
+  id: number;
+  stat1_label: string;
+  stat1_value: string;
+  stat1_sub: string;
+  stat1_accent_class: string;
+  stat2_label: string;
+  stat2_value: string;
+  stat2_sub: string;
+  stat2_accent_class: string;
+  updated_at: string;
+}
+
+export interface HomepageExpertiseCardRow {
+  id: string;
+  sort_order: number;
+  icon: string;
+  title: string;
+  description: string;
+  tags: string[];
+  updated_at: string;
+}
+
+export interface HomepageImageRow {
+  image_key: string;
+  url: string;
+  alt_text: string;
+  updated_at: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private readonly _client: SupabaseClient = createClient(
@@ -160,8 +245,70 @@ export class SupabaseService {
     const { error } = await this._client.from('homepage_expertise_cards').delete().eq('id', id);
     return { error: error ? error.message : null };
   }
-}
 
-interface HomepageHeroStatsRow { id: number; stat1_label: string; stat1_value: string; stat1_sub: string; stat1_accent_class: string; stat2_label: string; stat2_value: string; stat2_sub: string; stat2_accent_class: string; updated_at: string }
-interface HomepageExpertiseCardRow { id: string; sort_order: number; icon: string; title: string; description: string; tags: string[]; updated_at: string }
-interface HomepageImageRow { image_key: string; url: string; alt_text: string; updated_at: string }
+  // --- References ---
+  async getReferencesHero(): Promise<{ data: ReferencesHeroRow | null; error: string | null }> {
+    const { data, error } = await this._client.from('references_hero').select('*').eq('id', 1).maybeSingle();
+    return { data: data as ReferencesHeroRow ?? null, error: error ? error.message : null };
+  }
+
+  async upsertReferencesHero(hero: ReferencesHeroRow): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('references_hero').upsert({ ...hero, id: 1, updated_at: new Date().toISOString() }).eq('id', 1);
+    return { error: error ? error.message : null };
+  }
+
+  async getReferencesFeaturedProject(): Promise<{ data: ReferencesFeaturedProjectRow | null; error: string | null }> {
+    const { data, error } = await this._client.from('references_featured_project').select('*').eq('id', 1).maybeSingle();
+    return { data: data as ReferencesFeaturedProjectRow ?? null, error: error ? error.message : null };
+  }
+
+  async upsertReferencesFeaturedProject(project: ReferencesFeaturedProjectRow): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('references_featured_project').upsert({ ...project, id: 1, updated_at: new Date().toISOString() }).eq('id', 1);
+    return { error: error ? error.message : null };
+  }
+
+  async getReferencesPerformanceStats(): Promise<{ data: ReferencesPerformanceStatRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('references_performance_stats').select('*').order('sort_order', { ascending: true });
+    return { data: (data as ReferencesPerformanceStatRow[]) ?? [], error: error ? error.message : null };
+  }
+
+  async upsertReferencesPerformanceStat(stat: Partial<ReferencesPerformanceStatRow> & { id: string }): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('references_performance_stats').update({ ...stat, updated_at: new Date().toISOString() }).eq('id', stat.id);
+    return { error: error ? error.message : null };
+  }
+
+  async getReferencesSideProjects(): Promise<{ data: ReferencesSideProjectRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('references_side_projects').select('*').order('sort_order', { ascending: true });
+    return { data: (data as ReferencesSideProjectRow[]) ?? [], error: error ? error.message : null };
+  }
+
+  async upsertReferencesSideProject(id: string, project: Partial<ReferencesSideProjectRow>): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('references_side_projects').update({ ...project, updated_at: new Date().toISOString() }).eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async deleteReferencesSideProject(id: string): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('references_side_projects').delete().eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async getReferencesQualityPoints(): Promise<{ data: ReferencesQualityPointRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('references_quality_points').select('*').order('sort_order', { ascending: true });
+    return { data: (data as ReferencesQualityPointRow[]) ?? [], error: error ? error.message : null };
+  }
+
+  async upsertReferencesQualityPoint(id: string, point: Partial<ReferencesQualityPointRow>): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('references_quality_points').update({ ...point, updated_at: new Date().toISOString() }).eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async getReferencesImages(): Promise<{ data: ReferencesImageRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('references_images').select('*');
+    return { data: (data as ReferencesImageRow[]) ?? [], error: error ? error.message : null };
+  }
+
+  async upsertReferencesImage(imageKey: string, url: string, altText: string): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('references_images').upsert({ image_key: imageKey, url, alt_text: altText, updated_at: new Date().toISOString() });
+    return { error: error ? error.message : null };
+  }
+}

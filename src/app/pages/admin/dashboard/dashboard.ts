@@ -9,7 +9,7 @@ import { CompanyInfoService } from '../../../core/company-info.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { QuoteRequestRow } from '../../../core/supabase.service';
 
-type AdminSection = 'emails' | 'company' | 'home' | 'contact';
+type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,6 +36,12 @@ export class Dashboard implements OnInit {
   readonly homepageImages = this.companyInfo.homepageImages;
   readonly homepageHeroStats = this.companyInfo.homepageHeroStats;
   readonly homepageExpertiseCards = this.companyInfo.homepageExpertiseCards;
+  readonly referencesHero = this.companyInfo.referencesHero;
+  readonly referencesFeaturedProject = this.companyInfo.referencesFeaturedProject;
+  readonly referencesPerformanceStats = this.companyInfo.referencesPerformanceStats;
+  readonly referencesSideProjects = this.companyInfo.referencesSideProjects;
+  readonly referencesQualityPoints = this.companyInfo.referencesQualityPoints;
+  readonly referencesImages = this.companyInfo.referencesImages;
 
   readonly activeSection = signal<AdminSection>('emails');
   readonly searchQuery = signal('');
@@ -68,8 +74,12 @@ export class Dashboard implements OnInit {
   imageForm = { key: '', url: '', alt_text: '' };
   readonly showAddCard = signal(false);
   readonly editingCardId = signal<string | null>(null);
+  readonly editingRefImageKey = signal<string | null>(null);
+  refImageForm = { key: '', url: '', alt_text: '' };
 
-  // Login
+  // References forms
+  referencesHeroForm = { label: '', headline: '', body: '' };
+  featuredProjectForm = { sector: '', title: '', technology: '', tech_label: '', specs_json: '', image_key: '', image_alt: '', result: '' };
   loginEmail = '';
   loginPassword = '';
 
@@ -80,6 +90,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchServices();
       this.companyInfo.fetchCompanyValues();
       this.companyInfo.fetchHomepageContent();
+      this.companyInfo.fetchReferencesContent();
     }
   }
 
@@ -107,6 +118,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchServices();
       this.companyInfo.fetchCompanyValues();
       this.companyInfo.fetchHomepageContent();
+      this.companyInfo.fetchReferencesContent();
     }
   }
 
@@ -221,6 +233,56 @@ export class Dashboard implements OnInit {
     if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
     this.toast.success('Image mise à jour');
     this.cancelEditImage();
+  }
+
+  // CMS: References Hero
+  async saveReferencesHero(): Promise<void> {
+    const hero = this.referencesHero();
+    if (!hero) return;
+    const { error } = await this.companyInfo.updateReferencesHero({ ...hero, ...this.referencesHeroForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Hero mis à jour');
+  }
+
+  // CMS: Featured Project
+  async saveFeaturedProject(): Promise<void> {
+    const fp = this.referencesFeaturedProject();
+    if (!fp) return;
+    const { error } = await this.companyInfo.updateReferencesFeaturedProject({ ...fp, ...this.featuredProjectForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Projet mis à jour');
+  }
+
+  async savePerfStat(stat: any): Promise<void> {
+    const { error } = await this.companyInfo.updateReferencesPerformanceStat({ id: stat.id, value: stat.value, label: stat.label });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Statistique mise à jour');
+  }
+
+  async saveSideProject(project: any): Promise<void> {
+    const { error } = await this.companyInfo.updateReferencesSideProject(project.id, { sector: project.sector, title: project.title, description: project.description, key_spec: project.key_spec });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Projet mis à jour');
+  }
+
+  async saveQualityPoint(point: any): Promise<void> {
+    const { error } = await this.companyInfo.updateReferencesQualityPoint(point.id, { icon: point.icon, title: point.title, description: point.description });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Point qualité mis à jour');
+  }
+
+  async startEditRefImage(key: string): Promise<void> {
+    const img = this.referencesImages().find(i => i.image_key === key);
+    this.refImageForm = img ? { key: img.image_key, url: img.url, alt_text: img.alt_text } : { key, url: '', alt_text: '' };
+    this.editingRefImageKey.set(key);
+  }
+  cancelEditRefImage(): void { this.editingRefImageKey.set(null); this.refImageForm = { key: '', url: '', alt_text: '' }; }
+  async saveRefImage(): Promise<void> {
+    if (!this.refImageForm.url.trim()) { this.toast.error('L\'URL est requise'); return; }
+    const { error } = await this.companyInfo.upsertReferencesImage(this.refImageForm.key, this.refImageForm.url, this.refImageForm.alt_text);
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Image mise à jour');
+    this.cancelEditRefImage();
   }
 
   readonly availableIcons = ['engineering', 'handshake', 'workspace_premium', 'precision_manufacturing', 'monitoring', 'support_agent', 'verified', 'security'];

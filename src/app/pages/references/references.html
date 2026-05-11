@@ -2,15 +2,11 @@
   <!-- Hero Section -->
   <section class="px-4 sm:px-8 md:px-16 mb-12 md:mb-20 pt-8 md:pt-8">
     <div class="max-w-4xl">
-      <p class="font-label text-tertiary font-bold tracking-[0.2em] mb-4 text-sm uppercase">Mes Réalisations</p>
-      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6 md:mb-8">
-        Projets sur lesquels<br>j'ai travaillé
-      </h1>
+      <p class="font-label text-tertiary font-bold tracking-[0.2em] mb-4 text-sm uppercase">{{ heroLabel() }}</p>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6 md:mb-8" [innerHTML]="heroHeadline()"></h1>
       <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
         <div class="w-1 bg-tertiary-container h-16 sm:h-24 shrink-0"></div>
-        <p class="text-on-surface-variant text-base sm:text-lg max-w-2xl font-light leading-relaxed">
-          Chaque projet listé ici reflète mon expérience directe. Programmation, mise en service, instrumentation, formation — je suis intervenu de bout en bout ou sur des phases spécifiques, selon les besoins.
-        </p>
+        <p class="text-on-surface-variant text-base sm:text-lg max-w-2xl font-light leading-relaxed">{{ heroBody() }}</p>
       </div>
     </div>
   </section>
@@ -23,18 +19,18 @@
       <div class="flex flex-col sm:flex-row justify-between items-start mb-10 md:mb-16 gap-4 md:gap-8">
         <div>
           <span class="font-label text-xs tracking-widest text-outline mb-2 block uppercase">
-            {{ featuredProject.sector }}
+            {{ featuredProject()?.sector }}
           </span>
-          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-3 md:mb-4">{{ featuredProject.title }}</h2>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-3 md:mb-4">{{ featuredProject()?.title }}</h2>
         </div>
         <div class="flex flex-col sm:items-end shrink-0">
-          <span class="font-label text-tertiary font-bold text-xl md:text-2xl">{{ featuredProject.technology }}</span>
-          <span class="text-xs text-outline uppercase tracking-tighter">{{ featuredProject.techLabel }}</span>
+          <span class="font-label text-tertiary font-bold text-xl md:text-2xl">{{ featuredProject()?.technology }}</span>
+          <span class="text-xs text-outline uppercase tracking-tighter">{{ featuredProject()?.tech_label }}</span>
         </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 mb-10 md:mb-16">
-        @for (spec of featuredProject.specs; track spec.label) {
+        @for (spec of featuredProjectSpecs(); track spec.label) {
           <div class="border-l-2 border-outline-variant/30 pl-4 md:pl-6">
             <p class="font-label text-xs text-on-surface-variant uppercase mb-1 md:mb-2 leading-tight">{{ spec.label }}</p>
             <p class="font-medium text-sm md:text-base leading-tight">{{ spec.value }}</p>
@@ -45,14 +41,14 @@
       <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center">
         <div class="w-full md:w-2/3 aspect-video relative overflow-hidden bg-slate-200">
           <img
-            [src]="featuredProject.image"
-            [alt]="featuredProject.imageAlt"
+            [src]="featuredProjectImageUrl()"
+            [alt]="featuredProject()?.image_alt"
             class="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-500"
           >
         </div>
         <div class="flex-1">
           <h4 class="font-bold uppercase text-sm mb-2 tracking-widest leading-tight">Résultat</h4>
-          <p class="text-on-surface-variant text-sm leading-relaxed mb-4 md:mb-6">{{ featuredProject.result }}</p>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-4 md:mb-6">{{ featuredProject()?.result }}</p>
           <a routerLink="/contact"
              aria-label="Discuter de votre projet avec GENX Automation"
              class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all cursor-pointer">
@@ -73,7 +69,7 @@
         </p>
       </div>
       <div class="space-y-6 md:space-y-8">
-        @for (stat of performanceStats; track stat.label) {
+        @for (stat of performanceStats(); track stat.label) {
           <div class="flex justify-between items-end border-b border-white/20 pb-4">
             <span class="font-label text-xs md:text-sm uppercase tracking-widest opacity-60 leading-tight">{{ stat.label }}</span>
             <span class="text-3xl md:text-4xl font-bold leading-none">{{ stat.value }}</span>
@@ -83,14 +79,14 @@
     </div>
 
     <!-- Side Project Cards -->
-    @for (project of sideProjects; track project.title) {
+    @for (project of sideProjects(); track project.title) {
       <div class="lg:col-span-4 bg-surface-container-highest p-6 sm:p-8 flex flex-col hover:bg-surface-container transition-colors duration-200">
         <span class="font-label text-[10px] tracking-widest text-outline mb-3 md:mb-4 uppercase">{{ project.sector }}</span>
         <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 leading-tight">{{ project.title }}</h3>
         <p class="text-on-surface-variant text-sm mb-6 md:mb-8 flex-grow leading-relaxed">{{ project.description }}</p>
         <div class="bg-surface p-4 border-l-4 border-tertiary">
           <p class="text-[10px] font-bold uppercase tracking-tighter text-outline mb-1"> Technologies</p>
-          <p class="font-label text-xs leading-tight">{{ project.keySpec }}</p>
+          <p class="font-label text-xs leading-tight">{{ project.key_spec }}</p>
         </div>
       </div>
     }
@@ -104,7 +100,7 @@
           Pourquoi travailler avec moi ?
         </h2>
         <div class="space-y-5 md:space-y-6">
-          @for (point of qualityPoints; track point.title) {
+          @for (point of qualityPoints(); track point.title) {
             <div class="flex gap-4">
               <span class="material-symbols-outlined text-tertiary shrink-0" aria-hidden="true">check_circle</span>
               <div>
@@ -120,7 +116,7 @@
         <img
           alt="Futuristic server room representing high-end technical automation infrastructure"
           class="w-full h-64 sm:h-80 object-cover grayscale brightness-75"
-          [src]="images.serverRoom"
+          [src]="qualitySectionImageUrl()"
         >
         <div class="absolute -bottom-0 md:-bottom-8 left-0 md:-left-8 bg-tertiary-container p-5 sm:p-8 text-on-tertiary-container">
           <p class="font-label font-black text-2xl sm:text-4xl italic leading-tight">PASSIONNÉ</p>
