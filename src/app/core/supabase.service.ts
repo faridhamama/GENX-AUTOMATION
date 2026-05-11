@@ -65,8 +65,8 @@ export class SupabaseService {
   }
 
   async getCompanyInfo(): Promise<{ data: CompanyInfo | null; error: string | null }> {
-    const { data, error } = await this._client.from('company_info').select('*').eq('id', 1).single();
-    return { data: data as CompanyInfo, error: error ? error.message : null };
+    const { data, error } = await this._client.from('company_info').select('*').eq('id', 1).maybeSingle();
+    return { data, error: error ? error.message : null };
   }
 
   async updateCompanyInfo(info: Partial<CompanyInfo>): Promise<{ error: string | null }> {
