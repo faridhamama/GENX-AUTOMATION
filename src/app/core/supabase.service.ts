@@ -108,4 +108,44 @@ export class SupabaseService {
     const { error } = await this._client.from('company_values').update({ ...data, updated_at: new Date().toISOString() }).eq('id', id);
     return { error: error ? error.message : null };
   }
+
+  // --- Homepage ---
+  async getHomepageHeroStats(): Promise<{ data: HomepageHeroStatsRow | null; error: string | null }> {
+    const { data, error } = await this._client.from('homepage_hero_stats').select('*').eq('id', 1).maybeSingle();
+    return { data: data as HomepageHeroStatsRow ?? null, error: error ? error.message : null };
+  }
+
+  async upsertHomepageHeroStats(stats: HomepageHeroStatsRow): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('homepage_hero_stats').upsert({ ...stats, id: 1, updated_at: new Date().toISOString() }).eq('id', 1);
+    return { error: error ? error.message : null };
+  }
+
+  async getHomepageExpertiseCards(): Promise<{ data: HomepageExpertiseCardRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('homepage_expertise_cards').select('*').order('sort_order', { ascending: true });
+    return { data: (data as HomepageExpertiseCardRow[]) ?? [], error: error ? error.message : null };
+  }
+
+  async upsertHomepageExpertiseCard(id: string, card: Partial<HomepageExpertiseCardRow>): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('homepage_expertise_cards').update({ ...card, updated_at: new Date().toISOString() }).eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async getHomepageImages(): Promise<{ data: HomepageImageRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('homepage_images').select('*');
+    return { data: (data as HomepageImageRow[]) ?? [], error: error ? error.message : null };
+  }
+
+  async upsertHomepageImage(imageKey: string, url: string, altText: string): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('homepage_images').upsert({ image_key: imageKey, url, alt_text: altText, updated_at: new Date().toISOString() });
+    return { error: error ? error.message : null };
+  }
+
+  async deleteHomepageExpertiseCard(id: string): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('homepage_expertise_cards').delete().eq('id', id);
+    return { error: error ? error.message : null };
+  }
 }
+
+interface HomepageHeroStatsRow { id: number; stat1_label: string; stat1_value: string; stat1_sub: string; stat1_accent_class: string; stat2_label: string; stat2_value: string; stat2_sub: string; stat2_accent_class: string; updated_at: string }
+interface HomepageExpertiseCardRow { id: string; sort_order: number; icon: string; title: string; description: string; tags: string[]; updated_at: string }
+interface HomepageImageRow { image_key: string; url: string; alt_text: string; updated_at: string }

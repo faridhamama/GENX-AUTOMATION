@@ -17,6 +17,7 @@ export interface CompanyConfig {
   address: CompanyAddress;
   hours: BusinessHours[];
   founded: number;
+  domain: string;
 }
 
 export const COMPANY: CompanyConfig = {
@@ -35,4 +36,5 @@ export const COMPANY: CompanyConfig = {
     { label: 'Samedi', time: '09:00 - 12:30' },
   ],
   founded: 2025,
+  domain: 'genxautomation.com',
 };

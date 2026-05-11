@@ -33,6 +33,14 @@ export const routes: Routes = [
         path: 'company',
         loadComponent: () => import('./pages/admin/company/company').then((m) => m.CompanyAdmin),
       },
+      {
+        path: 'home',
+        loadComponent: () => import('./pages/admin/home/home-admin').then((m) => m.AdminHome),
+      },
+      {
+        path: 'contact',
+        loadComponent: () => import('./pages/admin/contact/contact-admin').then((m) => m.AdminContact),
+      },
     ],
   },
   {

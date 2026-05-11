@@ -1,4 +1,4 @@
-<main class="pt-20 md:pt-24 pb-12 md:pb-24">
+<main id="main-content" class="pt-20 md:pt-24 pb-12 md:pb-24">
   <!-- Hero Section -->
   <section class="px-4 sm:px-8 md:px-16 mb-12 md:mb-20 pt-8 md:pt-8">
     <div class="max-w-4xl">
@@ -54,9 +54,10 @@
           <h4 class="font-bold uppercase text-sm mb-2 tracking-widest leading-tight">Résultat</h4>
           <p class="text-on-surface-variant text-sm leading-relaxed mb-4 md:mb-6">{{ featuredProject.result }}</p>
           <a routerLink="/contact"
-             class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all">
+             aria-label="Discuter de votre projet avec GENX Automation"
+             class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary hover:gap-4 transition-all cursor-pointer">
             Discuter de votre projet
-            <span class="material-symbols-outlined text-base">arrow_forward</span>
+            <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>
           </a>
         </div>
       </div>
@@ -65,7 +66,7 @@
     <!-- Performance Stats Panel -->
     <div class="lg:col-span-4 bg-primary p-6 sm:p-10 md:p-12 text-on-primary flex flex-col justify-center">
       <div class="mb-8 md:mb-12">
-        <span class="material-symbols-outlined text-4xl md:text-5xl mb-4 md:mb-6 block">workspace_premium</span>
+        <span class="material-symbols-outlined text-4xl md:text-5xl mb-4 md:mb-6 block" aria-hidden="true">workspace_premium</span>
         <h3 class="text-2xl md:text-3xl font-bold leading-tight mb-3 md:mb-4">Expérience terrain</h3>
         <p class="text-primary-fixed-dim/80 font-light leading-relaxed text-sm md:text-base">
           Des années à travailler directement sur les processus industriels. Pas du théorique — du concret.
@@ -105,7 +106,7 @@
         <div class="space-y-5 md:space-y-6">
           @for (point of qualityPoints; track point.title) {
             <div class="flex gap-4">
-              <span class="material-symbols-outlined text-tertiary shrink-0">check_circle</span>
+              <span class="material-symbols-outlined text-tertiary shrink-0" aria-hidden="true">check_circle</span>
               <div>
                 <p class="font-bold text-sm uppercase tracking-wide mb-1 leading-tight">{{ point.title }}</p>
                 <p class="text-sm text-on-surface-variant leading-relaxed">{{ point.description }}</p>
@@ -134,10 +135,12 @@
     <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 leading-tight">Besoin d'un interlocuteur fiable ?</h3>
     <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
       <a routerLink="/contact"
+         aria-label="Contacter GENX Automation"
          class="bg-primary text-on-primary px-8 sm:px-10 py-4 font-label font-bold uppercase tracking-widest hover:bg-slate-800 transition-all">
         Me contacter
       </a>
       <a routerLink="/services"
+         aria-label="Voir les services GENX Automation"
          class="border border-outline text-on-surface px-8 sm:px-10 py-4 font-label font-bold uppercase tracking-widest hover:bg-surface-container-high transition-all">
         Voir mes services
       </a>

@@ -1,11 +1,11 @@
-<main class="pt-20 md:pt-24">
+<main id="main-content" class="pt-20 md:pt-24">
   <!-- Hero Section -->
   <section class="relative min-h-screen md:min-h-[870px] flex items-center px-4 sm:px-8 md:px-20 overflow-hidden bg-surface-container-low">
     <div class="absolute inset-0 z-0 opacity-10">
       <img
         alt="Technical blueprint overlay"
         class="w-full h-full object-cover"
-        [src]="images.heroBg"
+        [src]="images().heroBg"
       >
     </div>
 
@@ -13,7 +13,7 @@
       <!-- Hero Copy -->
       <div class="space-y-6 md:space-y-8">
         <div class="inline-flex items-center gap-3 px-3 py-1 bg-tertiary-container text-on-tertiary-container text-xs font-bold tracking-[0.2em] uppercase">
-          <span class="w-2 h-2 bg-primary rounded-full"></span>
+          <span class="w-2 h-2 bg-primary rounded-full" aria-hidden="true"></span>
           Casablanca, Maroc — Intervention nationale
         </div>
 
@@ -29,10 +29,12 @@
 
         <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <a routerLink="/contact"
+             aria-label="Discuter de votre projet avec GENX Automation"
              class="bg-primary text-on-primary px-6 sm:px-8 py-3 sm:py-4 font-bold uppercase tracking-widest text-sm border-b-2 border-primary-fixed hover:bg-on-primary-fixed-variant transition-colors text-center">
             Parlons de votre projet
           </a>
           <a routerLink="/references"
+             aria-label="Voir les references GENX Automation"
              class="border border-outline px-6 sm:px-8 py-3 sm:py-4 font-bold uppercase tracking-widest text-sm hover:bg-surface-container-high transition-colors text-center">
             Mes références
           </a>
@@ -41,7 +43,7 @@
 
       <!-- Stats Grid -->
       <div class="grid grid-cols-2 gap-3 md:gap-4">
-        @for (stat of heroStats; track stat.label) {
+        @for (stat of heroStats(); track stat.label) {
           <div class="bg-surface-container-lowest p-5 md:p-8 relative">
             <div class="absolute left-0 top-0 bottom-0 w-1 {{ stat.accentClass }}"></div>
             <div class="text-xs font-label uppercase tracking-widest text-on-surface-variant mb-3 md:mb-4">{{ stat.label }}</div>
@@ -54,7 +56,7 @@
           <img
             alt="High-tech industrial circuit board"
             class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-            [src]="images.circuitBoard"
+            [src]="images().circuitBoard"
           >
           <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-on-surface/80 to-transparent">
             <div class="text-white text-xs sm:text-sm font-bold uppercase tracking-widest">Matériel de Précision</div>
@@ -81,10 +83,10 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
 
-      @for (card of expertiseCards; track card.title) {
+      @for (card of expertiseCards(); track card.title) {
         <div class="bg-surface-container-low p-8 md:p-10 hover:bg-surface-container transition-colors duration-200 group">
           <div class="flex items-start gap-5 mb-6">
-            <span class="material-symbols-outlined text-primary text-4xl shrink-0 mt-1">{{ card.icon }}</span>
+            <span class="material-symbols-outlined text-primary text-4xl shrink-0 mt-1" aria-hidden="true">{{ card.icon }}</span>
             <div>
               <h3 class="text-xl sm:text-2xl font-bold text-on-surface mb-4 leading-tight">{{ card.title }}</h3>
               <p class="text-on-surface-variant text-sm leading-relaxed mb-6">{{ card.description }}</p>
@@ -113,6 +115,7 @@
         </p>
       </div>
       <a routerLink="/contact"
+         aria-label="Contacter GENX Automation"
          class="shrink-0 bg-on-primary-fixed text-white px-8 sm:px-10 py-4 sm:py-5 font-bold uppercase tracking-widest text-sm active:scale-95 transition-all text-center w-full sm:w-auto">
         Me contacter
       </a>

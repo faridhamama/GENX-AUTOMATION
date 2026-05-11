@@ -1,0 +1,173 @@
+<div class="mb-6">
+  <h1 class="text-2xl font-headline font-bold text-on-surface mb-1">Page d'accueil</h1>
+  <p class="text-sm text-on-surface-variant">Gérer le contenu de la page d'accueil</p>
+</div>
+
+<!-- Tabs -->
+<div class="flex gap-1 border-b border-outline mb-6">
+  @if (activeTab() === 'stats') {
+    <button class="px-4 py-2 font-label text-sm uppercase tracking-widest text-primary border-b-2 border-primary">Statistiques</button>
+  } @else {
+    <button (click)="setTab('stats')" class="px-4 py-2 font-label text-sm uppercase tracking-widest text-outline hover:text-primary transition-colors">Statistiques</button>
+  }
+  @if (activeTab() === 'expertise') {
+    <button class="px-4 py-2 font-label text-sm uppercase tracking-widest text-primary border-b-2 border-primary">Expertises</button>
+  } @else {
+    <button (click)="setTab('expertise')" class="px-4 py-2 font-label text-sm uppercase tracking-widest text-outline hover:text-primary transition-colors">Expertises</button>
+  }
+  @if (activeTab() === 'images') {
+    <button class="px-4 py-2 font-label text-sm uppercase tracking-widest text-primary border-b-2 border-primary">Images</button>
+  } @else {
+    <button (click)="setTab('images')" class="px-4 py-2 font-label text-sm uppercase tracking-widest text-outline hover:text-primary transition-colors">Images</button>
+  }
+</div>
+
+<!-- Stats Tab -->
+@if (activeTab() === 'stats') {
+  <div class="bg-surface border border-outline rounded p-6 mb-6">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Statistiques du Hero</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-outline uppercase">Statistique 1</h3>
+        <input [(ngModel)]="heroStatsForm.stat1_label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat1_value" placeholder="Valeur" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat1_sub" placeholder="Sous-titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <select [(ngModel)]="heroStatsForm.stat1_accent_class" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded">
+          <option value="bg-tertiary">Tertiary</option>
+          <option value="bg-tertiary-container">Tertiary Container</option>
+          <option value="bg-primary">Primary</option>
+          <option value="bg-primary-container">Primary Container</option>
+        </select>
+      </div>
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-outline uppercase">Statistique 2</h3>
+        <input [(ngModel)]="heroStatsForm.stat2_label" placeholder="Label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat2_value" placeholder="Valeur" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat2_sub" placeholder="Sous-titre" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <select [(ngModel)]="heroStatsForm.stat2_accent_class" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded">
+          <option value="bg-tertiary">Tertiary</option>
+          <option value="bg-tertiary-container">Tertiary Container</option>
+          <option value="bg-primary">Primary</option>
+          <option value="bg-primary-container">Primary Container</option>
+        </select>
+      </div>
+    </div>
+    <button (click)="saveHeroStats()" class="mt-6 px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">
+      Enregistrer
+    </button>
+  </div>
+}
+
+<!-- Expertise Cards Tab -->
+@if (activeTab() === 'expertise') {
+  <div class="bg-surface border border-outline rounded p-6 mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-headline font-bold text-on-surface">Cartes d'expertise</h2>
+      <button (click)="showAddCardForm()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">
+        + Ajouter
+      </button>
+    </div>
+
+    @if (showAddCard()) {
+      <div class="bg-surface-container-low border border-outline p-4 mb-4 rounded">
+        <h3 class="text-sm font-bold text-on-surface mb-3">Nouvelle carte</h3>
+        <div class="space-y-3">
+          <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
+            @for (icon of availableIcons; track icon) {
+              <option [value]="icon">{{ icon }}</option>
+            }
+          </select>
+          <input [(ngModel)]="cardForm.title" placeholder="Titre" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+          <textarea [(ngModel)]="cardForm.description" placeholder="Description" rows="3" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
+          <input [(ngModel)]="cardForm.tags" placeholder="Tags (séparés par virgules)" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+          <div class="flex gap-2">
+            <button (click)="saveCard()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+            <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+          </div>
+        </div>
+      </div>
+    }
+
+    <div class="space-y-3">
+      @for (card of expertiseCards(); track card.id) {
+        <div class="bg-surface-container-low border border-outline p-4 rounded">
+          @if (editingCardId() === card.id) {
+            <div class="space-y-3">
+              <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
+                @for (icon of availableIcons; track icon) {
+                  <option [value]="icon">{{ icon }}</option>
+                }
+              </select>
+              <input [(ngModel)]="cardForm.title" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <textarea [(ngModel)]="cardForm.description" rows="3" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
+              <input [(ngModel)]="cardForm.tags" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <div class="flex gap-2">
+                <button (click)="saveCard()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+                <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+              </div>
+            </div>
+          } @else {
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="material-symbols-outlined text-primary">{{ card.icon }}</span>
+                  <span class="font-headline font-bold text-on-surface">{{ card.title }}</span>
+                </div>
+                <p class="text-sm text-on-surface-variant mb-2">{{ card.description }}</p>
+                <div class="flex flex-wrap gap-1">
+                  @for (tag of card.tags; track tag) {
+                    <span class="text-[10px] font-label font-bold uppercase tracking-wider text-primary border border-primary/30 px-2 py-1">{{ tag }}</span>
+                  }
+                </div>
+              </div>
+              <div class="flex gap-2 ml-4">
+                <button (click)="startEditCard(card)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors">Modifier</button>
+                <button (click)="deleteCard(card.id)" class="px-3 py-1 text-sm text-error border border-error rounded hover:bg-error hover:text-white transition-colors">Supprimer</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}
+
+<!-- Images Tab -->
+@if (activeTab() === 'images') {
+  <div class="bg-surface border border-outline rounded p-6">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Images de la page d'accueil</h2>
+    <div class="space-y-4">
+      @for (img of homepageImages(); track img.image_key) {
+        <div class="bg-surface-container-low border border-outline p-4 rounded">
+          @if (editingImageKey() === img.image_key) {
+            <div class="space-y-3">
+              <input [(ngModel)]="imageForm.url" placeholder="URL de l'image" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <input [(ngModel)]="imageForm.alt_text" placeholder="Texte alternatif" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              @if (img.url) {
+                <img [src]="img.url" [alt]="img.alt_text" class="h-32 object-cover rounded" />
+              }
+              <div class="flex gap-2">
+                <button (click)="saveImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+                <button (click)="cancelEditImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+              </div>
+            </div>
+          } @else {
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <span class="font-label text-xs uppercase tracking-widest text-outline mr-3">{{ img.image_key }}</span>
+                @if (img.url) {
+                  <img [src]="img.url" [alt]="img.alt_text" class="h-16 w-auto rounded mt-2" />
+                } @else {
+                  <span class="text-sm text-on-surface-variant italic">Aucune image définie</span>
+                }
+              </div>
+              <button (click)="startEditImage(img.image_key)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors ml-4">
+                Modifier
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

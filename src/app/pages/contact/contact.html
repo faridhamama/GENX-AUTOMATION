@@ -1,4 +1,4 @@
-<main class="pt-20 md:pt-24 pb-12 md:pb-24 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto">
+<main id="main-content" class="pt-20 md:pt-24 pb-12 md:pb-24 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto">
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 pt-8">
 
     <!-- Left Column: Company Info -->
@@ -17,7 +17,7 @@
 
       @if (companyInfo(); as info) {
         <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
-          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">location_on</span>
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5" aria-hidden="true">location_on</span>
           <div>
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Localisation</h3>
             <p class="text-on-surface-variant text-sm">
@@ -27,7 +27,7 @@
         </div>
 
         <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
-          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">call</span>
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5" aria-hidden="true">call</span>
           <div>
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Téléphone</h3>
             <a
@@ -38,7 +38,7 @@
         </div>
 
         <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
-          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">mail</span>
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5" aria-hidden="true">mail</span>
           <div>
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-1">Email</h3>
             <a
@@ -49,7 +49,7 @@
         </div>
 
         <div class="flex items-start gap-4 p-4 sm:p-6 bg-surface-container-low border-l-4 border-tertiary">
-          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5">schedule</span>
+          <span class="material-symbols-outlined text-primary shrink-0 text-xl mt-0.5" aria-hidden="true">schedule</span>
           <div class="flex-1">
             <h3 class="font-label text-sm font-bold tracking-widest uppercase mb-2">Heures d'ouverture</h3>
             <p class="text-on-surface-variant text-sm">
@@ -65,7 +65,7 @@
       <div class="bg-surface-container-lowest p-6 sm:p-8 lg:p-10 xl:p-12 border-t-4 border-primary shadow-sm">
 
         <h2 class="text-xl sm:text-2xl font-headline font-bold mb-6 sm:mb-8 flex items-center gap-3">
-          <span class="material-symbols-outlined text-tertiary-container shrink-0" style="font-variation-settings: 'FILL' 1;">
+          <span class="material-symbols-outlined text-tertiary-container shrink-0" aria-hidden="true" style="font-variation-settings: 'FILL' 1;">
             contract_edit
           </span>
           Demander un Devis

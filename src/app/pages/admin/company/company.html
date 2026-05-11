@@ -40,8 +40,8 @@
                 </div>
               } @else {
                 <div class="flex items-center gap-2 shrink-0 text-outline text-sm">
-                  <button (click)="moveService(service.id, 'up')" class="p-1 hover:text-primary transition-colors">▲</button>
-                  <button (click)="moveService(service.id, 'down')" class="p-1 hover:text-primary transition-colors">▼</button>
+                  <button (click)="moveService(service.id, 'up')" class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">keyboard_arrow_up</span></button>
+                  <button (click)="moveService(service.id, 'down')" class="p-1 hover:text-primary transition-colors"><span class="material-symbols-outlined text-sm">keyboard_arrow_down</span></button>
                   <span>{{ service.sort_order }}</span>
                 </div>
                 <div class="flex-1">

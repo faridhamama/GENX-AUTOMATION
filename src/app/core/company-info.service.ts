@@ -33,6 +33,36 @@ export interface CompanyValue {
   updated_at: string;
 }
 
+export interface HomepageHeroStats {
+  id: number;
+  stat1_label: string;
+  stat1_value: string;
+  stat1_sub: string;
+  stat1_accent_class: string;
+  stat2_label: string;
+  stat2_value: string;
+  stat2_sub: string;
+  stat2_accent_class: string;
+  updated_at: string;
+}
+
+export interface HomepageExpertiseCard {
+  id: string;
+  sort_order: number;
+  icon: string;
+  title: string;
+  description: string;
+  tags: string[];
+  updated_at: string;
+}
+
+export interface HomepageImage {
+  image_key: string;
+  url: string;
+  alt_text: string;
+  updated_at: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CompanyInfoService {
   private readonly supabase = inject(SupabaseService);
@@ -48,6 +78,12 @@ export class CompanyInfoService {
   // Company values
   readonly companyValues = signal<CompanyValue[]>([]);
   readonly valuesLoading = signal(false);
+
+  // Homepage
+  readonly homepageHeroStats = signal<HomepageHeroStats | null>(null);
+  readonly homepageExpertiseCards = signal<HomepageExpertiseCard[]>([]);
+  readonly homepageImages = signal<HomepageImage[]>([]);
+  readonly homepageLoading = signal(false);
 
   // --- Company Info ---
   async fetchCompanyInfo(): Promise<void> {
@@ -128,6 +164,70 @@ export class CompanyInfoService {
     const { error } = await this.supabase.updateCompanyValue(id, { icon, title, description });
     if (!error) {
       await this.fetchCompanyValues();
+    }
+    return { error };
+  }
+
+  // --- Homepage ---
+  async fetchHomepageContent(): Promise<void> {
+    this.homepageLoading.set(true);
+    await Promise.all([
+      this.fetchHomepageHeroStats(),
+      this.fetchHomepageExpertiseCards(),
+      this.fetchHomepageImages(),
+    ]);
+    this.homepageLoading.set(false);
+  }
+
+  private async fetchHomepageHeroStats(): Promise<void> {
+    const { data, error } = await this.supabase.getHomepageHeroStats();
+    if (!error && data) {
+      this.homepageHeroStats.set(data as HomepageHeroStats);
+    }
+  }
+
+  async updateHomepageHeroStats(stats: HomepageHeroStats): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertHomepageHeroStats(stats);
+    if (!error) {
+      await this.fetchHomepageHeroStats();
+    }
+    return { error };
+  }
+
+  private async fetchHomepageExpertiseCards(): Promise<void> {
+    const { data, error } = await this.supabase.getHomepageExpertiseCards();
+    if (!error && data) {
+      this.homepageExpertiseCards.set(data as HomepageExpertiseCard[]);
+    }
+  }
+
+  async updateHomepageExpertiseCard(id: string, card: Partial<HomepageExpertiseCard>): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertHomepageExpertiseCard(id, card);
+    if (!error) {
+      await this.fetchHomepageExpertiseCards();
+    }
+    return { error };
+  }
+
+  async deleteHomepageExpertiseCard(id: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.deleteHomepageExpertiseCard(id);
+    if (!error) {
+      await this.fetchHomepageExpertiseCards();
+    }
+    return { error };
+  }
+
+  private async fetchHomepageImages(): Promise<void> {
+    const { data, error } = await this.supabase.getHomepageImages();
+    if (!error && data) {
+      this.homepageImages.set(data as HomepageImage[]);
+    }
+  }
+
+  async upsertHomepageImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertHomepageImage(key, url, alt);
+    if (!error) {
+      await this.fetchHomepageImages();
     }
     return { error };
   }

@@ -6,9 +6,15 @@
       <div class="text-lg font-black text-slate-900">{{ company.name }}</div>
       <p class="text-slate-500 normal-case tracking-normal text-sm">{{ company.tagline }}</p>
       <div class="flex gap-4">
-        <span class="material-symbols-outlined text-slate-400">language</span>
-        <span class="material-symbols-outlined text-slate-400">mail</span>
-        <span class="material-symbols-outlined text-slate-400">call</span>
+        <a [href]="'https://' + company.domain" [attr.aria-label]="'Site web de ' + company.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
+          <span class="material-symbols-outlined text-slate-400" aria-hidden="true">language</span>
+        </a>
+        <a [href]="'mailto:' + company.email" [attr.aria-label]="'Envoyer un email a ' + company.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
+          <span class="material-symbols-outlined text-slate-400" aria-hidden="true">mail</span>
+        </a>
+        <a [href]="'tel:' + company.phone" [attr.aria-label]="'Appeler ' + company.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
+          <span class="material-symbols-outlined text-slate-400" aria-hidden="true">call</span>
+        </a>
       </div>
     </div>
 

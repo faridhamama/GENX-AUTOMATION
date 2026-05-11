@@ -1,0 +1,47 @@
+<div class="max-w-3xl mx-auto">
+  <div class="mb-6">
+    <h1 class="text-2xl font-headline font-bold text-on-surface mb-1">Contact</h1>
+    <p class="text-sm text-on-surface-variant">Gérer les informations de contact affichées sur le site</p>
+  </div>
+
+  @if (companyInfo(); as info) {
+    <div class="bg-surface border border-outline rounded p-6">
+      <form #contactForm="ngForm" (ngSubmit)="saveContactInfo(contactForm)" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-label uppercase tracking-widest text-outline mb-2">Email</label>
+            <input name="contact_email" [ngModel]="info.contact_email" placeholder="contact@genx.ma" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          </div>
+          <div>
+            <label class="block text-sm font-label uppercase tracking-widest text-outline mb-2">Téléphone</label>
+            <input name="contact_phone" [ngModel]="info.contact_phone" placeholder="+212 5XX-XXXXXX" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-label uppercase tracking-widest text-outline mb-2">Adresse</label>
+          <input name="contact_address" [ngModel]="info.contact_address" placeholder="Casablanca, Maroc" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-label uppercase tracking-widest text-outline mb-2">Heures d'ouverture</label>
+            <input name="availability_hours" [ngModel]="info.availability_hours" placeholder="08:00 - 18:00" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          </div>
+          <div>
+            <label class="block text-sm font-label uppercase tracking-widest text-outline mb-2">Jours de disponibilité</label>
+            <input name="availability_days" [ngModel]="info.availability_days" placeholder="Lundi - Vendredi" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          </div>
+        </div>
+
+        <div class="flex justify-end">
+          <button type="submit" class="px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  } @else {
+    <p class="text-on-surface-variant text-sm">Chargement...</p>
+  }
+</div>

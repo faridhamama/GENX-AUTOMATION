@@ -5,11 +5,19 @@
   (click)="closeMenu()"
 ></div>
 
+<!-- Skip to main content -->
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-on-primary focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+>
+  Aller au contenu principal
+</a>
+
 <header class="fixed top-0 w-full z-50 bg-[#f7f9fb] border-b border-outline-variant/10">
   <nav class="flex justify-between items-center w-full px-4 sm:px-8 py-4 font-headline tracking-tight">
 
     <!-- Logo -->
-    <a routerLink="/" (click)="closeMenu()" class="text-lg sm:text-xl font-bold tracking-tighter text-slate-900 shrink-0">
+    <a routerLink="/" (click)="closeMenu()" class="text-lg sm:text-xl font-bold tracking-tighter text-slate-900 shrink-0 cursor-pointer">
       {{ companyName }}
     </a>
 
@@ -20,7 +28,7 @@
           [routerLink]="link.path"
           routerLinkActive="!text-primary border-b-2 border-tertiary-container pb-1"
           [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
-          class="text-slate-600 hover:text-slate-900 hover:bg-surface-container px-2 py-1 transition-colors duration-100 whitespace-nowrap"
+          class="text-slate-600 hover:text-slate-900 hover:bg-surface-container px-2 py-1 transition-colors duration-100 whitespace-nowrap cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
         >
           {{ link.label }}
         </a>
@@ -32,6 +40,7 @@
       <a
         routerLink="/contact"
         (click)="closeMenu()"
+        aria-label="Demander un devis"
         class="hidden sm:inline-flex bg-primary text-on-primary px-4 lg:px-6 py-2 border-b-2 border-primary-fixed active:scale-[0.98] transition-transform duration-75 text-xs sm:text-sm font-bold uppercase tracking-wider whitespace-nowrap"
       >
         Demander un devis
@@ -40,9 +49,9 @@
       <!-- Hamburger button — mobile only -->
       <button
         (click)="toggleMenu()"
-        class="md:hidden flex items-center justify-center w-10 h-10 text-slate-900 transition-transform duration-150 active:scale-90"
+        class="md:hidden flex items-center justify-center w-10 h-10 text-slate-900 transition-transform duration-150 active:scale-90 cursor-pointer"
         [attr.aria-expanded]="menuOpen()"
-        aria-label="Ouvrir le menu de navigation"
+        [attr.aria-label]="menuOpen() ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'"
       >
         @if (menuOpen()) {
           <span class="material-symbols-outlined text-2xl">close</span>
@@ -66,7 +75,7 @@
             (click)="closeMenu()"
             routerLinkActive="text-primary bg-surface-container font-bold"
             [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
-            class="flex items-center px-6 py-4 text-sm font-label uppercase tracking-widest text-slate-600 hover:bg-surface-container hover:text-slate-900 transition-colors duration-100 border-b border-outline-variant/10"
+            class="flex items-center px-6 py-4 text-sm font-label uppercase tracking-widest text-slate-600 hover:bg-surface-container hover:text-slate-900 transition-colors duration-100 border-b border-outline-variant/10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             {{ link.label }}
           </a>
@@ -76,7 +85,7 @@
         <a
           routerLink="/contact"
           (click)="closeMenu()"
-          class="flex items-center justify-center w-full bg-primary text-on-primary px-6 py-3 font-bold uppercase tracking-widest text-sm border-b-2 border-primary-fixed"
+          class="flex items-center justify-center w-full bg-primary text-on-primary px-6 py-3 font-bold uppercase tracking-widest text-sm border-b-2 border-primary-fixed cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
           Demander un devis
         </a>
