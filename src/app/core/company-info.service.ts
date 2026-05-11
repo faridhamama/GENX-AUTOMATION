@@ -139,15 +139,12 @@ export class CompanyInfoService {
   }
 
   async reorderServices(orderedIds: string[]): Promise<{ error: string | null }> {
-    const updates = orderedIds.map((id, index) =>
-      this.supabase.updateServiceOrder(id, index + 1),
-    );
-    const results = await Promise.all(updates);
-    const error = results.find((r) => r.error)?.error ?? null;
-    if (!error) {
-      await this.fetchServices();
+    for (let i = 0; i < orderedIds.length; i++) {
+      const { error } = await this.supabase.updateServiceOrder(orderedIds[i], i + 1);
+      if (error) return { error };
     }
-    return { error };
+    await this.fetchServices();
+    return { error: null };
   }
 
   // --- Company Values ---
