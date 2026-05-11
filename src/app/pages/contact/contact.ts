@@ -4,11 +4,6 @@ import { CompanyInfoService } from '../../core/company-info.service';
 import { QuoteRequest, SupabaseService } from '../../core/supabase.service';
 import { ToastService } from '../../shared/toast/toast.service';
 
-interface ContactStat {
-  value: string;
-  label: string;
-}
-
 @Component({
   selector: 'app-contact',
   imports: [ReactiveFormsModule],
@@ -20,29 +15,36 @@ export class Contact implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
-  private readonly companyInfoService = inject(CompanyInfoService);
+  private readonly companyInfo = inject(CompanyInfoService);
 
-  readonly companyInfo = this.companyInfoService.companyInfo;
+  readonly companyInfoData = this.companyInfo.companyInfo;
 
-  readonly contactStats: ContactStat[] = [
-    { value: '150+', label: 'Systèmes déployés' },
-    { value: '48h', label: 'Délai de réponse' },
-  ];
+  // CMS-driven content
+  readonly heroLabel = computed(() => this.companyInfo.contactPageHero()?.label ?? 'Ingénierie de précision');
+  readonly heroHeadline = computed(() => this.companyInfo.contactPageHero()?.headline ?? 'Parlons de votre projet');
+  readonly heroBody = computed(() => this.companyInfo.contactPageHero()?.body ?? "J'analyse vos besoins industriels pour concevoir des solutions d'automatisation sur mesure.");
 
-  readonly projectTypes: string[] = [
-    'Automatisme Industriel',
-    'Robotique & Cobotique',
-    'Vision Artificielle',
-    'Supervision SCADA',
-    'Maintenance & Audit',
-  ];
+  readonly contactStats = computed(() => this.companyInfo.contactStats());
+  readonly projectTypesList = computed(() => this.companyInfo.projectTypes());
+
+  readonly formTitle = computed(() => this.companyInfo.contactFormContent()?.form_title ?? 'Demander un Devis');
+  readonly successTitle = computed(() => this.companyInfo.contactFormContent()?.success_title ?? 'Demande envoyée !');
+  readonly successBody = computed(() => this.companyInfo.contactFormContent()?.success_body ?? 'Je vous répondrai sous 48h ouvrées.');
+  readonly errorMessage = computed(() => this.companyInfo.contactFormContent()?.error_message ?? 'Veuillez remplir tous les champs obligatoires correctement.');
+  readonly footerNote = computed(() => this.companyInfo.contactFormContent()?.footer_note ?? 'Réponse technique garantie sous 48h ouvrées');
+  readonly submitLabel = computed(() => this.companyInfo.contactFormContent()?.submit_label ?? 'Envoyer ma demande');
+  readonly loadingLabel = computed(() => this.companyInfo.contactFormContent()?.loading_label ?? 'Envoi en cours…');
+
+  readonly labels = computed(() => this.companyInfo.formLabels());
+
+  readonly firstProjectType = computed(() => this.projectTypesList()[0]?.label ?? 'Automatisation industrielle');
 
   readonly quoteForm = this.fb.group({
     fullName: ['', Validators.required],
     phone: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     desiredDate: [''],
-    projectType: [this.projectTypes[0]],
+    projectType: [this.firstProjectType()],
     description: ['', Validators.required],
   });
 
@@ -52,7 +54,9 @@ export class Contact implements OnInit {
   readonly showErrors = computed(() => this.submitted() && this.quoteForm.invalid);
 
   ngOnInit(): void {
-    this.companyInfoService.fetchCompanyInfo();
+    this.companyInfo.fetchCompanyInfo();
+    this.companyInfo.fetchContactContent();
+    this.quoteForm.get('projectType')?.setValue(this.firstProjectType());
   }
 
   isInvalid(field: string): boolean {
@@ -84,7 +88,7 @@ export class Contact implements OnInit {
     } else {
       this.submitStatus.set('success');
       this.toast.success("Votre demande a bien été envoyée. Je vous répondrai sous 48h.");
-      this.quoteForm.reset({ projectType: this.projectTypes[0] });
+      this.quoteForm.reset({ projectType: this.firstProjectType() });
       this.submitted.set(false);
     }
   }

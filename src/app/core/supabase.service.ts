@@ -190,6 +190,61 @@ export interface AboutImageRow {
   updated_at: string;
 }
 
+export interface ContactPageHeroRow {
+  id: number;
+  label: string;
+  headline: string;
+  body: string;
+  updated_at: string;
+}
+
+export interface ContactStatRow {
+  id: string;
+  sort_order: number;
+  value: string;
+  label: string;
+  updated_at: string;
+}
+
+export interface ProjectTypeRow {
+  id: string;
+  sort_order: number;
+  label: string;
+  updated_at: string;
+}
+
+export interface ContactFormContentRow {
+  id: number;
+  form_title: string;
+  success_title: string;
+  success_body: string;
+  error_message: string;
+  footer_note: string;
+  submit_label: string;
+  loading_label: string;
+  updated_at: string;
+}
+
+export interface FormLabelsRow {
+  id: number;
+  full_name_label: string;
+  full_name_error: string;
+  full_name_placeholder: string;
+  phone_label: string;
+  phone_error: string;
+  phone_placeholder: string;
+  email_label: string;
+  email_error: string;
+  email_placeholder: string;
+  desired_date_label: string;
+  desired_date_placeholder: string;
+  project_type_label: string;
+  description_label: string;
+  description_error: string;
+  description_placeholder: string;
+  updated_at: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private readonly _client: SupabaseClient = createClient(
@@ -437,6 +492,48 @@ export class SupabaseService {
   }
   async upsertAboutImage(imageKey: string, url: string, altText: string): Promise<{ error: string | null }> {
     const { error } = await this._client.from('about_images').upsert({ image_key: imageKey, url, alt_text: altText, updated_at: new Date().toISOString() });
+    return { error: error ? error.message : null };
+  }
+
+  // --- Contact ---
+  async getContactPageHero(): Promise<{ data: ContactPageHeroRow | null; error: string | null }> {
+    const { data, error } = await this._client.from('contact_page_hero').select('*').eq('id', 1).maybeSingle();
+    return { data: data as ContactPageHeroRow ?? null, error: error ? error.message : null };
+  }
+  async upsertContactPageHero(hero: ContactPageHeroRow): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('contact_page_hero').upsert({ ...hero, id: 1, updated_at: new Date().toISOString() }).eq('id', 1);
+    return { error: error ? error.message : null };
+  }
+  async getContactStats(): Promise<{ data: ContactStatRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('contact_stats').select('*').order('sort_order', { ascending: true });
+    return { data: (data as ContactStatRow[]) ?? [], error: error ? error.message : null };
+  }
+  async upsertContactStat(stat: Partial<ContactStatRow> & { id: string }): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('contact_stats').update({ ...stat, updated_at: new Date().toISOString() }).eq('id', stat.id);
+    return { error: error ? error.message : null };
+  }
+  async getProjectTypes(): Promise<{ data: ProjectTypeRow[]; error: string | null }> {
+    const { data, error } = await this._client.from('project_types').select('*').order('sort_order', { ascending: true });
+    return { data: (data as ProjectTypeRow[]) ?? [], error: error ? error.message : null };
+  }
+  async upsertProjectType(id: string, label: string): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('project_types').update({ label, updated_at: new Date().toISOString() }).eq('id', id);
+    return { error: error ? error.message : null };
+  }
+  async getContactFormContent(): Promise<{ data: ContactFormContentRow | null; error: string | null }> {
+    const { data, error } = await this._client.from('contact_form_content').select('*').eq('id', 1).maybeSingle();
+    return { data: data as ContactFormContentRow ?? null, error: error ? error.message : null };
+  }
+  async upsertContactFormContent(content: ContactFormContentRow): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('contact_form_content').upsert({ ...content, id: 1, updated_at: new Date().toISOString() }).eq('id', 1);
+    return { error: error ? error.message : null };
+  }
+  async getFormLabels(): Promise<{ data: FormLabelsRow | null; error: string | null }> {
+    const { data, error } = await this._client.from('form_labels').select('*').eq('id', 1).maybeSingle();
+    return { data: data as FormLabelsRow ?? null, error: error ? error.message : null };
+  }
+  async upsertFormLabels(labels: FormLabelsRow): Promise<{ error: string | null }> {
+    const { error } = await this._client.from('form_labels').upsert({ ...labels, id: 1, updated_at: new Date().toISOString() }).eq('id', 1);
     return { error: error ? error.message : null };
   }
 

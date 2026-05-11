@@ -19,6 +19,11 @@ import type {
   AboutValuesSectionRow,
   AboutCtaSectionRow,
   AboutImageRow,
+  ContactPageHeroRow,
+  ContactStatRow,
+  ProjectTypeRow,
+  ContactFormContentRow,
+  FormLabelsRow,
 } from './supabase.service';
 
 export interface CompanyInfo {
@@ -530,6 +535,73 @@ export class CompanyInfoService {
   async upsertAboutImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
     const { error } = await this.supabase.upsertAboutImage(key, url, alt);
     if (!error) await this.fetchAboutImages();
+    return { error };
+  }
+
+  // --- Contact ---
+  readonly contactPageHero = signal<ContactPageHeroRow | null>(null);
+  readonly contactStats = signal<ContactStatRow[]>([]);
+  readonly projectTypes = signal<ProjectTypeRow[]>([]);
+  readonly contactFormContent = signal<ContactFormContentRow | null>(null);
+  readonly formLabels = signal<FormLabelsRow | null>(null);
+
+  async fetchContactContent(): Promise<void> {
+    await Promise.all([
+      this.fetchContactPageHero(),
+      this.fetchContactStats(),
+      this.fetchProjectTypes(),
+      this.fetchContactFormContent(),
+      this.fetchFormLabels(),
+    ]);
+  }
+
+  private async fetchContactPageHero(): Promise<void> {
+    const { data, error } = await this.supabase.getContactPageHero();
+    if (!error && data) this.contactPageHero.set(data);
+  }
+  async updateContactPageHero(hero: ContactPageHeroRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertContactPageHero(hero);
+    if (!error) await this.fetchContactPageHero();
+    return { error };
+  }
+
+  private async fetchContactStats(): Promise<void> {
+    const { data, error } = await this.supabase.getContactStats();
+    if (!error && data) this.contactStats.set(data as ContactStatRow[]);
+  }
+  async updateContactStat(stat: Partial<ContactStatRow> & { id: string }): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertContactStat(stat);
+    if (!error) await this.fetchContactStats();
+    return { error };
+  }
+
+  private async fetchProjectTypes(): Promise<void> {
+    const { data, error } = await this.supabase.getProjectTypes();
+    if (!error && data) this.projectTypes.set(data as ProjectTypeRow[]);
+  }
+  async updateProjectType(id: string, label: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertProjectType(id, label);
+    if (!error) await this.fetchProjectTypes();
+    return { error };
+  }
+
+  private async fetchContactFormContent(): Promise<void> {
+    const { data, error } = await this.supabase.getContactFormContent();
+    if (!error && data) this.contactFormContent.set(data);
+  }
+  async updateContactFormContent(content: ContactFormContentRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertContactFormContent(content);
+    if (!error) await this.fetchContactFormContent();
+    return { error };
+  }
+
+  private async fetchFormLabels(): Promise<void> {
+    const { data, error } = await this.supabase.getFormLabels();
+    if (!error && data) this.formLabels.set(data);
+  }
+  async updateFormLabels(labels: FormLabelsRow): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.upsertFormLabels(labels);
+    if (!error) await this.fetchFormLabels();
     return { error };
   }
 }

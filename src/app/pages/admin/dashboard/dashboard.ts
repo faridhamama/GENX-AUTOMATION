@@ -9,7 +9,7 @@ import { CompanyInfoService } from '../../../core/company-info.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { QuoteRequestRow } from '../../../core/supabase.service';
 
-type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references' | 'services' | 'about';
+type AdminSection = 'emails' | 'company' | 'home' | 'contact' | 'references' | 'services' | 'about' | 'contact_content';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,8 +54,11 @@ export class Dashboard implements OnInit {
   readonly aboutValuesSection = this.companyInfo.aboutValuesSection;
   readonly aboutCtaSection = this.companyInfo.aboutCtaSection;
   readonly aboutImages = this.companyInfo.aboutImages;
-
-  readonly activeSection = signal<AdminSection>('emails');
+  readonly contactPageHero = this.companyInfo.contactPageHero;
+  readonly contactStats = this.companyInfo.contactStats;
+  readonly projectTypes = this.companyInfo.projectTypes;
+  readonly contactFormContent = this.companyInfo.contactFormContent;
+  readonly formLabels = this.companyInfo.formLabels;
   readonly searchQuery = signal('');
 
   readonly filteredRequests = computed(() => {
@@ -93,6 +96,11 @@ export class Dashboard implements OnInit {
   readonly editingAboutImageKey = signal<string | null>(null);
   aboutImageForm = { key: '', url: '', alt_text: '' };
 
+  // Contact content forms
+  contactHeroForm = { label: '', headline: '', body: '' };
+  contactFormContentForm = { form_title: '', success_title: '', success_body: '', error_message: '', footer_note: '', submit_label: '', loading_label: '' };
+  formLabelsForm = { full_name_label: '', full_name_error: '', full_name_placeholder: '', phone_label: '', phone_error: '', phone_placeholder: '', email_label: '', email_error: '', email_placeholder: '', desired_date_label: '', desired_date_placeholder: '', project_type_label: '', description_label: '', description_error: '', description_placeholder: '' };
+
   // References forms
   referencesHeroForm = { label: '', headline: '', body: '' };
   featuredProjectForm = { sector: '', title: '', technology: '', tech_label: '', specs_json: '', image_key: '', image_alt: '', result: '' };
@@ -109,6 +117,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchReferencesContent();
       this.companyInfo.fetchServicesContent();
       this.companyInfo.fetchAboutContent();
+      this.companyInfo.fetchContactContent();
     }
   }
 
@@ -139,6 +148,7 @@ export class Dashboard implements OnInit {
       this.companyInfo.fetchReferencesContent();
       this.companyInfo.fetchServicesContent();
       this.companyInfo.fetchAboutContent();
+      this.companyInfo.fetchContactContent();
     }
   }
 
@@ -387,6 +397,47 @@ export class Dashboard implements OnInit {
     if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
     this.toast.success('Image mise à jour');
     this.cancelEditAboutImage();
+  }
+
+  // CMS: Contact Hero
+  async saveContactHero(): Promise<void> {
+    const h = this.contactPageHero();
+    if (!h) return;
+    const { error } = await this.companyInfo.updateContactPageHero({ ...h, ...this.contactHeroForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Hero mis à jour');
+  }
+
+  // CMS: Contact Stats
+  async saveContactStat(stat: any): Promise<void> {
+    const { error } = await this.companyInfo.updateContactStat({ id: stat.id, value: stat.value, label: stat.label });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Stat mise à jour');
+  }
+
+  // CMS: Project Types
+  async saveProjectType(pt: any): Promise<void> {
+    const { error } = await this.companyInfo.updateProjectType(pt.id, pt.label);
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Type mis à jour');
+  }
+
+  // CMS: Contact Form Content
+  async saveContactFormContent(): Promise<void> {
+    const c = this.contactFormContent();
+    if (!c) return;
+    const { error } = await this.companyInfo.updateContactFormContent({ ...c, ...this.contactFormContentForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Formulaire mis à jour');
+  }
+
+  // CMS: Form Labels
+  async saveFormLabels(): Promise<void> {
+    const f = this.formLabels();
+    if (!f) return;
+    const { error } = await this.companyInfo.updateFormLabels({ ...f, ...this.formLabelsForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Labels mis à jour');
   }
 
   readonly availableIcons = ['engineering', 'handshake', 'workspace_premium', 'precision_manufacturing', 'monitoring', 'support_agent', 'verified', 'security'];
