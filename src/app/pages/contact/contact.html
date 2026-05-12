@@ -107,7 +107,7 @@
                 for="fullName"
                 class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
               >
-                Nom Complet <span class="text-error" aria-hidden="true">*</span>
+                {{ labels()?.full_name_label || 'Nom Complet' }} <span class="text-error" aria-hidden="true">*</span>
                 <span class="sr-only">(obligatoire)</span>
               </label>
               <input
@@ -116,7 +116,7 @@
                 type="text"
                 autocomplete="name"
                 autocapitalize="words"
-                placeholder="Jean Dupont"
+                [placeholder]="labels()?.full_name_placeholder || 'Votre nom et prénom'"
                 aria-required="true"
                 [attr.aria-invalid]="isInvalid('fullName') ? 'true' : null"
                 [attr.aria-describedby]="isInvalid('fullName') ? 'fullName-error' : null"
@@ -125,7 +125,7 @@
               >
               @if (isInvalid('fullName')) {
                 <p id="fullName-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
-                  Ce champ est requis
+                  {{ labels()?.full_name_error || 'Ce champ est requis' }}
                 </p>
               }
             </div>
@@ -135,7 +135,7 @@
                 for="phone"
                 class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
               >
-                Téléphone <span class="text-error" aria-hidden="true">*</span>
+                {{ labels()?.phone_label || 'Téléphone' }} <span class="text-error" aria-hidden="true">*</span>
                 <span class="sr-only">(obligatoire)</span>
               </label>
               <input
@@ -143,7 +143,7 @@
                 formControlName="phone"
                 type="tel"
                 autocomplete="tel"
-                placeholder="+212 6XX-XXXXXX"
+                [placeholder]="labels()?.phone_placeholder || '+212 6XX-XXXXXX'"
                 aria-required="true"
                 [attr.aria-invalid]="isInvalid('phone') ? 'true' : null"
                 [attr.aria-describedby]="isInvalid('phone') ? 'phone-error' : null"
@@ -152,7 +152,7 @@
               >
               @if (isInvalid('phone')) {
                 <p id="phone-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
-                  Ce champ est requis
+                  {{ labels()?.phone_error || 'Ce champ est requis' }}
                 </p>
               }
             </div>
@@ -166,7 +166,7 @@
                 for="email"
                 class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
               >
-                Email Professionnel <span class="text-error" aria-hidden="true">*</span>
+                {{ labels()?.email_label || 'Email Professionnel' }} <span class="text-error" aria-hidden="true">*</span>
                 <span class="sr-only">(obligatoire)</span>
               </label>
               <input
@@ -175,7 +175,7 @@
                 type="email"
                 autocomplete="email"
                 inputmode="email"
-                placeholder="contact@entreprise.com"
+                [placeholder]="labels()?.email_placeholder || 'contact@entreprise.com'"
                 aria-required="true"
                 [attr.aria-invalid]="isInvalid('email') ? 'true' : null"
                 [attr.aria-describedby]="isInvalid('email') ? 'email-error' : null"
@@ -184,8 +184,7 @@
               >
               @if (isInvalid('email')) {
                 <p id="email-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
-                  @if (quoteForm.get('email')?.hasError('required')) { Ce champ est requis }
-                  @else { Adresse email invalide }
+                  {{ labels()?.email_error || 'Un email valide est requis' }}
                 </p>
               }
             </div>
@@ -195,7 +194,7 @@
                 for="desiredDate"
                 class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
               >
-                Date Souhaitée
+                {{ labels()?.desired_date_label || 'Date Souhaitée' }}
               </label>
               <input
                 id="desiredDate"
@@ -213,7 +212,7 @@
               for="projectType"
               class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
             >
-              Type de Projet
+              {{ labels()?.project_type_label || 'Type de Projet' }}
             </label>
             <div class="relative">
               <select
@@ -238,14 +237,14 @@
               for="description"
               class="block font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] text-outline uppercase"
             >
-              Description du projet <span class="text-error" aria-hidden="true">*</span>
+              {{ labels()?.description_label || 'Description du projet' }} <span class="text-error" aria-hidden="true">*</span>
               <span class="sr-only">(obligatoire)</span>
             </label>
             <textarea
               id="description"
               formControlName="description"
               rows="4"
-              placeholder="Décrivez vos besoins techniques, contraintes et objectifs..."
+              [placeholder]="labels()?.description_placeholder || 'Décrivez vos besoins techniques, contraintes et objectifs...'"
               aria-required="true"
               [attr.aria-invalid]="isInvalid('description') ? 'true' : null"
               [attr.aria-describedby]="isInvalid('description') ? 'description-error' : null"
@@ -254,7 +253,7 @@
             ></textarea>
             @if (isInvalid('description')) {
               <p id="description-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
-                Ce champ est requis
+                {{ labels()?.description_error || 'Ce champ est requis' }}
               </p>
             }
           </div>
