@@ -15,9 +15,12 @@ export class QuoteRequestsService {
     thisWeek: 0,
   });
 
-  private readonly today = new Date();
-  private readonly startOfToday = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toISOString();
-  private readonly startOfWeek = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate() - this.today.getDay()).toISOString();
+  private get dateBounds() {
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay()).toISOString();
+    return { startOfToday, startOfWeek };
+  }
 
   async fetchRequests(): Promise<void> {
     this.isLoading.set(true);
@@ -41,9 +44,10 @@ export class QuoteRequestsService {
   }
 
   private computeStats(data: QuoteRequestRow[]): void {
+    const { startOfToday, startOfWeek } = this.dateBounds;
     const unread = data.filter((r) => !r.read).length;
-    const today = data.filter((r) => r.created_at >= this.startOfToday).length;
-    const thisWeek = data.filter((r) => r.created_at >= this.startOfWeek).length;
-    this.stats.set({ total: data.length, unread, today, thisWeek });
+    const todayCount = data.filter((r) => r.created_at >= startOfToday).length;
+    const thisWeekCount = data.filter((r) => r.created_at >= startOfWeek).length;
+    this.stats.set({ total: data.length, unread, today: todayCount, thisWeek: thisWeekCount });
   }
 }
