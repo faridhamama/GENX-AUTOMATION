@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CompanyInfoService } from '../../core/company-info.service';
+import { ReferencesFacade } from '../../core/references.facade';
 import { IMAGES } from '../../core/images.config';
 
 @Component({
@@ -11,15 +11,15 @@ import { IMAGES } from '../../core/images.config';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class References implements OnInit {
-  private readonly companyInfo = inject(CompanyInfoService);
+  private readonly references = inject(ReferencesFacade);
 
   readonly images = IMAGES.references;
 
-  readonly heroLabel = computed(() => this.companyInfo.referencesHero()?.label ?? 'Mes Réalisations');
-  readonly heroHeadline = computed(() => this.companyInfo.referencesHero()?.headline ?? 'Projets sur lesquels<br>j\'ai travaillé');
-  readonly heroBody = computed(() => this.companyInfo.referencesHero()?.body ?? "Chaque projet listé ici reflète mon expérience directe. Programmation, mise en service, instrumentation, formation — je suis intervenu de bout en bout ou sur des phases spécifiques, selon les besoins.");
+  readonly heroLabel = computed(() => this.references.referencesHero()?.label ?? 'Mes Réalisations');
+  readonly heroHeadline = computed(() => this.references.referencesHero()?.headline ?? 'Projets sur lesquels<br>j\'ai travaillé');
+  readonly heroBody = computed(() => this.references.referencesHero()?.body ?? "Chaque projet listé ici reflète mon expérience directe. Programmation, mise en service, instrumentation, formation — je suis intervenu de bout en bout ou sur des phases spécifiques, selon les besoins.");
 
-  readonly featuredProject = computed(() => this.companyInfo.referencesFeaturedProject());
+  readonly featuredProject = computed(() => this.references.referencesFeaturedProject());
   readonly featuredProjectSpecs = computed(() => {
     const fp = this.featuredProject();
     if (!fp) return [];
@@ -28,17 +28,17 @@ export class References implements OnInit {
   readonly featuredProjectImageUrl = computed(() => {
     const fp = this.featuredProject();
     if (!fp) return IMAGES.references.featuredProject;
-    return this.companyInfo.referencesImagesMap()[fp.image_key]?.url ?? IMAGES.references.featuredProject;
+    return this.references.referencesImagesMap()[fp.image_key]?.url ?? IMAGES.references.featuredProject;
   });
 
-  readonly performanceStats = computed(() => this.companyInfo.referencesPerformanceStats());
-  readonly sideProjects = computed(() => this.companyInfo.referencesSideProjects());
-  readonly qualityPoints = computed(() => this.companyInfo.referencesQualityPoints());
+  readonly performanceStats = computed(() => this.references.referencesPerformanceStats());
+  readonly sideProjects = computed(() => this.references.referencesSideProjects());
+  readonly qualityPoints = computed(() => this.references.referencesQualityPoints());
   readonly qualitySectionImageUrl = computed(() => {
-    return this.companyInfo.referencesImagesMap()['serverRoom']?.url ?? IMAGES.references.serverRoom;
+    return this.references.referencesImagesMap()['serverRoom']?.url ?? IMAGES.references.serverRoom;
   });
 
   ngOnInit(): void {
-    this.companyInfo.fetchReferencesContent();
+    this.references.fetchReferencesContent();
   }
 }

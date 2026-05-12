@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CompanyInfoService, HomepageExpertiseCard } from '../../../core/company-info.service';
+import { CompanyInfoService, HomepageExpertiseCard, HomepageHeroStats } from '../../../core/company-info.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class AdminHome implements OnInit {
   readonly homepageImages = this.companyInfoService.homepageImages;
 
   // Hero stats form - initialized with defaults, updated via effect when data loads
-  heroStatsForm = {
+  heroStatsForm: Omit<HomepageHeroStats, 'id' | 'updated_at'> = {
     stat1_label: 'Années d\'expérience terrain',
     stat1_value: '5+',
     stat1_sub: 'En industrie',
@@ -68,7 +68,7 @@ export class AdminHome implements OnInit {
   }
 
   async saveHeroStats(): Promise<void> {
-    const { error } = await this.companyInfoService.updateHomepageHeroStats(this.heroStatsForm as any);
+    const { error } = await this.companyInfoService.updateHomepageHeroStats(this.heroStatsForm as HomepageHeroStats);
     if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
     this.toast.success('Statistiques mises à jour');
   }

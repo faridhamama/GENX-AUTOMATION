@@ -21,15 +21,13 @@ export class AuthService {
   private initialize(): void {
     // Restore session from localStorage (Supabase client does this automatically)
     this.supabase.client.auth.getSession().then(({ data }) => {
-      const session = data.session as { user: { id: string; email?: string } } | null;
-      this._user.set(session?.user ?? null);
+      this._user.set(data.session?.user ?? null);
       this._isLoading.set(false);
     });
 
     // Keep signal in sync with future auth events
     this.supabase.onAuthStateChange((_event, session) => {
-      const sess = session as { user: { id: string; email?: string } } | null;
-      this._user.set(sess?.user ?? null);
+      this._user.set((session as { user: { id: string; email?: string } } | null)?.user ?? null);
       this._isLoading.set(false);
     });
   }

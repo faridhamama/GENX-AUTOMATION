@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
-import { CompanyInfoService } from '../../core/company-info.service';
+import { ServicesPageFacade } from '../../core/services-page.facade';
+import { CompanyFacade } from '../../core/company.facade';
 
 @Component({
   selector: 'app-services',
@@ -9,20 +10,21 @@ import { CompanyInfoService } from '../../core/company-info.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Services implements OnInit {
-  private readonly companyInfo = inject(CompanyInfoService);
+  private readonly servicesPage = inject(ServicesPageFacade);
+  private readonly company = inject(CompanyFacade);
 
-  readonly services = this.companyInfo.services;
+  readonly services = this.company.services;
 
-  readonly heroLabel = computed(() => this.companyInfo.servicesPageHero()?.label ?? 'GENX AUTOMATION');
-  readonly heroHeadline = computed(() => this.companyInfo.servicesPageHero()?.headline ?? "De l'idée à la <span class=\"text-outline-variant\">mise en service</span>");
-  readonly heroBody = computed(() => this.companyInfo.servicesPageHero()?.body ?? "Nous couvrons l'ensemble de la chaîne : étude, conception, programmation, supervision et mise en service. Un interlocuteur unique, de A à Z.");
+  readonly heroLabel = computed(() => this.servicesPage.servicesPageHero()?.label ?? 'GENX AUTOMATION');
+  readonly heroHeadline = computed(() => this.servicesPage.servicesPageHero()?.headline ?? "De l'idée à la <span class=\"text-outline-variant\">mise en service</span>");
+  readonly heroBody = computed(() => this.servicesPage.servicesPageHero()?.body ?? "Nous couvrons l'ensemble de la chaîne : étude, conception, programmation, supervision et mise en service. Un interlocuteur unique, de A à Z.");
 
-  readonly methodologySectionLabel = computed(() => this.companyInfo.servicesMethodology()?.section_label ?? 'Comment nous travaillons');
-  readonly methodologyHeadline = computed(() => this.companyInfo.servicesMethodology()?.headline ?? 'Notre Processus');
-  readonly methodologySubtext = computed(() => this.companyInfo.servicesMethodology()?.subtext ?? 'Transparence à chaque étape');
+  readonly methodologySectionLabel = computed(() => this.servicesPage.servicesMethodology()?.section_label ?? 'Comment nous travaillons');
+  readonly methodologyHeadline = computed(() => this.servicesPage.servicesMethodology()?.headline ?? 'Notre Processus');
+  readonly methodologySubtext = computed(() => this.servicesPage.servicesMethodology()?.subtext ?? 'Transparence à chaque étape');
 
   readonly methodologySteps = computed(() =>
-    this.companyInfo.methodologySteps().map(s => ({
+    this.servicesPage.methodologySteps().map(s => ({
       number: String(s.step_number).padStart(2, '0'),
       title: s.title,
       description: s.description,
@@ -30,7 +32,7 @@ export class Services implements OnInit {
   );
 
   ngOnInit(): void {
-    this.companyInfo.fetchServices();
-    this.companyInfo.fetchServicesContent();
+    this.company.fetchServices();
+    this.servicesPage.fetchServicesContent();
   }
 }

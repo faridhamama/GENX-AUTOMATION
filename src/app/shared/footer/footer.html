@@ -1,19 +1,19 @@
 <footer class="w-full border-t border-outline-variant/20 bg-surface-container-low">
-  @if (company()) {
+  @if (companyData()) {
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 sm:px-8 md:px-12 py-10 md:py-16 font-label text-sm uppercase tracking-widest">
 
     <!-- Brand -->
     <div class="space-y-4 md:space-y-6 sm:col-span-2 md:col-span-1">
-      <div class="text-lg font-black text-slate-900">{{ company()!.name }}</div>
-      <p class="text-slate-500 normal-case tracking-normal text-sm">{{ company()!.tagline }}</p>
+      <div class="text-lg font-black text-slate-900">{{ companyData()!.name }}</div>
+      <p class="text-slate-500 normal-case tracking-normal text-sm">{{ companyData()!.tagline }}</p>
       <div class="flex gap-4">
-        <a [href]="'https://' + company()!.domain" [attr.aria-label]="'Site web de ' + company()!.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
+        <a [href]="'https://' + companyData()!.domain" [attr.aria-label]="'Site web de ' + companyData()!.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
           <span class="material-symbols-outlined text-slate-400" aria-hidden="true">language</span>
         </a>
-        <a [href]="'mailto:' + company()!.email" [attr.aria-label]="'Envoyer un email a ' + company()!.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
+        <a [href]="'mailto:' + companyData()!.email" [attr.aria-label]="'Envoyer un email a ' + companyData()!.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
           <span class="material-symbols-outlined text-slate-400" aria-hidden="true">mail</span>
         </a>
-        <a [href]="'tel:' + company()!.phone" [attr.aria-label]="'Appeler ' + company()!.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
+        <a [href]="'tel:' + companyData()!.phone" [attr.aria-label]="'Appeler ' + companyData()!.name" class="text-slate-500 hover:text-tertiary-container transition-colors duration-100">
           <span class="material-symbols-outlined text-slate-400" aria-hidden="true">call</span>
         </a>
       </div>
@@ -40,11 +40,11 @@
     <div class="space-y-4 md:space-y-6">
       <div class="font-bold text-primary">Localisation</div>
       <p class="text-slate-500 normal-case tracking-normal text-sm">
-        {{ company()!.address.city }}, {{ company()!.address.country }}<br>
-        {{ company()!.address.zone }}
+        {{ companyData()!.address.city }}, {{ companyData()!.address.country }}<br>
+        {{ companyData()!.address.zone }}
       </p>
       <p class="text-slate-500 normal-case tracking-normal text-xs">
-        © {{ company()!.founded }} {{ company()!.name }}. Tous droits réservés.
+        © {{ companyData()!.founded }} {{ companyData()!.name }}. Tous droits réservés.
       </p>
     </div>
 

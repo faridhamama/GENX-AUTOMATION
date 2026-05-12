@@ -41,7 +41,7 @@
         <div class="text-[10px] font-label uppercase tracking-widest text-outline mb-2 mt-2">Navigation</div>
 
         <button (click)="setSection('emails')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'emails'" [class.text-primary]="activeSection() === 'emails'" [class.text-on-surface]="activeSection() !== 'emails'">
-          <span class="material-symbols-outlined text-lg" aria-hidden="true">mail</span>
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">inbox</span>
           Emails
           @if (stats().unread > 0) {
             <span class="ml-auto bg-primary text-on-primary text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">{{ stats().unread }}</span>
@@ -49,7 +49,7 @@
         </button>
 
         <button (click)="setSection('company')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'company'" [class.text-primary]="activeSection() === 'company'" [class.text-on-surface]="activeSection() !== 'company'">
-          <span class="material-symbols-outlined text-lg" aria-hidden="true">apartment</span>
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">domain</span>
           Entreprise
         </button>
 
@@ -59,22 +59,22 @@
         </button>
 
         <button (click)="setSection('contact')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'contact'" [class.text-primary]="activeSection() === 'contact'" [class.text-on-surface]="activeSection() !== 'contact'">
-          <span class="material-symbols-outlined text-lg" aria-hidden="true">contact_phone</span>
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">contact_mail</span>
           Contact
         </button>
 
         <button (click)="setSection('references')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'references'" [class.text-primary]="activeSection() === 'references'" [class.text-on-surface]="activeSection() !== 'references'">
-          <span class="material-symbols-outlined text-lg" aria-hidden="true">workspace_premium</span>
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">workspaces</span>
           Références
         </button>
 
         <button (click)="setSection('services')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'services'" [class.text-primary]="activeSection() === 'services'" [class.text-on-surface]="activeSection() !== 'services'">
-          <span class="material-symbols-outlined text-lg" aria-hidden="true">miscellaneous_services</span>
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">handyman</span>
           Services
         </button>
 
         <button (click)="setSection('about')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'about'" [class.text-primary]="activeSection() === 'about'" [class.text-on-surface]="activeSection() !== 'about'">
-          <span class="material-symbols-outlined text-lg" aria-hidden="true">info</span>
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">person</span>
           À propos
         </button>
 
@@ -84,7 +84,7 @@
         </button>
 
         <button (click)="setSection('homepage_hero')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer" [class.bg-surface-container-high]="activeSection() === 'homepage_hero'" [class.text-primary]="activeSection() === 'homepage_hero'" [class.text-on-surface]="activeSection() !== 'homepage_hero'">
-          <span class="material-symbols-outlined text-lg" aria-hidden="true">home</span>
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">display_settings</span>
           Hero Page d'accueil
         </button>
 

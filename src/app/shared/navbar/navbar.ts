@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NAV_LINKS, NavLink } from '../../core/navigation.config';
 import { AuthService } from '../../core/auth.service';
-import { CompanyInfoService } from '../../core/company-info.service';
+import { CompanyFacade } from '../../core/company.facade';
 
 @Component({
   selector: 'app-navbar',
@@ -13,9 +13,9 @@ import { CompanyInfoService } from '../../core/company-info.service';
 })
 export class Navbar {
   private readonly auth = inject(AuthService);
-  private readonly companyInfo = inject(CompanyInfoService);
+  private readonly company = inject(CompanyFacade);
 
-  readonly companyName = computed(() => this.companyInfo.companyInfo()?.company_name ?? 'GENX AUTOMATION');
+  readonly companyName = computed(() => this.company.companyInfo()?.company_name ?? 'GENX AUTOMATION');
   readonly menuOpen = signal(false);
 
   readonly navLinks = computed<NavLink[]>(() => {

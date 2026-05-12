@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CompanyInfoService } from '../../core/company-info.service';
+import { CompanyFacade } from '../../core/company.facade';
+import { ContactFacade } from '../../core/contact.facade';
 import { QuoteRequest, SupabaseService } from '../../core/supabase.service';
 import { ToastService } from '../../shared/toast/toast.service';
 
@@ -15,27 +16,28 @@ export class Contact implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
-  private readonly companyInfo = inject(CompanyInfoService);
+  private readonly company = inject(CompanyFacade);
+  private readonly contact = inject(ContactFacade);
 
-  readonly companyInfoData = this.companyInfo.companyInfo;
+  readonly companyInfoData = this.company.companyInfo;
 
   // CMS-driven content
-  readonly heroLabel = computed(() => this.companyInfo.contactPageHero()?.label ?? 'Ingénierie de précision');
-  readonly heroHeadline = computed(() => this.companyInfo.contactPageHero()?.headline ?? 'Parlons de votre projet');
-  readonly heroBody = computed(() => this.companyInfo.contactPageHero()?.body ?? "J'analyse vos besoins industriels pour concevoir des solutions d'automatisation sur mesure.");
+  readonly heroLabel = computed(() => this.contact.contactPageHero()?.label ?? 'Ingénierie de précision');
+  readonly heroHeadline = computed(() => this.contact.contactPageHero()?.headline ?? 'Parlons de votre projet');
+  readonly heroBody = computed(() => this.contact.contactPageHero()?.body ?? "J'analyse vos besoins industriels pour concevoir des solutions d'automatisation sur mesure.");
 
-  readonly contactStats = computed(() => this.companyInfo.contactStats());
-  readonly projectTypesList = computed(() => this.companyInfo.projectTypes());
+  readonly contactStats = computed(() => this.contact.contactStats());
+  readonly projectTypesList = computed(() => this.contact.projectTypes());
 
-  readonly formTitle = computed(() => this.companyInfo.contactFormContent()?.form_title ?? 'Demander un Devis');
-  readonly successTitle = computed(() => this.companyInfo.contactFormContent()?.success_title ?? 'Demande envoyée !');
-  readonly successBody = computed(() => this.companyInfo.contactFormContent()?.success_body ?? 'Je vous répondrai sous 48h ouvrées.');
-  readonly errorMessage = computed(() => this.companyInfo.contactFormContent()?.error_message ?? 'Veuillez remplir tous les champs obligatoires correctement.');
-  readonly footerNote = computed(() => this.companyInfo.contactFormContent()?.footer_note ?? 'Réponse technique garantie sous 48h ouvrées');
-  readonly submitLabel = computed(() => this.companyInfo.contactFormContent()?.submit_label ?? 'Envoyer ma demande');
-  readonly loadingLabel = computed(() => this.companyInfo.contactFormContent()?.loading_label ?? 'Envoi en cours…');
+  readonly formTitle = computed(() => this.contact.contactFormContent()?.form_title ?? 'Demander un Devis');
+  readonly successTitle = computed(() => this.contact.contactFormContent()?.success_title ?? 'Demande envoyée !');
+  readonly successBody = computed(() => this.contact.contactFormContent()?.success_body ?? 'Je vous répondrai sous 48h ouvrées.');
+  readonly errorMessage = computed(() => this.contact.contactFormContent()?.error_message ?? 'Veuillez remplir tous les champs obligatoires correctement.');
+  readonly footerNote = computed(() => this.contact.contactFormContent()?.footer_note ?? 'Réponse technique garantie sous 48h ouvrées');
+  readonly submitLabel = computed(() => this.contact.contactFormContent()?.submit_label ?? 'Envoyer ma demande');
+  readonly loadingLabel = computed(() => this.contact.contactFormContent()?.loading_label ?? 'Envoi en cours…');
 
-  readonly labels = computed(() => this.companyInfo.formLabels());
+  readonly labels = computed(() => this.contact.formLabels());
 
   readonly firstProjectType = computed(() => this.projectTypesList()[0]?.label ?? 'Automatisation industrielle');
 
@@ -54,8 +56,8 @@ export class Contact implements OnInit {
   readonly showErrors = computed(() => this.submitted() && this.quoteForm.invalid);
 
   ngOnInit(): void {
-    this.companyInfo.fetchCompanyInfo();
-    this.companyInfo.fetchContactContent();
+    this.company.fetchCompanyInfo();
+    this.contact.fetchContactContent();
     this.quoteForm.get('projectType')?.setValue(this.firstProjectType());
   }
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NAV_LINKS, NavLink } from '../../core/navigation.config';
-import { CompanyInfoService } from '../../core/company-info.service';
+import { CompanyFacade } from '../../core/company.facade';
 
 @Component({
   selector: 'app-footer',
@@ -11,12 +11,12 @@ import { CompanyInfoService } from '../../core/company-info.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer implements OnInit {
-  private readonly companyInfo = inject(CompanyInfoService);
+  private readonly company = inject(CompanyFacade);
 
   readonly navLinks: NavLink[] = NAV_LINKS;
 
-  readonly company = computed(() => {
-    const info = this.companyInfo.companyInfo();
+  readonly companyData = computed(() => {
+    const info = this.company.companyInfo();
     if (!info) return null;
     return {
       name: info.company_name,
@@ -50,6 +50,6 @@ export class Footer implements OnInit {
   }
 
   ngOnInit(): void {
-    this.companyInfo.fetchCompanyInfo();
+    this.company.fetchCompanyInfo();
   }
 }
