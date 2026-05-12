@@ -42,6 +42,7 @@ export class EmailEditorComponent implements OnInit {
 
   async markAsRead(id: string): Promise<void> {
     await this.quoteRequests.markAsRead(id);
+    this.toast.success('Demande marquee comme lue');
     this.selectedRequest.update((r) => r?.id === id ? { ...r, read: true } : r);
   }
 

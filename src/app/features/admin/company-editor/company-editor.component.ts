@@ -97,9 +97,10 @@ export class CompanyEditorComponent implements OnInit {
   }
 
   async deleteService(id: string): Promise<void> {
+    if (!confirm('Supprimer ce service définitivement ? Cette action est irréversible.')) return;
     const { error } = await this.company.deleteService(id);
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de la suppression');
       return;
     }
     this.toast.success('Service supprimé');
@@ -113,7 +114,7 @@ export class CompanyEditorComponent implements OnInit {
     const target = direction === 'up' ? index - 1 : index + 1;
     if (target < 0 || target >= list.length) return;
     const { error } = await this.company.swapServiceOrder(id, list[target].id);
-    if (error) this.toast.error();
+    if (error) this.toast.error('Erreur lors du déplacement');
   }
 
   startEditValue(id: string): void {
@@ -142,7 +143,7 @@ export class CompanyEditorComponent implements OnInit {
 
     const { error } = await this.company.updateCompanyValue(id, icon, title, description);
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de la sauvegarde');
       return;
     }
     this.toast.success('Valeur mise à jour');

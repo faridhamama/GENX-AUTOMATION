@@ -92,6 +92,12 @@ export class ReferencesFacade {
     return { error };
   }
 
+  async deleteReferencesQualityPoint(id: string): Promise<{ error: string | null }> {
+    const { error } = await this.db.deleteReferencesQualityPoint(id);
+    if (!error) await this.fetchReferencesQualityPoints();
+    return { error };
+  }
+
   private async fetchReferencesQualityPoints(): Promise<void> {
     const { data, error } = await this.db.getReferencesQualityPoints();
     if (!error && data) this.referencesQualityPoints.set(data);

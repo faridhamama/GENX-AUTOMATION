@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ServicesPageFacade } from '../../../core/services-page.facade';
+import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { ToastService } from '../../../shared/toast/toast.service';
 export class ServicesEditorComponent implements OnInit {
   private readonly company = inject(CompanyFacade);
   private readonly servicesPage = inject(ServicesPageFacade);
+  private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
 
   protected readonly servicesPageHero = this.servicesPage.servicesPageHero;
@@ -37,14 +39,21 @@ export class ServicesEditorComponent implements OnInit {
     url: '',
     alt_text: '',
   };
+  selectedImageFile = signal<File | null>(null);
+  selectedImageKey = signal<string | null>(null);
 
   ngOnInit(): void {
     this.servicesPage.fetchServicesContent();
+    // Auto-load forms once data is available
+    setTimeout(() => {
+      this.setupHeroForm();
+      this.setupMethodologyForm();
+    }, 500);
   }
 
   protected setupHeroForm(): void {
     const hero = this.servicesPageHero();
-    if (hero) {
+    if (hero && !this.servicesHeroForm.headline) {
       this.servicesHeroForm = {
         label: hero.label ?? '',
         headline: hero.headline ?? '',
@@ -63,15 +72,15 @@ export class ServicesEditorComponent implements OnInit {
     });
 
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de la sauvegarde');
     } else {
-      this.toast.success('Hero section saved.');
+      this.toast.success('Hero enregistré');
     }
   }
 
   protected setupMethodologyForm(): void {
     const meth = this.servicesMethodology();
-    if (meth) {
+    if (meth && !this.servicesMethodologyForm.headline) {
       this.servicesMethodologyForm = {
         section_label: meth.section_label ?? '',
         headline: meth.headline ?? '',
@@ -90,9 +99,9 @@ export class ServicesEditorComponent implements OnInit {
     });
 
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de la sauvegarde');
     } else {
-      this.toast.success('Methodology section saved.');
+      this.toast.success('Méthodologie enregistrée');
     }
   }
 
@@ -104,9 +113,9 @@ export class ServicesEditorComponent implements OnInit {
     });
 
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de la sauvegarde');
     } else {
-      this.toast.success('Methodology step saved.');
+      this.toast.success('Étape enregistrée');
     }
   }
 
@@ -119,25 +128,49 @@ export class ServicesEditorComponent implements OnInit {
         url: img.url,
         alt_text: img.alt_text,
       };
+      this.selectedImageFile.set(null);
+      this.selectedImageKey.set(null);
+    }
+  }
+
+  protected onImageFileSelected(event: Event, key: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImageFile.set(input.files[0]);
+      this.selectedImageKey.set(key);
+      this.servicesImageForm.key = key;
     }
   }
 
   protected cancelEditServicesImage(): void {
     this.editingServicesImageKey.set(null);
+    this.selectedImageFile.set(null);
+    this.selectedImageKey.set(null);
     this.servicesImageForm = { key: '', url: '', alt_text: '' };
   }
 
-  protected async saveServicesImage(): Promise<void> {
-    const { error } = await this.servicesPage.upsertServicesImage(
-      this.servicesImageForm.key,
-      this.servicesImageForm.url,
-      this.servicesImageForm.alt_text,
-    );
-
+  protected async uploadServicesImage(): Promise<void> {
+    const file = this.selectedImageFile();
+    const key = this.selectedImageKey();
+    if (!file || !key) {
+      this.toast.error('Veuillez selectionner un fichier image');
+      return;
+    }
+    const path = `services/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+    const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de l\'upload: ' + error);
+      return;
+    }
+    if (!publicUrl) {
+      this.toast.error('URL publique non disponible apres upload');
+      return;
+    }
+    const { error: dbError } = await this.servicesPage.upsertServicesImage(key, publicUrl, this.servicesImageForm.alt_text);
+    if (dbError) {
+      this.toast.error('Erreur lors de la sauvegarde en base');
     } else {
-      this.toast.success('Image saved.');
+      this.toast.success('Image uploadee et sauvegardee');
       this.cancelEditServicesImage();
     }
   }

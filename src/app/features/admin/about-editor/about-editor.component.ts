@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { FormsModule } from '@angular/forms';
 import { AboutFacade } from '../../../core/about.facade';
 import { CompanyFacade } from '../../../core/company.facade';
+import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 
 interface AboutImageForm {
@@ -19,6 +20,7 @@ interface AboutImageForm {
 export class AboutEditorComponent implements OnInit {
   private readonly company = inject(CompanyFacade);
   private readonly about = inject(AboutFacade);
+  private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
 
   // Forms
@@ -40,6 +42,8 @@ export class AboutEditorComponent implements OnInit {
 
   // Image editing state
   editingAboutImageKey = signal<string | null>(null);
+  selectedImageFile = signal<File | null>(null);
+  selectedImageKey = signal<string | null>(null);
 
   // Expose signals for template
   readonly aboutHero = this.about.aboutHero;
@@ -200,28 +204,49 @@ export class AboutEditorComponent implements OnInit {
     if (img) {
       this.aboutImageForm = { key: img.image_key, url: img.url, alt_text: img.alt_text };
       this.editingAboutImageKey.set(key);
+      this.selectedImageFile.set(null);
+      this.selectedImageKey.set(null);
+    }
+  }
+
+  onImageFileSelected(event: Event, key: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImageFile.set(input.files[0]);
+      this.selectedImageKey.set(key);
+      this.aboutImageForm.key = key;
     }
   }
 
   cancelEditAboutImage(): void {
     this.editingAboutImageKey.set(null);
+    this.selectedImageFile.set(null);
+    this.selectedImageKey.set(null);
     this.aboutImageForm = { key: '', url: '', alt_text: '' };
   }
 
-  async saveAboutImage(): Promise<void> {
-    if (!this.aboutImageForm.key || !this.aboutImageForm.url) {
-      this.toast.error('La cle et l\'URL sont requises');
+  async uploadAboutImage(): Promise<void> {
+    const file = this.selectedImageFile();
+    const key = this.selectedImageKey();
+    if (!file || !key) {
+      this.toast.error('Veuillez selectionner un fichier image');
       return;
     }
-    const { error } = await this.about.upsertAboutImage(
-      this.aboutImageForm.key,
-      this.aboutImageForm.url,
-      this.aboutImageForm.alt_text,
-    );
+    const path = `about/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+    const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de l\'upload: ' + error);
+      return;
+    }
+    if (!publicUrl) {
+      this.toast.error('URL publique non disponible apres upload');
+      return;
+    }
+    const { error: dbError } = await this.about.upsertAboutImage(key, publicUrl, this.aboutImageForm.alt_text);
+    if (dbError) {
+      this.toast.error('Erreur lors de la sauvegarde en base');
     } else {
-      this.toast.success('Image sauvegardee');
+      this.toast.success('Image uploadee et sauvegardee');
       this.cancelEditAboutImage();
     }
   }

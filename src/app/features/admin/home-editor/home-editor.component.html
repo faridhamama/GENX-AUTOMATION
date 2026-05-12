@@ -2,34 +2,44 @@
 
   <!-- Hero Content -->
   <div class="bg-surface border border-outline rounded p-6">
-    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Contenu Hero</h2>
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary" aria-hidden="true">home</span>
+      <h2 class="text-lg font-headline font-bold text-on-surface">Contenu du Hero</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-4">Section principale de la page d'accueil — titre, description et boutons</p>
     <div class="space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Badge</label>
-          <input [(ngModel)]="heroContentForm.hero_badge" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Badge</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte court affiché au-dessus du titre principal (ex: "Solutions d'automatisation sur mesure")</p>
+          <input [(ngModel)]="heroContentForm.hero_badge" placeholder="Solutions d'automatisation sur mesure" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Legende image stats</label>
-          <input [(ngModel)]="heroContentForm.stats_image_caption" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Légende de l'image stats</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte sous l'image des statistiques (ex: "Équipe GENX en action")</p>
+          <input [(ngModel)]="heroContentForm.stats_image_caption" placeholder="Équipe GENX en action" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
       <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Titre (HTML autorise)</label>
-        <input [(ngModel)]="heroContentForm.hero_headline" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre principal</label>
+        <p class="text-xs text-on-surface-variant mb-1.5">Titre en grand — HTML simple autorisé (&lt;strong&gt;, &lt;em&gt;, &lt;br&gt;)</p>
+        <input [(ngModel)]="heroContentForm.hero_headline" placeholder="Automatisation industrielle<br>et robotique avanzada" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
       </div>
       <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Corps (HTML autorise)</label>
-        <textarea [(ngModel)]="heroContentForm.hero_body" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded resize-none"></textarea>
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Corps de texte</label>
+        <p class="text-xs text-on-surface-variant mb-1.5">Paragraphe sous le titre — HTML simple autorisé</p>
+        <textarea [(ngModel)]="heroContentForm.hero_body" rows="3" placeholder="Decrivez votre entreprise en quelques phrases..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded resize-none"></textarea>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Bouton principal</label>
-          <input [(ngModel)]="heroContentForm.cta_primary_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton principal</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton d'action principal (ex: "Demander un devis")</p>
+          <input [(ngModel)]="heroContentForm.cta_primary_label" placeholder="Demander un devis" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Bouton secondaire</label>
-          <input [(ngModel)]="heroContentForm.cta_secondary_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton secondaire</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte du second bouton (ex: "Découvrir nos services")</p>
+          <input [(ngModel)]="heroContentForm.cta_secondary_label" placeholder="Découvrir nos services" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
     </div>
@@ -38,17 +48,20 @@
       <h3 class="text-sm font-bold text-outline uppercase mb-3">Section Expertise</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
-          <input [(ngModel)]="heroContentForm.expertise_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Petit texte au-dessus du titre (ex: "Notre Expertise")</p>
+          <input [(ngModel)]="heroContentForm.expertise_label" placeholder="Notre Expertise" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div class="md:col-span-2">
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Titre</label>
-          <input [(ngModel)]="heroContentForm.expertise_headline" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section expertise</p>
+          <input [(ngModel)]="heroContentForm.expertise_headline" placeholder="Expertise en automatisation et robotique" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
       <div class="mt-3">
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Sous-texte</label>
-        <input [(ngModel)]="heroContentForm.expertise_subtext" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-texte</label>
+        <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif de la section expertise</p>
+        <input [(ngModel)]="heroContentForm.expertise_subtext" placeholder="Des solutions adaptées à chaque secteur..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
       </div>
     </div>
 
@@ -56,62 +69,126 @@
       <h3 class="text-sm font-bold text-outline uppercase mb-3">Section CTA</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Titre CTA</label>
-          <input [(ngModel)]="heroContentForm.cta_section_headline" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre CTA</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section appel à l'action</p>
+          <input [(ngModel)]="heroContentForm.cta_section_headline" placeholder="Prêt à automatiser ?" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Corps CTA</label>
-          <input [(ngModel)]="heroContentForm.cta_section_body" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Corps CTA</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif de la section CTA</p>
+          <input [(ngModel)]="heroContentForm.cta_section_body" placeholder="Discutons de votre projet..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Bouton CTA</label>
-          <input [(ngModel)]="heroContentForm.cta_section_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton CTA</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton CTA</p>
+          <input [(ngModel)]="heroContentForm.cta_section_label" placeholder="Contactez-nous" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
     </div>
 
-    <button (click)="saveHeroContent()" class="mt-6 px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+    <button (click)="saveHeroContent()" class="flex items-center gap-1.5 mt-6 px-6 py-2.5 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
+      <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+      Enregistrer
+    </button>
   </div>
 
   <!-- Hero Stats -->
   <div class="bg-surface border border-outline rounded p-6">
-    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Statistiques du Hero</h2>
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary" aria-hidden="true">bar_chart</span>
+      <h2 class="text-lg font-headline font-bold text-on-surface">Statistiques du Hero</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-4">Les 2 chiffres clés affichés sur la page d'accueil</p>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="space-y-4">
         <h3 class="text-sm font-bold text-outline uppercase">Statistique 1</h3>
-        <input [(ngModel)]="heroStatsForm.stat1_label" placeholder="Label (ex: Projets livrés)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        <input [(ngModel)]="heroStatsForm.stat1_value" placeholder="Valeur (ex: 150+)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        <input [(ngModel)]="heroStatsForm.stat1_sub" placeholder="Sous-titre (ex: Depuis 2025)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Nom de la statistique (ex: "Projets livrés")</p>
+          <input [(ngModel)]="heroStatsForm.stat1_label" placeholder="Projets livrés" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Le chiffre ou pourcentage (ex: "150+" ou "98%")</p>
+          <input [(ngModel)]="heroStatsForm.stat1_value" placeholder="150+" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-titre</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte sous la valeur (ex: "Depuis 2025")</p>
+          <input [(ngModel)]="heroStatsForm.stat1_sub" placeholder="Depuis 2025" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
       </div>
       <div class="space-y-4">
         <h3 class="text-sm font-bold text-outline uppercase">Statistique 2</h3>
-        <input [(ngModel)]="heroStatsForm.stat2_label" placeholder="Label (ex: Clients actifs)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        <input [(ngModel)]="heroStatsForm.stat2_value" placeholder="Valeur (ex: 98%)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        <input [(ngModel)]="heroStatsForm.stat2_sub" placeholder="Sous-titre (ex: Satisfaction client)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Nom de la statistique (ex: "Clients actifs")</p>
+          <input [(ngModel)]="heroStatsForm.stat2_label" placeholder="Clients actifs" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Le chiffre ou pourcentage (ex: "98%")</p>
+          <input [(ngModel)]="heroStatsForm.stat2_value" placeholder="98%" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-titre</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Texte sous la valeur (ex: "Satisfaction client")</p>
+          <input [(ngModel)]="heroStatsForm.stat2_sub" placeholder="Satisfaction client" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
       </div>
     </div>
-    <button (click)="saveHeroStats()" class="mt-6 px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+    <button (click)="saveHeroStats()" class="flex items-center gap-1.5 mt-6 px-6 py-2.5 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
+      <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+      Enregistrer
+    </button>
   </div>
 
   <!-- Expertise Cards -->
   <div class="bg-surface border border-outline rounded p-6">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary" aria-hidden="true">apps</span>
+      <h2 class="text-lg font-headline font-bold text-on-surface">Cartes d'Expertise</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-4">Les domaines de compétence affichés après le hero sur la page d'accueil</p>
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-lg font-headline font-bold text-on-surface">Cartes d'expertise</h2>
-      <button (click)="showAddCardForm()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">+ Ajouter</button>
+      <span class="text-xs text-on-surface-variant">{{ home.homepageExpertiseCards().length }} carte(s)存在</span>
+      <button (click)="showAddCardForm()" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
+        <span class="material-symbols-outlined text-base" aria-hidden="true">add</span>
+        Ajouter une carte
+      </button>
     </div>
     @if (showAddCard()) {
       <div class="bg-surface-container-low border border-outline p-4 mb-4 rounded space-y-3">
-        <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
-          @for (icon of cardIcons; track icon) {
-            <option [value]="icon">{{ icon }}</option>
-          }
-        </select>
-        <input [(ngModel)]="cardForm.title" placeholder="Titre" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-        <textarea [(ngModel)]="cardForm.description" placeholder="Description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
-        <input [(ngModel)]="cardForm.tags" placeholder="Tags (séparés par virgules)" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icône</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Nom de l'icône Material Symbols (ex: "precision_manufacturing")</p>
+          <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
+            @for (icon of cardIcons; track icon) {
+              <option [value]="icon">{{ icon }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Nom court du domaine d'expertise</p>
+          <input [(ngModel)]="cardForm.title" placeholder="Automatisation Industrielle" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Description courte du domaine</p>
+          <textarea [(ngModel)]="cardForm.description" placeholder="Conception et intégration de systèmes automatisés..." rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded resize-none"></textarea>
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Tags</label>
+          <p class="text-xs text-on-surface-variant mb-1.5">Mots-clés séparés par des virgules (ex: "PLC, SCADA, Robotique")</p>
+          <input [(ngModel)]="cardForm.tags" placeholder="PLC, SCADA, Robotique" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+        </div>
         <div class="flex gap-2">
-          <button (click)="saveCard()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
-          <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+          <button (click)="saveCard()" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
+            <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+            Enregistrer
+          </button>
+          <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
         </div>
       </div>
     }
@@ -120,16 +197,31 @@
         <div class="bg-surface-container-low border border-outline p-4 rounded">
           @if (editingCardId() === card.id) {
             <div class="space-y-3">
-              <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
-                @for (icon of cardIcons; track icon) {
-                  <option [value]="icon">{{ icon }}</option>
-                }
-              </select>
-              <input [(ngModel)]="cardForm.title" placeholder="Titre de la carte" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-              <textarea [(ngModel)]="cardForm.description" placeholder="Description de la carte" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
-              <input [(ngModel)]="cardForm.tags" placeholder="Tags (séparés par virgules)" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icône</label>
+                <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
+                  @for (icon of cardIcons; track icon) {
+                    <option [value]="icon">{{ icon }}</option>
+                  }
+                </select>
+              </div>
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
+                <input [(ngModel)]="cardForm.title" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              </div>
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
+                <textarea [(ngModel)]="cardForm.description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded resize-none"></textarea>
+              </div>
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Tags</label>
+                <input [(ngModel)]="cardForm.tags" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              </div>
               <div class="flex gap-2">
-                <button (click)="saveCard()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+                <button (click)="saveCard()" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
+                  <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+                  Enregistrer
+                </button>
                 <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
               </div>
             </div>
@@ -148,8 +240,14 @@
                 </div>
               </div>
               <div class="flex gap-2 ml-4">
-                <button (click)="startEditCard(card)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Modifier</button>
-                <button (click)="deleteCard(card.id)" class="px-3 py-1 text-sm text-error border border-error rounded hover:bg-error hover:text-white transition-colors cursor-pointer">Supprimer</button>
+                <button (click)="startEditCard(card)" class="flex items-center gap-1 px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">
+                  <span class="material-symbols-outlined text-base" aria-hidden="true">edit</span>
+                  Modifier
+                </button>
+                <button (click)="deleteCard(card.id)" class="flex items-center gap-1 px-3 py-1 text-sm text-error border border-error rounded hover:bg-error hover:text-white transition-colors cursor-pointer">
+                  <span class="material-symbols-outlined text-base" aria-hidden="true">delete</span>
+                  Supprimer
+                </button>
               </div>
             </div>
           }
@@ -160,33 +258,57 @@
 
   <!-- Images -->
   <div class="bg-surface border border-outline rounded p-6">
-    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Images</h2>
+    <div class="flex items-center gap-2 mb-1">
+      <span class="material-symbols-outlined text-primary" aria-hidden="true">image</span>
+      <h2 class="text-lg font-headline font-bold text-on-surface">Images de la Page d'Accueil</h2>
+    </div>
+    <p class="text-xs text-on-surface-variant mb-4">URL et description des images affichées sur la page d'accueil</p>
     <div class="space-y-4">
       @for (img of home.homepageImages(); track img.image_key) {
         <div class="bg-surface-container-low border border-outline p-4 rounded">
           @if (editingImageKey() === img.image_key) {
             <div class="space-y-3">
-              <input [(ngModel)]="imageForm.url" placeholder="URL de l'image" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-              <input [(ngModel)]="imageForm.alt_text" placeholder="Texte alternatif" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Fichier image</label>
+                <p class="text-xs text-on-surface-variant mb-1.5">Choisissez un fichier image (PNG, JPG, WebP, SVG)</p>
+                <input (change)="onImageFileSelected($event, img.image_key)" type="file" accept="image/*" class="w-full text-sm text-on-surface file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:bg-primary file:text-on-primary file:font-bold file:font-label file:uppercase file:tracking-widest file:text-[10px]" />
+              </div>
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Texte alternatif</label>
+                <p class="text-xs text-on-surface-variant mb-1.5">Description de l'image pour les moteurs de recherche</p>
+                <input [(ngModel)]="imageForm.alt_text" placeholder="Armoire électrique automate" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              </div>
               @if (img.url) {
                 <img [src]="img.url" [alt]="img.alt_text" class="h-32 object-cover rounded" />
               }
               <div class="flex gap-2">
-                <button (click)="saveImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+                <button (click)="uploadImage(img.image_key)" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
+                  <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+                  Enregistrer
+                </button>
                 <button (click)="cancelEditImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
               </div>
             </div>
           } @else {
-            <div class="flex items-center justify-between">
-              <div class="flex-1">
-                <span class="font-label text-xs uppercase tracking-widest text-outline mr-3">{{ img.image_key }}</span>
+            <div class="flex items-start gap-4">
+              <div class="shrink-0">
                 @if (img.url) {
-                  <img [src]="img.url" [alt]="img.alt_text" class="h-16 w-auto rounded mt-2" />
+                  <img [src]="img.url" [alt]="img.alt_text || img.image_key" class="h-20 w-20 object-cover rounded border border-outline" />
                 } @else {
-                  <span class="text-sm text-on-surface-variant italic">Aucune image définie</span>
+                  <div class="h-20 w-20 rounded border border-dashed border-outline flex items-center justify-center">
+                    <span class="material-symbols-outlined text-outline text-2xl" aria-hidden="true">image_not_supported</span>
+                  </div>
                 }
               </div>
-              <button (click)="startEditImage(img.image_key)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer ml-4">Modifier</button>
+              <div class="flex-1 min-w-0">
+                <span class="font-label text-[10px] font-bold uppercase tracking-widest text-primary">{{ img.image_key }}</span>
+                <p class="text-xs text-on-surface-variant mt-1">{{ img.alt_text || 'Pas de texte alternatif' }}</p>
+                <p class="text-[10px] text-on-surface-variant mt-1 truncate">{{ img.url || 'Aucune URL définie' }}</p>
+              </div>
+              <button (click)="startEditImage(img.image_key)" class="flex items-center gap-1 px-3 py-1.5 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer shrink-0">
+                <span class="material-symbols-outlined text-base" aria-hidden="true">edit</span>
+                Modifier
+              </button>
             </div>
           }
         </div>

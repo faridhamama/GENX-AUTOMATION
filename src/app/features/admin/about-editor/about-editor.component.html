@@ -7,221 +7,259 @@
 
     <!-- Hero Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">person</span>
         <h2 class="font-headline font-bold text-on-surface">Hero</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">Introduction principale de la section A propos</p>
       <form (ngSubmit)="saveAboutHero()" class="space-y-4">
         <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Texte d'accent au-dessus du titre principal</p>
             <input [(ngModel)]="aboutHeroForm.label" name="aboutHeroLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Titre principal de la section Hero</p>
             <input [(ngModel)]="aboutHeroForm.headline" name="aboutHeroHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Body</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Paragraphe de description sous le titre</p>
             <textarea [(ngModel)]="aboutHeroForm.body" name="aboutHeroBody" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
           </div>
         </div>
-        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-          Sauvegarder
+        <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+          Enregistrer
         </button>
       </form>
     </div>
 
     <!-- Availability Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">schedule</span>
         <h2 class="font-headline font-bold text-on-surface">Disponibilite</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">Horaires et jours de disponibilite pour les rendez-vous</p>
       <form (ngSubmit)="saveAboutAvailability()" class="space-y-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section disponibilite</p>
             <input [(ngModel)]="aboutAvailForm.label" name="aboutAvailLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Jours</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Jours de la semaine disponibles</p>
             <input [(ngModel)]="aboutAvailForm.days" name="aboutAvailDays" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Heures</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Plage horaire quotidienne</p>
             <input [(ngModel)]="aboutAvailForm.hours" name="aboutAvailHours" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
         </div>
-        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-          Sauvegarder
+        <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+          Enregistrer
         </button>
       </form>
     </div>
 
     <!-- Mission Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">format_quote</span>
         <h2 class="font-headline font-bold text-on-surface">Mission</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">Citation ou declaration de mission de l'entreprise</p>
       <form (ngSubmit)="saveAboutMission()" class="space-y-4">
         <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section mission</p>
             <input [(ngModel)]="aboutMissionForm.label" name="aboutMissionLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Quote</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Citation ou declaration inspirante</p>
             <textarea [(ngModel)]="aboutMissionForm.quote" name="aboutMissionQuote" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
           </div>
         </div>
-        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-          Sauvegarder
+        <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+          Enregistrer
         </button>
       </form>
     </div>
 
     <!-- Company Description Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">domain</span>
         <h2 class="font-headline font-bold text-on-surface">Description Entreprise</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">Presentation de l'entreprise et de son activite</p>
       <form (ngSubmit)="saveAboutCompany()" class="space-y-4">
         <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section description</p>
             <input [(ngModel)]="aboutCompanyForm.label" name="aboutCompanyLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Body</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Description detaillee de l'entreprise</p>
             <textarea [(ngModel)]="aboutCompanyForm.body" name="aboutCompanyBody" rows="4" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
           </div>
         </div>
-        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-          Sauvegarder
+        <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+          Enregistrer
         </button>
       </form>
     </div>
 
     <!-- Services Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">handyman</span>
         <h2 class="font-headline font-bold text-on-surface">Section Services</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">En-tete et texte d'introduction pour la section services</p>
       <form (ngSubmit)="saveAboutServicesSection()" class="space-y-4">
         <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section services</p>
             <input [(ngModel)]="aboutServicesSectionForm.headline" name="aboutServicesHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif sous le titre</p>
             <textarea [(ngModel)]="aboutServicesSectionForm.subtext" name="aboutServicesSubtext" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
           </div>
         </div>
-        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-          Sauvegarder
+        <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+          Enregistrer
         </button>
       </form>
     </div>
 
     <!-- Values Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">emoji_events</span>
         <h2 class="font-headline font-bold text-on-surface">Section Valeurs</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">En-tete et texte d'introduction pour la section valeurs</p>
       <form (ngSubmit)="saveAboutValuesSection()" class="space-y-4">
         <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section valeurs</p>
             <input [(ngModel)]="aboutValuesSectionForm.headline" name="aboutValuesHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif sous le titre</p>
             <textarea [(ngModel)]="aboutValuesSectionForm.subtext" name="aboutValuesSubtext" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
           </div>
         </div>
-        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-          Sauvegarder
+        <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+          Enregistrer
         </button>
       </form>
     </div>
 
     <!-- CTA Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">campaign</span>
         <h2 class="font-headline font-bold text-on-surface">Section CTA</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">Appels a l'action et liens vers les pages de contact</p>
       <form (ngSubmit)="saveAboutCtaSection()" class="space-y-4">
         <div class="grid grid-cols-1 gap-4">
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section CTA</p>
             <input [(ngModel)]="aboutCtaSectionForm.headline" name="aboutCtaHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif sous le titre</p>
             <textarea [(ngModel)]="aboutCtaSectionForm.subtext" name="aboutCtaSubtext" rows="2" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Primary Label</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton principal</p>
               <input [(ngModel)]="aboutCtaSectionForm.cta_primary_label" name="aboutCtaPrimaryLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
             </div>
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Primary Link</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">URL du bouton principal</p>
               <input [(ngModel)]="aboutCtaSectionForm.cta_primary_link" name="aboutCtaPrimaryLink" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
             </div>
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Secondary Label</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton secondaire</p>
               <input [(ngModel)]="aboutCtaSectionForm.cta_secondary_label" name="aboutCtaSecondaryLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
             </div>
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Secondary Link</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">URL du bouton secondaire</p>
               <input [(ngModel)]="aboutCtaSectionForm.cta_secondary_link" name="aboutCtaSecondaryLink" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
             </div>
           </div>
         </div>
-        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-          Sauvegarder
+        <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+          Enregistrer
         </button>
       </form>
     </div>
 
     <!-- Images Section -->
     <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-4">
+      <div class="flex items-center gap-2 mb-1">
         <span class="material-symbols-outlined text-primary" aria-hidden="true">image</span>
         <h2 class="font-headline font-bold text-on-surface">Images</h2>
       </div>
+      <p class="text-xs text-on-surface-variant mb-4">Modifier les images utilisees dans la section A propos</p>
 
       @if (editingAboutImageKey()) {
         <div class="bg-surface-container-low border border-outline-variant rounded-sm p-4 mb-4">
           <h3 class="font-label text-[10px] font-bold uppercase tracking-widest text-outline mb-3">Modifier l'image: {{ aboutImageForm.key }}</h3>
-          <form (ngSubmit)="saveAboutImage()" class="space-y-4">
+          <div class="space-y-4">
             <div class="grid grid-cols-1 gap-4">
               <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">URL</label>
-                <input [(ngModel)]="aboutImageForm.url" name="aboutImageUrl" class="w-full bg-surface border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Fichier image</label>
+                <p class="text-xs text-on-surface-variant mb-1.5">Choisissez un fichier image (PNG, JPG, WebP, SVG)</p>
+                <input (change)="onImageFileSelected($event, aboutImageForm.key)" type="file" accept="image/*" class="w-full text-sm text-on-surface file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:bg-primary file:text-on-primary file:font-bold file:font-label file:uppercase file:tracking-widest file:text-[10px]" />
               </div>
               <div>
                 <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Alt Text</label>
+                <p class="text-xs text-on-surface-variant mb-1.5">Texte alternatif pour l'accessibilite</p>
                 <input [(ngModel)]="aboutImageForm.alt_text" name="aboutImageAlt" class="w-full bg-surface border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
               </div>
             </div>
             <div class="flex gap-2">
-              <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-                Sauvegarder
+              <button type="button" (click)="uploadAboutImage()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+                <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+                Enregistrer
               </button>
               <button type="button" (click)="cancelEditAboutImage()" class="bg-surface-container-high text-on-surface px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-lowest transition-colors rounded-sm cursor-pointer">
                 Annuler
               </button>
             </div>
-          </form>
+          </div>
         </div>
       }
 

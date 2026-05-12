@@ -49,6 +49,20 @@ export class SupabaseService {
       .eq('id', id);
     return { error: error ? error.message : null };
   }
+
+  async uploadImage(bucket: string, path: string, file: File): Promise<{ publicUrl: string | null; error: string | null }> {
+    const { data, error } = await this.client.storage
+      .from(bucket)
+      .upload(path, file, { upsert: true });
+    if (error) return { publicUrl: null, error: error.message };
+    const { data: urlData } = this.client.storage.from(bucket).getPublicUrl(path);
+    return { publicUrl: urlData.publicUrl, error: null };
+  }
+
+  async deleteImage(bucket: string, path: string): Promise<{ error: string | null }> {
+    const { error } = await this.client.storage.from(bucket).remove([path]);
+    return { error: error ? error.message : null };
+  }
 }
 
 // Re-export all row types from models for backward compatibility

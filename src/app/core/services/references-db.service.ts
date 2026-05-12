@@ -89,6 +89,14 @@ export class ReferencesDbService {
     return { error: error ? error.message : null };
   }
 
+  async deleteReferencesQualityPoint(id: string): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.client
+      .from('references_quality_points')
+      .delete()
+      .eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
   async getReferencesQualityPoints(): Promise<{ data: ReferencesQualityPointRow[]; error: string | null }> {
     const { data, error } = await this.supabase.client
       .from('references_quality_points')

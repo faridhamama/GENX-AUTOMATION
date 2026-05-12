@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ReferencesFacade } from '../../../core/references.facade';
+import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { ToastService } from '../../../shared/toast/toast.service';
 export class ReferencesEditorComponent implements OnInit {
   private readonly company = inject(CompanyFacade);
   private readonly refs = inject(ReferencesFacade);
+  private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
 
   // Data signals from facades
@@ -43,6 +45,8 @@ export class ReferencesEditorComponent implements OnInit {
   readonly editingPerfStatId = signal<string | null>(null);
   readonly editingSideProjectId = signal<string | null>(null);
   readonly editingQualityPointId = signal<string | null>(null);
+  readonly selectedImageFile = signal<File | null>(null);
+  readonly selectedImageKey = signal<string | null>(null);
 
   // Inline edit forms
   readonly perfStatForm = { value: '', label: '' };
@@ -214,9 +218,10 @@ export class ReferencesEditorComponent implements OnInit {
   }
 
   async deleteSideProject(id: string): Promise<void> {
+    if (!confirm('Supprimer ce projet parallele ?')) return;
     const { error } = await this.refs.deleteReferencesSideProject(id);
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de la suppression');
       return;
     }
     this.toast.success('Projet parallel supprime');
@@ -259,6 +264,17 @@ export class ReferencesEditorComponent implements OnInit {
     this.cancelEditQualityPoint();
   }
 
+  async deleteQualityPoint(id: string): Promise<void> {
+    if (!confirm('Supprimer ce point qualite ?')) return;
+    const { error } = await this.refs.deleteReferencesQualityPoint(id);
+    if (error) {
+      this.toast.error('Erreur lors de la suppression');
+      return;
+    }
+    this.toast.success('Point qualite supprime');
+    if (this.editingQualityPointId() === id) this.cancelEditQualityPoint();
+  }
+
   // References images methods
   startEditRefImage(key: string): void {
     const image = this.refs.referencesImagesMap()[key];
@@ -267,27 +283,51 @@ export class ReferencesEditorComponent implements OnInit {
     this.refImageForm.url = image.url;
     this.refImageForm.alt_text = image.alt_text;
     this.editingRefImageKey.set(key);
+    this.selectedImageFile.set(null);
+    this.selectedImageKey.set(null);
+  }
+
+  onImageFileSelected(event: Event, key: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImageFile.set(input.files[0]);
+      this.selectedImageKey.set(key);
+      this.refImageForm.key = key;
+    }
   }
 
   cancelEditRefImage(): void {
     this.editingRefImageKey.set(null);
+    this.selectedImageFile.set(null);
+    this.selectedImageKey.set(null);
     this.refImageForm.key = '';
     this.refImageForm.url = '';
     this.refImageForm.alt_text = '';
   }
 
-  async saveRefImage(): Promise<void> {
-    const key = this.refImageForm.key.trim();
-    const url = this.refImageForm.url.trim();
-    const alt_text = this.refImageForm.alt_text.trim();
-    if (!key || !url) return;
-
-    const { error } = await this.refs.upsertReferencesImage(key, url, alt_text);
-    if (error) {
-      this.toast.error();
+  async uploadRefImage(): Promise<void> {
+    const file = this.selectedImageFile();
+    const key = this.selectedImageKey();
+    if (!file || !key) {
+      this.toast.error('Veuillez selectionner un fichier image');
       return;
     }
-    this.toast.success('Image mise a jour');
-    this.cancelEditRefImage();
+    const path = `references/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+    const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
+    if (error) {
+      this.toast.error('Erreur lors de l\'upload: ' + error);
+      return;
+    }
+    if (!publicUrl) {
+      this.toast.error('URL publique non disponible apres upload');
+      return;
+    }
+    const { error: dbError } = await this.refs.upsertReferencesImage(key, publicUrl, this.refImageForm.alt_text);
+    if (dbError) {
+      this.toast.error('Erreur lors de la sauvegarde en base');
+    } else {
+      this.toast.success('Image uploadee et sauvegardee');
+      this.cancelEditRefImage();
+    }
   }
 }

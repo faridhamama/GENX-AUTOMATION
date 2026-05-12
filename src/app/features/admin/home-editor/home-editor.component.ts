@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { HomeFacade } from '../../../core/home.facade';
+import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
@@ -14,12 +15,15 @@ import { ToastService } from '../../../shared/toast/toast.service';
 export class HomeEditorComponent implements OnInit {
   readonly company = inject(CompanyFacade);
   readonly home = inject(HomeFacade);
+  readonly supabase = inject(SupabaseService);
   readonly toast = inject(ToastService);
 
   // Signals
   readonly editingCardId = signal<string | null>(null);
   readonly showAddCard = signal(false);
   readonly editingImageKey = signal<string | null>(null);
+  readonly selectedImageFile = signal<File | null>(null);
+  readonly selectedImageKey = signal<string | null>(null);
 
   // Homepage hero content form (badge, headline, body, CTAs, expertise section, CTA section)
   heroContentForm: {
@@ -229,11 +233,12 @@ export class HomeEditorComponent implements OnInit {
   }
 
   async deleteCard(id: string): Promise<void> {
+    if (!confirm('Supprimer cette carte d\'expertise ? Cette action est irréversible.')) return;
     const { error } = await this.home.deleteHomepageExpertiseCard(id);
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de la suppression');
     } else {
-      this.toast.success('Carte supprimee');
+      this.toast.success('Carte supprimée');
     }
   }
 
@@ -261,19 +266,41 @@ export class HomeEditorComponent implements OnInit {
 
   cancelEditImage(): void {
     this.editingImageKey.set(null);
+    this.selectedImageFile.set(null);
+    this.selectedImageKey.set(null);
     this.imageForm = { key: '', url: '', alt_text: '' };
   }
 
-  async saveImage(): Promise<void> {
-    const { error } = await this.home.upsertHomepageImage(
-      this.imageForm.key,
-      this.imageForm.url,
-      this.imageForm.alt_text,
-    );
+  onImageFileSelected(event: Event, key: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImageFile.set(input.files[0]);
+      this.selectedImageKey.set(key);
+      this.imageForm.key = key;
+    }
+  }
+
+  async uploadImage(key: string): Promise<void> {
+    const file = this.selectedImageFile();
+    if (!file) {
+      this.toast.error('Veuillez selectionner un fichier image');
+      return;
+    }
+    const path = `homepage/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+    const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
     if (error) {
-      this.toast.error();
+      this.toast.error('Erreur lors de l\'upload: ' + error);
+      return;
+    }
+    if (!publicUrl) {
+      this.toast.error('URL publique non disponible apres upload');
+      return;
+    }
+    const { error: dbError } = await this.home.upsertHomepageImage(key, publicUrl, this.imageForm.alt_text);
+    if (dbError) {
+      this.toast.error('Erreur lors de la sauvegarde en base');
     } else {
-      this.toast.success('Image sauvegardee');
+      this.toast.success('Image uploadee et sauvegardee');
       this.cancelEditImage();
     }
   }

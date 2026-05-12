@@ -4,36 +4,46 @@
   @if (companyInfoData(); as info) {
     <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
       <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
-        <h2 class="font-headline font-bold text-on-surface">Informations de contact</h2>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="material-symbols-outlined text-primary" aria-hidden="true">domain</span>
+          <h2 class="font-headline font-bold text-on-surface">Informations de contact</h2>
+        </div>
+        <p class="text-xs text-on-surface-variant">Coordonnées affichées sur le site (page Contact, Footer, etc.)</p>
       </div>
       <div class="p-5">
         <form #companyForm="ngForm" (ngSubmit)="saveCompanyInfo(companyForm)" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Email</label>
-              <input name="contact_email" [ngModel]="info.contact_email" placeholder="contact@genxautomation.com" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Email</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Adresse email principale de contact</p>
+              <input name="contact_email" [ngModel]="info.contact_email" placeholder="contact@genx-automation.ma" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
             <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Téléphone</label>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Téléphone</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Numéro de téléphone principal (avec indicatif pays)</p>
               <input name="contact_phone" [ngModel]="info.contact_phone" placeholder="+212 6XX-XXXXXX" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
           </div>
           <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Adresse</label>
-            <input name="contact_address" [ngModel]="info.contact_address" placeholder="Casablanca, Maroc" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Adresse</label>
+            <p class="text-xs text-on-surface-variant mb-1.5">Adresse physique complète</p>
+            <input name="contact_address" [ngModel]="info.contact_address" placeholder="Zone Industrielle, Tit Mellil, Casablanca" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Heures d'ouverture</label>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Heures d'ouverture</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Horaires de travail (ex: "08:00 - 18:00")</p>
               <input name="availability_hours" [ngModel]="info.availability_hours" placeholder="08:00 - 18:00" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
             <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Jours de disponibilité</label>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Jours de disponibilité</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Jours ouvrables (ex: "Lundi - Vendredi")</p>
               <input name="availability_days" [ngModel]="info.availability_days" placeholder="Lundi - Vendredi" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
           </div>
           <div class="flex justify-end pt-2">
-            <button type="submit" class="px-6 py-2.5 bg-primary text-on-primary font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-all rounded-sm cursor-pointer">
+            <button type="submit" class="flex items-center gap-1.5 px-6 py-2.5 bg-primary text-on-primary font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-all rounded-sm cursor-pointer">
+              <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
               Enregistrer
             </button>
           </div>
@@ -49,7 +59,13 @@
   <!-- Services Card -->
   <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
     <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low flex items-center justify-between">
-      <h2 class="font-headline font-bold text-on-surface">Services</h2>
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="material-symbols-outlined text-primary" aria-hidden="true">handyman</span>
+          <h2 class="font-headline font-bold text-on-surface">Services</h2>
+        </div>
+        <p class="text-xs text-on-surface-variant">Services proposés par l'entreprise</p>
+      </div>
       @if (!showAddService() && !editingServiceId()) {
         <button (click)="showAddServiceForm()" class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">add</span>
@@ -66,12 +82,14 @@
           </h3>
           <div class="space-y-4">
             <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
-              <input [(ngModel)]="serviceForm.label" type="text" placeholder="Nom du service" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Nom du service</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Titre court du service (ex: "Automatisation Industrielle")</p>
+              <input [(ngModel)]="serviceForm.label" type="text" placeholder="Automatisation Industrielle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
             </div>
             <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Description</label>
-              <textarea [(ngModel)]="serviceForm.description" rows="3" placeholder="Description du service" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40 resize-none"></textarea>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
+              <p class="text-xs text-on-surface-variant mb-1.5">Description courte du service proposé</p>
+              <textarea [(ngModel)]="serviceForm.description" rows="3" placeholder="Conception et integration de solutions d'automatisation..." class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40 resize-none"></textarea>
             </div>
             <div class="flex gap-2 pt-1">
               <button (click)="saveService()" class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
@@ -89,7 +107,7 @@
       @if (services().length === 0) {
         <div class="text-center py-8">
           <span class="material-symbols-outlined text-4xl text-outline mb-3 block" aria-hidden="true">handyman</span>
-          <p class="text-sm text-on-surface-variant">Aucun service enregistré</p>
+          <p class="text-sm text-on-surface-variant">Aucun service enregistré — cliquez sur "Ajouter" pour commencer</p>
         </div>
       } @else {
         <ul class="space-y-2">
@@ -115,7 +133,11 @@
   <!-- Engagements (Values) Card -->
   <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
     <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
-      <h2 class="font-headline font-bold text-on-surface">Engagements</h2>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">verified</span>
+        <h2 class="font-headline font-bold text-on-surface">Engagements</h2>
+      </div>
+      <p class="text-xs text-on-surface-variant">Valeurs et engagements de l'entreprise</p>
     </div>
 
     <div class="p-5">
@@ -133,6 +155,7 @@
                   <h3 class="font-label font-bold text-[10px] uppercase tracking-widest text-primary">Modifier l'engagement</h3>
                   <div>
                     <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icône</label>
+                    <p class="text-xs text-on-surface-variant mb-1.5">Nom de l'icône Material Symbols</p>
                     <select [(ngModel)]="valueForm.icon" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none cursor-pointer">
                       @for (icon of availableIcons; track icon) {
                         <option [value]="icon">{{ icon }}</option>
@@ -141,10 +164,12 @@
                   </div>
                   <div>
                     <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
+                    <p class="text-xs text-on-surface-variant mb-1.5">Nom court de l'engagement (ex: "Excellence technique")</p>
                     <input [(ngModel)]="valueForm.title" type="text" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
                   </div>
                   <div>
                     <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
+                    <p class="text-xs text-on-surface-variant mb-1.5">Description courte de l'engagement</p>
                     <textarea [(ngModel)]="valueForm.description" rows="2" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none resize-none"></textarea>
                   </div>
                   <div class="flex gap-2 pt-1">

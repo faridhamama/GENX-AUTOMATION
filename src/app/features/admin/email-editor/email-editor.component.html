@@ -3,6 +3,8 @@
   <div class="w-96 border-r border-surface-variant flex flex-col bg-surface">
     <!-- Search -->
     <div class="p-4 border-b border-surface-variant">
+      <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Recherche</label>
+      <p class="text-xs text-on-surface-variant mb-1.5">Filtrez les demandes par nom, email ou type de projet</p>
       <input
         type="text"
         [(ngModel)]="searchQuery"
@@ -66,9 +68,10 @@
               @if (!req.read) {
                 <button
                   (click)="markAsRead(req.id)"
-                  class="px-3 py-1.5 bg-primary text-on-primary rounded text-sm hover:bg-primary-container transition-colors"
+                  class="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded text-sm hover:bg-primary-container transition-colors"
                 >
-                  Marquer lu
+                  <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+                  Marquer comme lu
                 </button>
               }
               <button
