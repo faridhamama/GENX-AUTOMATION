@@ -1,6 +1,6 @@
 <!-- Login View -->
 @if (!isAuthenticated()) {
-  <div class="min-h-screen bg-surface flex items-start justify-center px-5 pt-[64px] pb-10">
+  <div class="admin-body bg-surface flex items-start justify-center px-5 pb-10">
     <div class="w-full max-w-sm">
       <div class="text-center mb-6">
         <div class="text-[10px] font-label uppercase tracking-[0.3em] text-primary mb-2">Espace Administration</div>
@@ -33,10 +33,10 @@
 
 <!-- Authenticated Layout -->
 @if (isAuthenticated()) {
-  <div class="flex mt-[64px]">
+  <div class="admin-grid">
 
     <!-- Sidebar -->
-    <aside class="fixed top-[64px] left-0 w-56 admin-sidebar bg-surface border-r border-outline-variant hidden md:block overflow-y-auto">
+    <aside class="admin-side bg-surface border-r border-outline-variant hidden md:block">
       <nav class="p-4 flex flex-col gap-1">
         <div class="text-[10px] font-label uppercase tracking-widest text-outline mb-2 mt-2">Navigation</div>
 
@@ -98,7 +98,7 @@
     </aside>
 
     <!-- Main content -->
-    <main class="flex-1 bg-surface-container-lowest md:pl-56 admin-page">
+    <main class="admin-content bg-surface-container-lowest">
       <router-outlet />
     </main>
   </div>

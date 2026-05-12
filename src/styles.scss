@@ -43,29 +43,53 @@ img {
 }
 
 /* ============================================
-   Admin layout: centralized screen tokens
+   Layout tokens
    ============================================ */
 :root {
-  --navbar-height: 64px;
-  --sidebar-width: 224px; /* 14rem = 224px */
+  --navbar-h: 96px;
+  --sidebar-w: 224px;
 }
 
-/* Admin page: full height minus navbar */
-.admin-page {
-  height: calc(100vh - var(--navbar-height));
+/* ============================================
+   Admin layout utilities
+   ============================================ */
+
+/* Grid: navbar + sidebar + content */
+.admin-grid {
+  display: grid;
+  grid-template-areas:
+    "main main main"
+    "side content content";
+  grid-template-rows: var(--navbar-h) 1fr;
+  grid-template-columns: var(--sidebar-w) 1fr 1fr;
+  min-height: 100vh;
 }
 
-/* Admin page with list + detail layout */
+/* Full-height minus navbar (for scrolling content) */
+.admin-body {
+  grid-area: main;
+  padding-top: var(--navbar-h);
+  min-height: 100vh;
+}
+
+/* Sidebar panel */
+.admin-side {
+  grid-area: side;
+  position: sticky;
+  top: var(--navbar-h);
+  height: calc(100vh - var(--navbar-h));
+  overflow-y: auto;
+}
+
+/* Main content panel */
+.admin-content {
+  grid-area: content;
+  overflow-y: auto;
+}
+
+/* List + detail split */
 .admin-split {
-  height: calc(100vh - var(--navbar-height));
-}
-
-/* Admin detail panel */
-.admin-detail {
-  height: calc(100vh - var(--navbar-height));
-}
-
-/* Sidebar: fixed, full height minus navbar */
-.admin-sidebar {
-  height: calc(100vh - var(--navbar-height));
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  height: calc(100vh - var(--navbar-h));
 }
