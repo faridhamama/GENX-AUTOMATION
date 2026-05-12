@@ -41,3 +41,31 @@ img {
   white-space: nowrap;
   border: 0;
 }
+
+/* ============================================
+   Admin layout: centralized screen tokens
+   ============================================ */
+:root {
+  --navbar-height: 64px;
+  --sidebar-width: 224px; /* 14rem = 224px */
+}
+
+/* Admin page: full height minus navbar */
+.admin-page {
+  height: calc(100vh - var(--navbar-height));
+}
+
+/* Admin page with list + detail layout */
+.admin-split {
+  height: calc(100vh - var(--navbar-height));
+}
+
+/* Admin detail panel */
+.admin-detail {
+  height: calc(100vh - var(--navbar-height));
+}
+
+/* Sidebar: fixed, full height minus navbar */
+.admin-sidebar {
+  height: calc(100vh - var(--navbar-height));
+}

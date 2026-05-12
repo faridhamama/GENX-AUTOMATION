@@ -1,0 +1,144 @@
+<div class="flex admin-split">
+  <!-- Request List Panel -->
+  <div class="w-96 border-r border-surface-variant flex flex-col bg-surface">
+    <!-- Search -->
+    <div class="p-4 border-b border-surface-variant">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Rechercher par nom, email ou projet..."
+        class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface placeholder:text-on-surface-variant"
+      />
+    </div>
+
+    <!-- Request List -->
+    <div class="flex-1 overflow-y-auto">
+      @for (request of filteredRequests(); track request.id) {
+        <button
+          (click)="selectRequest(request)"
+          class="w-full text-left px-4 py-3 border-b border-surface-variant hover:bg-surface-container-high transition-colors"
+          [class.bg-surface-container-high]="selectedRequest()?.id === request.id"
+          [class.border-l-2]="!request.read"
+          [class.border-l-primary]="!request.read"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <p class="font-medium text-on-surface truncate">{{ request.full_name }}</p>
+              <p class="text-sm text-on-surface-variant truncate">{{ request.email }}</p>
+            </div>
+            @if (!request.read) {
+              <span class="w-2 h-2 rounded-full bg-primary flex-shrink-0 mt-2"></span>
+            }
+          </div>
+          <div class="mt-1 flex items-center gap-2">
+            <span class="text-xs px-2 py-0.5 bg-surface-container-high rounded text-on-surface-variant">
+              {{ request.project_type }}
+            </span>
+            <span class="text-xs text-on-surface-variant">{{ formatDate(request.created_at) }}</span>
+          </div>
+        </button>
+      } @empty {
+        <div class="p-8 text-center text-on-surface-variant">
+          <p>Aucune demande trouvée.</p>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Detail Panel -->
+  <div class="flex-1 bg-surface-container-low">
+    @if (selectedRequest(); as req) {
+      <div class="h-full flex flex-col">
+        <!-- Detail Header -->
+        <div class="p-6 border-b border-surface-variant bg-surface">
+          <div class="flex items-start justify-between">
+            <div>
+              <h2 class="text-xl font-medium text-on-surface">{{ req.full_name }}</h2>
+              <p class="text-on-surface-variant mt-1">{{ req.email }}</p>
+            </div>
+            <div class="flex gap-2">
+              <a
+                [href]="'mailto:' + req.email"
+                class="px-3 py-1.5 bg-surface-container-high rounded text-sm text-on-surface hover:bg-surface-container-hover transition-colors"
+              >
+                Répondre
+              </a>
+              @if (!req.read) {
+                <button
+                  (click)="markAsRead(req.id)"
+                  class="px-3 py-1.5 bg-primary text-on-primary rounded text-sm hover:bg-primary-container transition-colors"
+                >
+                  Marquer lu
+                </button>
+              }
+              <button
+                (click)="closeDetail()"
+                class="px-3 py-1.5 bg-surface-container-high rounded text-sm text-on-surface hover:bg-surface-container-hover transition-colors"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Content -->
+        <div class="flex-1 overflow-y-auto p-6">
+          <div class="space-y-6">
+            <!-- Status -->
+            <div>
+              <span
+                class="inline-block px-2 py-1 rounded text-xs font-medium"
+                [class.bg-primary-container]="!req.read"
+                [class.text-on-primary-container]="!req.read"
+                [class.bg-surface-container-high]="req.read"
+                [class.text-on-surface-variant]="req.read"
+              >
+                {{ req.read ? 'Lu' : 'Non lu' }}
+              </span>
+              <span class="ml-2 text-sm text-on-surface-variant">
+                Reçu le {{ formatDate(req.created_at) }}
+              </span>
+            </div>
+
+            <!-- Project Type -->
+            <div>
+              <h3 class="text-sm font-medium text-on-surface-variant mb-1">Type de projet</h3>
+              <p class="text-on-surface">{{ req.project_type }}</p>
+            </div>
+
+            <!-- Phone -->
+            @if (req.phone) {
+              <div>
+                <h3 class="text-sm font-medium text-on-surface-variant mb-1">Téléphone</h3>
+                <p class="text-on-surface">{{ req.phone }}</p>
+              </div>
+            }
+
+            <!-- Desired Date -->
+            @if (req.desired_date) {
+              <div>
+                <h3 class="text-sm font-medium text-on-surface-variant mb-1">Date souhaitée</h3>
+                <p class="text-on-surface">{{ req.desired_date }}</p>
+              </div>
+            }
+
+            <!-- Description -->
+            <div>
+              <h3 class="text-sm font-medium text-on-surface-variant mb-1">Description du projet</h3>
+              <p class="text-on-surface whitespace-pre-wrap">{{ req.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="h-full flex items-center justify-center">
+        <div class="text-center">
+          <svg class="w-16 h-16 mx-auto text-on-surface-variant mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <p class="text-on-surface-variant">Sélectionnez une demande pour voir les détails</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

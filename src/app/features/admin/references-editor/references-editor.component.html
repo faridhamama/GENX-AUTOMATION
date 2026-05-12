@@ -1,0 +1,259 @@
+<div class="p-6 max-w-5xl mx-auto space-y-8">
+
+  <!-- Hero Section -->
+  <section class="bg-surface-container-lowest border-t-4 border-primary p-5">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-headline font-bold text-on-surface">Hero References</h2>
+      @if (referencesHero()) {
+        <button type="button" (click)="initHeroForm()" class="text-xs font-label uppercase tracking-widest text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer">
+          Charger
+        </button>
+      }
+    </div>
+    <div class="space-y-4">
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label</label>
+        <input [(ngModel)]="referencesHeroForm.label" type="text" placeholder="Nos realisations" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Headline</label>
+        <input [(ngModel)]="referencesHeroForm.headline" type="text" placeholder="Solutions industrielles sur mesure" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Body</label>
+        <textarea [(ngModel)]="referencesHeroForm.body" rows="3" placeholder="Texte descriptif..." class="w-full bg-transparent border-2 border-outline-variant focus:border-primary transition-colors py-2 px-3 text-sm outline-none resize-none"></textarea>
+      </div>
+      <button type="button" (click)="saveReferencesHero()" class="bg-primary text-on-primary px-4 py-2 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-primary-fixed-variant transition-colors cursor-pointer">
+        Enregistrer Hero
+      </button>
+    </div>
+  </section>
+
+  <!-- Featured Project Section -->
+  <section class="bg-surface-container-lowest border-t-4 border-secondary p-5">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-headline font-bold text-on-surface">Projet en Vedette</h2>
+      @if (referencesFeaturedProject()) {
+        <button type="button" (click)="initFeaturedProjectForm()" class="text-xs font-label uppercase tracking-widest text-secondary hover:text-on-secondary-fixed-variant transition-colors cursor-pointer">
+          Charger
+        </button>
+      }
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Secteur</label>
+        <input [(ngModel)]="featuredProjectForm.sector" type="text" placeholder="Automate industrielle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Titre</label>
+        <input [(ngModel)]="featuredProjectForm.title" type="text" placeholder="Systeme de controle centralise" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Technologie</label>
+        <input [(ngModel)]="featuredProjectForm.technology" type="text" placeholder="Siemens S7-1500" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Tech Label</label>
+        <input [(ngModel)]="featuredProjectForm.tech_label" type="text" placeholder="PLC" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5 sm:col-span-2">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Specs JSON</label>
+        <input [(ngModel)]="featuredProjectForm.specs_json" type="text" placeholder='{"cpu":"1515-2 PN","memory":"4MB"}' class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Image Key</label>
+        <input [(ngModel)]="featuredProjectForm.image_key" type="text" placeholder="featured_project_1" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Image Alt</label>
+        <input [(ngModel)]="featuredProjectForm.image_alt" type="text" placeholder="Armoire electrique automate" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+      <div class="space-y-1.5 sm:col-span-2">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Resultat</label>
+        <input [(ngModel)]="featuredProjectForm.result" type="text" placeholder="+40% de productivite" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+      </div>
+    </div>
+    <button type="button" (click)="saveFeaturedProject()" class="mt-4 bg-secondary text-on-secondary px-4 py-2 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-secondary-fixed-variant transition-colors cursor-pointer">
+      Enregistrer Projet
+    </button>
+  </section>
+
+  <!-- Performance Stats Section -->
+  <section class="bg-surface-container-lowest border-t-4 border-tertiary p-5">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Statistiques de Performance</h2>
+    <div class="space-y-3">
+      @for (stat of referencesPerformanceStats(); track stat.id) {
+        <div class="flex items-center gap-3 p-3 bg-surface-container-high rounded">
+          @if (editingPerfStatId() === stat.id) {
+            <input [(ngModel)]="perfStatForm.value" type="text" placeholder="Valeur" class="flex-1 bg-transparent border-b-2 border-tertiary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+            <input [(ngModel)]="perfStatForm.label" type="text" placeholder="Label" class="flex-1 bg-transparent border-b-2 border-tertiary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+            <button type="button" (click)="savePerfStat()" class="text-tertiary hover:text-on-tertiary-fixed-variant transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg">check</span>
+            </button>
+            <button type="button" (click)="cancelEditPerfStat()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+          } @else {
+            <span class="text-2xl font-black text-tertiary">{{ stat.value }}</span>
+            <span class="flex-1 text-sm text-on-surface">{{ stat.label }}</span>
+            <button type="button" (click)="startEditPerfStat(stat.id)" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg">edit</span>
+            </button>
+          }
+        </div>
+      } @empty {
+        <p class="text-on-surface-variant text-sm">Aucune statistique disponible</p>
+      }
+    </div>
+  </section>
+
+  <!-- Side Projects Section -->
+  <section class="bg-surface-container-lowest border-t-4 border-quaternary p-5">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Projets Paralleles</h2>
+    <div class="space-y-3">
+      @for (project of referencesSideProjects(); track project.id) {
+        <div class="p-4 bg-surface-container-high rounded">
+          @if (editingSideProjectId() === project.id) {
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+              <input [(ngModel)]="sideProjectForm.sector" type="text" placeholder="Secteur" class="bg-transparent border-b-2 border-quaternary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+              <input [(ngModel)]="sideProjectForm.title" type="text" placeholder="Titre" class="bg-transparent border-b-2 border-quaternary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+              <input [(ngModel)]="sideProjectForm.key_spec" type="text" placeholder="Specification cle" class="bg-transparent border-b-2 border-quaternary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+              <input [(ngModel)]="sideProjectForm.description" type="text" placeholder="Description" class="bg-transparent border-b-2 border-quaternary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+            </div>
+            <div class="flex gap-2">
+              <button type="button" (click)="saveSideProject()" class="text-quaternary hover:text-on-quaternary-fixed-variant transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-lg">check</span>
+              </button>
+              <button type="button" (click)="cancelEditSideProject()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+          } @else {
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-label uppercase tracking-widest text-quaternary">{{ project.sector }}</span>
+                <h3 class="text-base font-headline font-bold text-on-surface">{{ project.title }}</h3>
+                <p class="text-sm text-on-surface-variant mt-1">{{ project.description }}</p>
+                @if (project.key_spec) {
+                  <span class="inline-block mt-2 text-xs bg-surface-container-lowest text-on-surface-variant px-2 py-1 rounded">{{ project.key_spec }}</span>
+                }
+              </div>
+              <div class="flex gap-1">
+                <button type="button" (click)="startEditSideProject(project.id)" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+                  <span class="material-symbols-outlined text-lg">edit</span>
+                </button>
+                <button type="button" (click)="deleteSideProject(project.id)" class="text-error hover:text-on-error-fixed-variant transition-colors cursor-pointer">
+                  <span class="material-symbols-outlined text-lg">delete</span>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      } @empty {
+        <p class="text-on-surface-variant text-sm">Aucun projet parallel disponible</p>
+      }
+    </div>
+  </section>
+
+  <!-- Quality Points Section -->
+  <section class="bg-surface-container-lowest border-t-4 border-primary p-5">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Points Qualite</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      @for (point of referencesQualityPoints(); track point.id) {
+        <div class="p-4 bg-surface-container-high rounded">
+          @if (editingQualityPointId() === point.id) {
+            <div class="space-y-3">
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icon</label>
+                <select [(ngModel)]="qualityPointForm.icon" class="w-full bg-surface border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-2 text-sm outline-none cursor-pointer">
+                  <option value="">Selectionner icone</option>
+                  @for (icon of availableIcons; track icon) {
+                    <option [value]="icon">{{ icon }}</option>
+                  }
+                </select>
+              </div>
+              <input [(ngModel)]="qualityPointForm.title" type="text" placeholder="Titre" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
+              <textarea [(ngModel)]="qualityPointForm.description" rows="2" placeholder="Description" class="w-full bg-transparent border-2 border-primary focus:border-outline-variant transition-colors py-1 px-2 text-sm outline-none resize-none"></textarea>
+              <div class="flex gap-2">
+                <button type="button" (click)="saveQualityPoint()" class="text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer">
+                  <span class="material-symbols-outlined text-lg">check</span>
+                </button>
+                <button type="button" (click)="cancelEditQualityPoint()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+                  <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+              </div>
+            </div>
+          } @else {
+            <div class="flex items-start justify-between">
+              <div class="flex gap-3">
+                <span class="material-symbols-outlined text-2xl text-primary">{{ point.icon }}</span>
+                <div>
+                  <h3 class="text-base font-headline font-bold text-on-surface">{{ point.title }}</h3>
+                  <p class="text-sm text-on-surface-variant mt-1">{{ point.description }}</p>
+                </div>
+              </div>
+              <button type="button" (click)="startEditQualityPoint(point.id)" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-lg">edit</span>
+              </button>
+            </div>
+          }
+        </div>
+      } @empty {
+        <p class="text-on-surface-variant text-sm col-span-full">Aucun point qualite disponible</p>
+      }
+    </div>
+  </section>
+
+  <!-- References Images Section -->
+  <section class="bg-surface-container-lowest border-t-4 border-secondary p-5">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Images References</h2>
+    <div class="space-y-3">
+      @for (image of referencesImages(); track image.image_key) {
+        <div class="p-4 bg-surface-container-high rounded">
+          @if (editingRefImageKey() === image.image_key) {
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+              <div class="space-y-1">
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Key</label>
+                <input [(ngModel)]="refImageForm.key" type="text" class="bg-transparent border-b-2 border-secondary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+              </div>
+              <div class="space-y-1 sm:col-span-2">
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">URL</label>
+                <input [(ngModel)]="refImageForm.url" type="text" placeholder="https://..." class="bg-transparent border-b-2 border-secondary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+              </div>
+            </div>
+            <div class="space-y-1 mb-3">
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Alt Text</label>
+              <input [(ngModel)]="refImageForm.alt_text" type="text" placeholder="Description de l'image" class="w-full bg-transparent border-b-2 border-secondary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+            </div>
+            <div class="flex gap-2">
+              <button type="button" (click)="saveRefImage()" class="text-secondary hover:text-on-secondary-fixed-variant transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-lg">check</span>
+              </button>
+              <button type="button" (click)="cancelEditRefImage()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+          } @else {
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                @if (image.url) {
+                  <img [src]="image.url" [alt]="image.alt_text" class="w-16 h-16 object-cover rounded" />
+                }
+                <div>
+                  <span class="text-xs font-label uppercase tracking-widest text-secondary">{{ image.image_key }}</span>
+                  <p class="text-sm text-on-surface-variant">{{ image.alt_text || 'Pas de description' }}</p>
+                </div>
+              </div>
+              <button type="button" (click)="startEditRefImage(image.image_key)" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-lg">edit</span>
+              </button>
+            </div>
+          }
+        </div>
+      } @empty {
+        <p class="text-on-surface-variant text-sm">Aucune image disponible</p>
+      }
+    </div>
+  </section>
+
+</div>

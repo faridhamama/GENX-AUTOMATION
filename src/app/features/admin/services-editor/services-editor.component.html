@@ -1,0 +1,223 @@
+<div class="max-w-3xl mx-auto p-6 space-y-8">
+
+  <!-- Hero Section -->
+  <section class="bg-white rounded-xl border border-neutral-200 p-6 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-neutral-900">Hero</h2>
+      @if (servicesPageHero()) {
+        <button
+          type="button"
+          class="text-sm text-blue-600 hover:text-blue-700"
+          (click)="setupHeroForm()">
+          Load current values
+        </button>
+      }
+    </div>
+
+    <div class="grid gap-4">
+      <div>
+        <label class="block text-sm font-medium text-neutral-700 mb-1">Label</label>
+        <input
+          type="text"
+          [(ngModel)]="servicesHeroForm.label"
+          class="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Section label" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-neutral-700 mb-1">Headline</label>
+        <input
+          type="text"
+          [(ngModel)]="servicesHeroForm.headline"
+          class="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Main headline" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-neutral-700 mb-1">Body</label>
+        <textarea
+          [(ngModel)]="servicesHeroForm.body"
+          rows="3"
+          class="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Body text"></textarea>
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button
+        type="button"
+        (click)="saveServicesHero()"
+        class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+        Save Hero
+      </button>
+    </div>
+  </section>
+
+  <!-- Methodology Section -->
+  <section class="bg-white rounded-xl border border-neutral-200 p-6 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-neutral-900">Methodology</h2>
+      @if (servicesMethodology()) {
+        <button
+          type="button"
+          class="text-sm text-blue-600 hover:text-blue-700"
+          (click)="setupMethodologyForm()">
+          Load current values
+        </button>
+      }
+    </div>
+
+    <div class="grid gap-4">
+      <div>
+        <label class="block text-sm font-medium text-neutral-700 mb-1">Section Label</label>
+        <input
+          type="text"
+          [(ngModel)]="servicesMethodologyForm.section_label"
+          class="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="e.g. Our Methodology" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-neutral-700 mb-1">Headline</label>
+        <input
+          type="text"
+          [(ngModel)]="servicesMethodologyForm.headline"
+          class="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Methodology headline" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-neutral-700 mb-1">Subtext</label>
+        <textarea
+          [(ngModel)]="servicesMethodologyForm.subtext"
+          rows="2"
+          class="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Supporting subtext"></textarea>
+      </div>
+    </div>
+
+    <div class="flex justify-end">
+      <button
+        type="button"
+        (click)="saveServicesMethodology()"
+        class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+        Save Methodology
+      </button>
+    </div>
+  </section>
+
+  <!-- Methodology Steps -->
+  <section class="bg-white rounded-xl border border-neutral-200 p-6 space-y-4">
+    <h2 class="text-lg font-semibold text-neutral-900">Methodology Steps</h2>
+
+    @if (methodologySteps().length === 0) {
+      <p class="text-sm text-neutral-500">No methodology steps found.</p>
+    } @else {
+      <div class="space-y-4">
+        @for (step of methodologySteps(); track step.id) {
+          <div class="border border-neutral-200 rounded-lg p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-neutral-500">Step {{ step.step_number }}</span>
+            </div>
+            <div class="grid gap-3">
+              <div>
+                <label class="block text-xs font-medium text-neutral-600 mb-1">Title</label>
+                <input
+                  type="text"
+                  [ngModel]="step.title"
+                  (ngModelChange)="step.title = $event"
+                  class="w-full rounded-lg border border-neutral-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-neutral-600 mb-1">Description</label>
+                <textarea
+                  [ngModel]="step.description"
+                  (ngModelChange)="step.description = $event"
+                  rows="2"
+                  class="w-full rounded-lg border border-neutral-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button
+                type="button"
+                (click)="saveMethodologyStep(step)"
+                class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700">
+                Save Step
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- Images -->
+  <section class="bg-white rounded-xl border border-neutral-200 p-6 space-y-4">
+    <h2 class="text-lg font-semibold text-neutral-900">Services Images</h2>
+
+    @if (servicesImages().length === 0) {
+      <p class="text-sm text-neutral-500">No images found.</p>
+    } @else {
+      <div class="space-y-4">
+        @for (img of servicesImages(); track img.image_key) {
+          <div class="border border-neutral-200 rounded-lg p-4">
+            @if (editingServicesImageKey() === img.image_key) {
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-xs font-medium text-neutral-600 mb-1">Key</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="servicesImageForm.key"
+                    class="w-full rounded-lg border border-neutral-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-neutral-600 mb-1">URL</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="servicesImageForm.url"
+                    class="w-full rounded-lg border border-neutral-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-neutral-600 mb-1">Alt Text</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="servicesImageForm.alt_text"
+                    class="w-full rounded-lg border border-neutral-300 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                <div class="flex gap-2 justify-end">
+                  <button
+                    type="button"
+                    (click)="cancelEditServicesImage()"
+                    class="rounded-lg border border-neutral-300 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-50">
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    (click)="saveServicesImage()"
+                    class="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700">
+                    Save Image
+                  </button>
+                </div>
+              </div>
+            } @else {
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  @if (img.url) {
+                    <img [src]="img.url" [alt]="img.alt_text" class="h-12 w-12 rounded-lg object-cover" />
+                  }
+                  <div>
+                    <p class="text-sm font-medium text-neutral-900">{{ img.image_key }}</p>
+                    <p class="text-xs text-neutral-500 truncate max-w-xs">{{ img.url }}</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  (click)="startEditServicesImage(img.image_key)"
+                  class="rounded-lg border border-neutral-300 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-50">
+                  Edit
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+</div>

@@ -1,0 +1,170 @@
+<div class="p-6 max-w-5xl mx-auto space-y-8">
+  <h1 class="text-2xl font-medium text-on-surface">Contenu Contact</h1>
+
+  @if (contact.contactLoading()) {
+    <p class="text-on-surface-variant">Chargement...</p>
+  } @else {
+
+    <!-- Hero Section -->
+    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
+      <h2 class="text-lg font-medium text-on-surface">En-tête</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Label</label>
+          <input type="text" [(ngModel)]="contactHeroForm.label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Titre</label>
+          <input type="text" [(ngModel)]="contactHeroForm.headline" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Corps</label>
+          <input type="text" [(ngModel)]="contactHeroForm.body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+      </div>
+      <button (click)="saveContactHero()" class="px-4 py-2 bg-primary text-on-primary rounded hover:bg-primary-container transition-colors">
+        Enregistrer
+      </button>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
+      <h2 class="text-lg font-medium text-on-surface">Statistiques</h2>
+      <div class="space-y-3">
+        @for (stat of contact.contactStats(); track stat.id) {
+          <div class="flex gap-3 items-center">
+            <input type="text" [(ngModel)]="stat.value" class="flex-1 px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+            <input type="text" [(ngModel)]="stat.label" class="flex-1 px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+            <button (click)="saveContactStat(stat)" class="px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm">
+              Sauvegarder
+            </button>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Project Types Section -->
+    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
+      <h2 class="text-lg font-medium text-on-surface">Types de projet</h2>
+      <div class="space-y-3">
+        @for (pt of contact.projectTypes(); track pt.id) {
+          <div class="flex gap-3 items-center">
+            <input type="text" [(ngModel)]="pt.label" class="flex-1 px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+            <button (click)="saveProjectType(pt)" class="px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm">
+              Sauvegarder
+            </button>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Form Content Section -->
+    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
+      <h2 class="text-lg font-medium text-on-surface">Contenu du formulaire</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Titre du formulaire</label>
+          <input type="text" [(ngModel)]="contactFormContentForm.form_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Texte de succès</label>
+          <input type="text" [(ngModel)]="contactFormContentForm.success_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Corps de succès</label>
+          <input type="text" [(ngModel)]="contactFormContentForm.success_body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Message d'erreur</label>
+          <input type="text" [(ngModel)]="contactFormContentForm.error_message" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Note de pied</label>
+          <input type="text" [(ngModel)]="contactFormContentForm.footer_note" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Label submit</label>
+          <input type="text" [(ngModel)]="contactFormContentForm.submit_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Label chargement</label>
+          <input type="text" [(ngModel)]="contactFormContentForm.loading_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+      </div>
+      <button (click)="saveContactFormContent()" class="px-4 py-2 bg-primary text-on-primary rounded hover:bg-primary-container transition-colors">
+        Enregistrer
+      </button>
+    </section>
+
+    <!-- Form Labels Section -->
+    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
+      <h2 class="text-lg font-medium text-on-surface">Libellés du formulaire</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Nom complet - Label</label>
+          <input type="text" [(ngModel)]="formLabelsForm.full_name_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Nom complet - Placeholder</label>
+          <input type="text" [(ngModel)]="formLabelsForm.full_name_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Nom complet - Erreur</label>
+          <input type="text" [(ngModel)]="formLabelsForm.full_name_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Téléphone - Label</label>
+          <input type="text" [(ngModel)]="formLabelsForm.phone_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Téléphone - Placeholder</label>
+          <input type="text" [(ngModel)]="formLabelsForm.phone_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Téléphone - Erreur</label>
+          <input type="text" [(ngModel)]="formLabelsForm.phone_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Email - Label</label>
+          <input type="text" [(ngModel)]="formLabelsForm.email_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Email - Placeholder</label>
+          <input type="text" [(ngModel)]="formLabelsForm.email_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Email - Erreur</label>
+          <input type="text" [(ngModel)]="formLabelsForm.email_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Date souhaitée - Label</label>
+          <input type="text" [(ngModel)]="formLabelsForm.desired_date_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Date souhaitée - Placeholder</label>
+          <input type="text" [(ngModel)]="formLabelsForm.desired_date_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Type de projet - Label</label>
+          <input type="text" [(ngModel)]="formLabelsForm.project_type_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Description - Label</label>
+          <input type="text" [(ngModel)]="formLabelsForm.description_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Description - Placeholder</label>
+          <input type="text" [(ngModel)]="formLabelsForm.description_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+        <div>
+          <label class="block text-sm text-on-surface-variant mb-1">Description - Erreur</label>
+          <input type="text" [(ngModel)]="formLabelsForm.description_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+        </div>
+      </div>
+      <button (click)="saveFormLabels()" class="px-4 py-2 bg-primary text-on-primary rounded hover:bg-primary-container transition-colors">
+        Enregistrer
+      </button>
+    </section>
+
+  }
+</div>

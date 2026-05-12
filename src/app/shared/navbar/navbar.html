@@ -17,8 +17,12 @@
   <nav class="flex justify-between items-center w-full px-4 sm:px-8 py-4 font-headline tracking-tight">
 
     <!-- Logo -->
-    <a routerLink="/" (click)="closeMenu()" class="text-lg sm:text-xl font-bold tracking-tighter text-slate-900 shrink-0 cursor-pointer">
-      {{ companyName() }}
+    <a routerLink="/" (click)="closeMenu()" class="flex items-center gap-2 shrink-0 cursor-pointer">
+      <img src="GENX AUTOMATION FAVICON.svg" alt="GENX AUTOMATION" class="navbar-logo-icon">
+      <span class="flex flex-col leading-tight">
+        <span class="text-lg sm:text-xl font-bold tracking-tighter">GENX</span>
+        <span class="text-s sm:text-m font-bold uppercase tracking-widest text-slate-700">AUTOMATION</span>
+      </span>
     </a>
 
     <!-- Desktop nav links -->

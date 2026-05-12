@@ -1,0 +1,255 @@
+@if (aboutLoading()) {
+  <div class="p-8 flex items-center justify-center">
+    <span class="material-symbols-outlined text-4xl text-outline animate-spin" aria-hidden="true">progress_activity</span>
+  </div>
+} @else {
+  <div class="p-6 space-y-6 max-w-5xl mx-auto">
+
+    <!-- Hero Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">person</span>
+        <h2 class="font-headline font-bold text-on-surface">Hero</h2>
+      </div>
+      <form (ngSubmit)="saveAboutHero()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <input [(ngModel)]="aboutHeroForm.label" name="aboutHeroLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <input [(ngModel)]="aboutHeroForm.headline" name="aboutHeroHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Body</label>
+            <textarea [(ngModel)]="aboutHeroForm.body" name="aboutHeroBody" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          Sauvegarder
+        </button>
+      </form>
+    </div>
+
+    <!-- Availability Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">schedule</span>
+        <h2 class="font-headline font-bold text-on-surface">Disponibilite</h2>
+      </div>
+      <form (ngSubmit)="saveAboutAvailability()" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <input [(ngModel)]="aboutAvailForm.label" name="aboutAvailLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Jours</label>
+            <input [(ngModel)]="aboutAvailForm.days" name="aboutAvailDays" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Heures</label>
+            <input [(ngModel)]="aboutAvailForm.hours" name="aboutAvailHours" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+        </div>
+        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          Sauvegarder
+        </button>
+      </form>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">format_quote</span>
+        <h2 class="font-headline font-bold text-on-surface">Mission</h2>
+      </div>
+      <form (ngSubmit)="saveAboutMission()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <input [(ngModel)]="aboutMissionForm.label" name="aboutMissionLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Quote</label>
+            <textarea [(ngModel)]="aboutMissionForm.quote" name="aboutMissionQuote" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          Sauvegarder
+        </button>
+      </form>
+    </div>
+
+    <!-- Company Description Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">domain</span>
+        <h2 class="font-headline font-bold text-on-surface">Description Entreprise</h2>
+      </div>
+      <form (ngSubmit)="saveAboutCompany()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+            <input [(ngModel)]="aboutCompanyForm.label" name="aboutCompanyLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Body</label>
+            <textarea [(ngModel)]="aboutCompanyForm.body" name="aboutCompanyBody" rows="4" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          Sauvegarder
+        </button>
+      </form>
+    </div>
+
+    <!-- Services Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">handyman</span>
+        <h2 class="font-headline font-bold text-on-surface">Section Services</h2>
+      </div>
+      <form (ngSubmit)="saveAboutServicesSection()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <input [(ngModel)]="aboutServicesSectionForm.headline" name="aboutServicesHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
+            <textarea [(ngModel)]="aboutServicesSectionForm.subtext" name="aboutServicesSubtext" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          Sauvegarder
+        </button>
+      </form>
+    </div>
+
+    <!-- Values Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">emoji_events</span>
+        <h2 class="font-headline font-bold text-on-surface">Section Valeurs</h2>
+      </div>
+      <form (ngSubmit)="saveAboutValuesSection()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <input [(ngModel)]="aboutValuesSectionForm.headline" name="aboutValuesHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
+            <textarea [(ngModel)]="aboutValuesSectionForm.subtext" name="aboutValuesSubtext" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          Sauvegarder
+        </button>
+      </form>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">campaign</span>
+        <h2 class="font-headline font-bold text-on-surface">Section CTA</h2>
+      </div>
+      <form (ngSubmit)="saveAboutCtaSection()" class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
+            <input [(ngModel)]="aboutCtaSectionForm.headline" name="aboutCtaHeadline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
+            <textarea [(ngModel)]="aboutCtaSectionForm.subtext" name="aboutCtaSubtext" rows="2" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Primary Label</label>
+              <input [(ngModel)]="aboutCtaSectionForm.cta_primary_label" name="aboutCtaPrimaryLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+            </div>
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Primary Link</label>
+              <input [(ngModel)]="aboutCtaSectionForm.cta_primary_link" name="aboutCtaPrimaryLink" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+            </div>
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Secondary Label</label>
+              <input [(ngModel)]="aboutCtaSectionForm.cta_secondary_label" name="aboutCtaSecondaryLabel" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+            </div>
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Secondary Link</label>
+              <input [(ngModel)]="aboutCtaSectionForm.cta_secondary_link" name="aboutCtaSecondaryLink" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          Sauvegarder
+        </button>
+      </form>
+    </div>
+
+    <!-- Images Section -->
+    <div class="bg-surface border border-outline-variant rounded-sm p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-primary" aria-hidden="true">image</span>
+        <h2 class="font-headline font-bold text-on-surface">Images</h2>
+      </div>
+
+      @if (editingAboutImageKey()) {
+        <div class="bg-surface-container-low border border-outline-variant rounded-sm p-4 mb-4">
+          <h3 class="font-label text-[10px] font-bold uppercase tracking-widest text-outline mb-3">Modifier l'image: {{ aboutImageForm.key }}</h3>
+          <form (ngSubmit)="saveAboutImage()" class="space-y-4">
+            <div class="grid grid-cols-1 gap-4">
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">URL</label>
+                <input [(ngModel)]="aboutImageForm.url" name="aboutImageUrl" class="w-full bg-surface border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+              </div>
+              <div>
+                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Alt Text</label>
+                <input [(ngModel)]="aboutImageForm.alt_text" name="aboutImageAlt" class="w-full bg-surface border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button type="submit" class="bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+                Sauvegarder
+              </button>
+              <button type="button" (click)="cancelEditAboutImage()" class="bg-surface-container-high text-on-surface px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-lowest transition-colors rounded-sm cursor-pointer">
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+      }
+
+      <div class="space-y-3">
+        @for (img of aboutImages(); track img.image_key) {
+          <div class="flex items-center gap-4 bg-surface-container-low border border-outline-variant rounded-sm p-3">
+            @if (img.url) {
+              <img [src]="img.url" [alt]="img.alt_text" class="w-16 h-16 object-cover rounded-sm shrink-0" />
+            } @else {
+              <div class="w-16 h-16 bg-outline-variant/20 rounded-sm flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-outline text-xl" aria-hidden="true">image_not_supported</span>
+              </div>
+            }
+            <div class="flex-1 min-w-0">
+              <div class="font-label text-[10px] font-bold uppercase tracking-widest text-outline mb-0.5">{{ img.image_key }}</div>
+              <div class="text-xs text-on-surface-variant truncate">{{ img.alt_text || 'Pas de texte alternatif' }}</div>
+            </div>
+            <button type="button" (click)="startEditAboutImage(img.image_key)" class="shrink-0 bg-primary/10 text-primary px-3 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-primary/20 transition-colors rounded-sm cursor-pointer">
+              Modifier
+            </button>
+          </div>
+        } @empty {
+          <div class="text-center py-6 text-on-surface-variant text-sm">
+            Aucune image trouvee
+          </div>
+        }
+      </div>
+    </div>
+
+  </div>
+}

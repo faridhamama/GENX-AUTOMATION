@@ -1,0 +1,197 @@
+<div class="p-6 max-w-5xl mx-auto space-y-6">
+
+  <!-- Hero Content -->
+  <div class="bg-surface border border-outline rounded p-6">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Contenu Hero</h2>
+    <div class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Badge</label>
+          <input [(ngModel)]="heroContentForm.hero_badge" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Legende image stats</label>
+          <input [(ngModel)]="heroContentForm.stats_image_caption" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+      </div>
+      <div>
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Titre (HTML autorise)</label>
+        <input [(ngModel)]="heroContentForm.hero_headline" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+      </div>
+      <div>
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Corps (HTML autorise)</label>
+        <textarea [(ngModel)]="heroContentForm.hero_body" rows="3" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded resize-none"></textarea>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Bouton principal</label>
+          <input [(ngModel)]="heroContentForm.cta_primary_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Bouton secondaire</label>
+          <input [(ngModel)]="heroContentForm.cta_secondary_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-outline-variant pt-4 mt-4">
+      <h3 class="text-sm font-bold text-outline uppercase mb-3">Section Expertise</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+          <input [(ngModel)]="heroContentForm.expertise_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Titre</label>
+          <input [(ngModel)]="heroContentForm.expertise_headline" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+      </div>
+      <div class="mt-3">
+        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Sous-texte</label>
+        <input [(ngModel)]="heroContentForm.expertise_subtext" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+      </div>
+    </div>
+
+    <div class="border-t border-outline-variant pt-4 mt-4">
+      <h3 class="text-sm font-bold text-outline uppercase mb-3">Section CTA</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Titre CTA</label>
+          <input [(ngModel)]="heroContentForm.cta_section_headline" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Corps CTA</label>
+          <input [(ngModel)]="heroContentForm.cta_section_body" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+        <div>
+          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Bouton CTA</label>
+          <input [(ngModel)]="heroContentForm.cta_section_label" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </div>
+      </div>
+    </div>
+
+    <button (click)="saveHeroContent()" class="mt-6 px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+  </div>
+
+  <!-- Hero Stats -->
+  <div class="bg-surface border border-outline rounded p-6">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Statistiques du Hero</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-outline uppercase">Statistique 1</h3>
+        <input [(ngModel)]="heroStatsForm.stat1_label" placeholder="Label (ex: Projets livrés)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat1_value" placeholder="Valeur (ex: 150+)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat1_sub" placeholder="Sous-titre (ex: Depuis 2025)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+      </div>
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-outline uppercase">Statistique 2</h3>
+        <input [(ngModel)]="heroStatsForm.stat2_label" placeholder="Label (ex: Clients actifs)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat2_value" placeholder="Valeur (ex: 98%)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [(ngModel)]="heroStatsForm.stat2_sub" placeholder="Sous-titre (ex: Satisfaction client)" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+      </div>
+    </div>
+    <button (click)="saveHeroStats()" class="mt-6 px-6 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+  </div>
+
+  <!-- Expertise Cards -->
+  <div class="bg-surface border border-outline rounded p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-headline font-bold text-on-surface">Cartes d'expertise</h2>
+      <button (click)="showAddCardForm()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">+ Ajouter</button>
+    </div>
+    @if (showAddCard()) {
+      <div class="bg-surface-container-low border border-outline p-4 mb-4 rounded space-y-3">
+        <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
+          @for (icon of cardIcons; track icon) {
+            <option [value]="icon">{{ icon }}</option>
+          }
+        </select>
+        <input [(ngModel)]="cardForm.title" placeholder="Titre" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+        <textarea [(ngModel)]="cardForm.description" placeholder="Description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
+        <input [(ngModel)]="cardForm.tags" placeholder="Tags (séparés par virgules)" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+        <div class="flex gap-2">
+          <button (click)="saveCard()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110">Enregistrer</button>
+          <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded">Annuler</button>
+        </div>
+      </div>
+    }
+    <div class="space-y-3">
+      @for (card of home.homepageExpertiseCards(); track card.id) {
+        <div class="bg-surface-container-low border border-outline p-4 rounded">
+          @if (editingCardId() === card.id) {
+            <div class="space-y-3">
+              <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
+                @for (icon of cardIcons; track icon) {
+                  <option [value]="icon">{{ icon }}</option>
+                }
+              </select>
+              <input [(ngModel)]="cardForm.title" placeholder="Titre de la carte" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <textarea [(ngModel)]="cardForm.description" placeholder="Description de la carte" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded"></textarea>
+              <input [(ngModel)]="cardForm.tags" placeholder="Tags (séparés par virgules)" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <div class="flex gap-2">
+                <button (click)="saveCard()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+                <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
+              </div>
+            </div>
+          } @else {
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="material-symbols-outlined text-primary" aria-hidden="true">{{ card.icon }}</span>
+                  <span class="font-headline font-bold text-on-surface">{{ card.title }}</span>
+                </div>
+                <p class="text-sm text-on-surface-variant mb-2">{{ card.description }}</p>
+                <div class="flex flex-wrap gap-1">
+                  @for (tag of card.tags; track tag) {
+                    <span class="text-[10px] font-label font-bold uppercase tracking-wider text-primary border border-primary/30 px-2 py-1">{{ tag }}</span>
+                  }
+                </div>
+              </div>
+              <div class="flex gap-2 ml-4">
+                <button (click)="startEditCard(card)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer">Modifier</button>
+                <button (click)="deleteCard(card.id)" class="px-3 py-1 text-sm text-error border border-error rounded hover:bg-error hover:text-white transition-colors cursor-pointer">Supprimer</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Images -->
+  <div class="bg-surface border border-outline rounded p-6">
+    <h2 class="text-lg font-headline font-bold text-on-surface mb-4">Images</h2>
+    <div class="space-y-4">
+      @for (img of home.homepageImages(); track img.image_key) {
+        <div class="bg-surface-container-low border border-outline p-4 rounded">
+          @if (editingImageKey() === img.image_key) {
+            <div class="space-y-3">
+              <input [(ngModel)]="imageForm.url" placeholder="URL de l'image" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              <input [(ngModel)]="imageForm.alt_text" placeholder="Texte alternatif" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
+              @if (img.url) {
+                <img [src]="img.url" [alt]="img.alt_text" class="h-32 object-cover rounded" />
+              }
+              <div class="flex gap-2">
+                <button (click)="saveImage()" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">Enregistrer</button>
+                <button (click)="cancelEditImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
+              </div>
+            </div>
+          } @else {
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <span class="font-label text-xs uppercase tracking-widest text-outline mr-3">{{ img.image_key }}</span>
+                @if (img.url) {
+                  <img [src]="img.url" [alt]="img.alt_text" class="h-16 w-auto rounded mt-2" />
+                } @else {
+                  <span class="text-sm text-on-surface-variant italic">Aucune image définie</span>
+                }
+              </div>
+              <button (click)="startEditImage(img.image_key)" class="px-3 py-1 text-sm text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors cursor-pointer ml-4">Modifier</button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,105 @@
+<!-- Login View -->
+@if (!isAuthenticated()) {
+  <div class="min-h-screen bg-surface flex items-start justify-center px-5 pt-[64px] pb-10">
+    <div class="w-full max-w-sm">
+      <div class="text-center mb-6">
+        <div class="text-[10px] font-label uppercase tracking-[0.3em] text-primary mb-2">Espace Administration</div>
+        <div class="text-xl font-black tracking-tight text-on-surface">{{ companyName }}</div>
+      </div>
+      <div class="bg-surface-container-lowest border-t-4 border-primary p-5 sm:p-8 shadow-sm">
+        <h1 class="text-base sm:text-lg font-headline font-bold text-on-surface mb-0.5">Connexion</h1>
+        <p class="text-[11px] sm:text-xs text-on-surface-variant mb-5">Tableau de bord</p>
+        <form (ngSubmit)="onLogin()" novalidate class="space-y-5">
+          <div class="space-y-1.5">
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Email</label>
+            <input name="email" [(ngModel)]="loginEmail" type="email" autocomplete="email" placeholder="admin@genx-automation.ma" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2.5 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
+          </div>
+          <div class="space-y-1.5">
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Mot de passe</label>
+            <input name="password" [(ngModel)]="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2.5 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
+          </div>
+          <button type="submit" class="w-full bg-primary text-on-primary py-3 font-headline font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-on-primary-fixed-variant transition-all rounded-sm cursor-pointer">
+            Se connecter
+            <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>
+          </button>
+        </form>
+      </div>
+      <div class="text-center mt-5">
+        <a routerLink="/" class="text-[11px] font-label uppercase tracking-widest text-outline hover:text-primary transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined text-base">arrow_back</span> Retour au site</a>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Authenticated Layout -->
+@if (isAuthenticated()) {
+  <div class="flex mt-[64px]">
+
+    <!-- Sidebar -->
+    <aside class="fixed top-[64px] left-0 w-56 admin-sidebar bg-surface border-r border-outline-variant hidden md:block overflow-y-auto">
+      <nav class="p-4 flex flex-col gap-1">
+        <div class="text-[10px] font-label uppercase tracking-widest text-outline mb-2 mt-2">Navigation</div>
+
+        <button (click)="navigateTo('emails')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">inbox</span>
+          Emails
+          @if (quoteRequests.stats().unread > 0) {
+            <span class="ml-auto bg-primary text-on-primary text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">{{ quoteRequests.stats().unread }}</span>
+          }
+        </button>
+
+        <button (click)="navigateTo('company')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">domain</span>
+          Entreprise
+        </button>
+
+        <button (click)="navigateTo('home')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">home</span>
+          Page d'accueil
+        </button>
+
+        <button (click)="navigateTo('contact')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">contact_mail</span>
+          Contact
+        </button>
+
+        <button (click)="navigateTo('references')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">workspaces</span>
+          Références
+        </button>
+
+        <button (click)="navigateTo('services')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">handyman</span>
+          Services
+        </button>
+
+        <button (click)="navigateTo('about')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">person</span>
+          À propos
+        </button>
+
+        <button (click)="navigateTo('contact-content')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">edit_note</span>
+          Contenu Contact
+        </button>
+
+        <button (click)="navigateTo('homepage-hero')" class="w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center gap-3 cursor-pointer hover:bg-surface-container-high">
+          <span class="material-symbols-outlined text-lg" aria-hidden="true">display_settings</span>
+          Hero Page d'accueil
+        </button>
+
+        <div class="mt-6 pt-4 border-t border-outline-variant/30">
+          <button (click)="signOut()" class="w-full text-left px-3 py-2 rounded text-sm text-outline hover:text-on-surface transition-colors flex items-center gap-3 cursor-pointer">
+            <span class="material-symbols-outlined text-lg" aria-hidden="true">logout</span>
+            Déconnexion
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 bg-surface-container-lowest md:pl-56 admin-page">
+      <router-outlet />
+    </main>
+  </div>
+}

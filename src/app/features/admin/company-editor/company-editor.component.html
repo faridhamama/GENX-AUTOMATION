@@ -1,0 +1,177 @@
+<div class="p-6 max-w-5xl mx-auto space-y-8">
+
+  <!-- Company Info -->
+  @if (companyInfoData(); as info) {
+    <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
+      <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
+        <h2 class="font-headline font-bold text-on-surface">Informations de contact</h2>
+      </div>
+      <div class="p-5">
+        <form #companyForm="ngForm" (ngSubmit)="saveCompanyInfo(companyForm)" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Email</label>
+              <input name="contact_email" [ngModel]="info.contact_email" placeholder="contact@genxautomation.com" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+            </div>
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Téléphone</label>
+              <input name="contact_phone" [ngModel]="info.contact_phone" placeholder="+212 6XX-XXXXXX" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+            </div>
+          </div>
+          <div>
+            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Adresse</label>
+            <input name="contact_address" [ngModel]="info.contact_address" placeholder="Casablanca, Maroc" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Heures d'ouverture</label>
+              <input name="availability_hours" [ngModel]="info.availability_hours" placeholder="08:00 - 18:00" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+            </div>
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Jours de disponibilité</label>
+              <input name="availability_days" [ngModel]="info.availability_days" placeholder="Lundi - Vendredi" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+            </div>
+          </div>
+          <div class="flex justify-end pt-2">
+            <button type="submit" class="px-6 py-2.5 bg-primary text-on-primary font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-all rounded-sm cursor-pointer">
+              Enregistrer
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  } @else {
+    <div class="flex items-center justify-center py-12">
+      <span class="material-symbols-outlined text-4xl text-outline animate-spin" aria-hidden="true">progress_activity</span>
+    </div>
+  }
+
+  <!-- Services Card -->
+  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low flex items-center justify-between">
+      <h2 class="font-headline font-bold text-on-surface">Services</h2>
+      @if (!showAddService() && !editingServiceId()) {
+        <button (click)="showAddServiceForm()" class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">add</span>
+          Ajouter
+        </button>
+      }
+    </div>
+
+    <div class="p-5">
+      @if (showAddService() || editingServiceId()) {
+        <div class="bg-surface-container-lowest border border-outline-variant rounded-sm p-4 mb-5">
+          <h3 class="font-label font-bold text-[10px] uppercase tracking-widest text-primary mb-4">
+            {{ editingServiceId() ? 'Modifier le service' : 'Nouveau service' }}
+          </h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
+              <input [(ngModel)]="serviceForm.label" type="text" placeholder="Nom du service" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
+            </div>
+            <div>
+              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Description</label>
+              <textarea [(ngModel)]="serviceForm.description" rows="3" placeholder="Description du service" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40 resize-none"></textarea>
+            </div>
+            <div class="flex gap-2 pt-1">
+              <button (click)="saveService()" class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+                <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+                Enregistrer
+              </button>
+              <button (click)="cancelEditService()" class="flex items-center gap-1.5 bg-surface-container text-on-surface px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-high transition-colors rounded-sm cursor-pointer">
+                Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (services().length === 0) {
+        <div class="text-center py-8">
+          <span class="material-symbols-outlined text-4xl text-outline mb-3 block" aria-hidden="true">handyman</span>
+          <p class="text-sm text-on-surface-variant">Aucun service enregistré</p>
+        </div>
+      } @else {
+        <ul class="space-y-2">
+          @for (service of services(); track service.id) {
+            <li class="flex items-start gap-3 bg-surface-container-low p-4 rounded-sm group">
+              <div class="flex-1 min-w-0">
+                <div class="font-label font-bold text-[11px] uppercase tracking-wider text-on-surface truncate">{{ service.label }}</div>
+                <div class="text-[11px] text-on-surface-variant mt-1 line-clamp-2">{{ service.description }}</div>
+              </div>
+              <div class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button (click)="moveService(service.id, 'up')" aria-label="Déplacer vers le haut" class="material-symbols-outlined text-outline hover:text-on-surface transition-colors p-1 cursor-pointer">expand_less</button>
+                <button (click)="moveService(service.id, 'down')" aria-label="Déplacer vers le bas" class="material-symbols-outlined text-outline hover:text-on-surface transition-colors p-1 cursor-pointer">expand_more</button>
+                <button (click)="startEditService(service.id)" aria-label="Modifier" class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1 cursor-pointer">edit</button>
+                <button (click)="deleteService(service.id)" aria-label="Supprimer" class="material-symbols-outlined text-outline hover:text-error transition-colors p-1 cursor-pointer">delete</button>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </section>
+
+  <!-- Engagements (Values) Card -->
+  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
+    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
+      <h2 class="font-headline font-bold text-on-surface">Engagements</h2>
+    </div>
+
+    <div class="p-5">
+      @if (companyValues().length === 0) {
+        <div class="text-center py-8">
+          <span class="material-symbols-outlined text-4xl text-outline mb-3 block" aria-hidden="true">verified</span>
+          <p class="text-sm text-on-surface-variant">Aucun engagement enregistré</p>
+        </div>
+      } @else {
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          @for (value of companyValues(); track value.id) {
+            <li class="bg-surface-container-low rounded-sm p-4">
+              @if (editingValueId() === value.id) {
+                <div class="space-y-3">
+                  <h3 class="font-label font-bold text-[10px] uppercase tracking-widest text-primary">Modifier l'engagement</h3>
+                  <div>
+                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icône</label>
+                    <select [(ngModel)]="valueForm.icon" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none cursor-pointer">
+                      @for (icon of availableIcons; track icon) {
+                        <option [value]="icon">{{ icon }}</option>
+                      }
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
+                    <input [(ngModel)]="valueForm.title" type="text" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
+                  </div>
+                  <div>
+                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
+                    <textarea [(ngModel)]="valueForm.description" rows="2" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none resize-none"></textarea>
+                  </div>
+                  <div class="flex gap-2 pt-1">
+                    <button (click)="saveValue()" class="flex items-center gap-1 bg-primary text-on-primary px-3 py-1.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+                      <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+                      Enregistrer
+                    </button>
+                    <button (click)="cancelEditValue()" class="flex items-center gap-1 bg-surface-container text-on-surface px-3 py-1.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-high transition-colors rounded-sm cursor-pointer">
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              } @else {
+                <div class="flex items-start gap-3">
+                  <span class="material-symbols-outlined text-primary text-2xl shrink-0" aria-hidden="true">{{ value.icon }}</span>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-label font-bold text-[11px] uppercase tracking-wider text-on-surface">{{ value.title }}</div>
+                    <div class="text-[11px] text-on-surface-variant mt-1 line-clamp-3">{{ value.description }}</div>
+                  </div>
+                  <button (click)="startEditValue(value.id)" aria-label="Modifier" class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1 shrink-0 cursor-pointer">edit</button>
+                </div>
+              }
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </section>
+
+</div>

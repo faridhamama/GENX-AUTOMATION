@@ -1,49 +1,33 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { adminRoutes } from './features/admin/admin.routes';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/home/home').then((m) => m.Home),
+    loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'about',
-    loadComponent: () => import('./pages/about/about').then((m) => m.About),
+    loadComponent: () => import('./features/about/about.component').then((m) => m.AboutComponent),
   },
   {
     path: 'services',
-    loadComponent: () => import('./pages/services/services').then((m) => m.Services),
+    loadComponent: () => import('./features/services/services.component').then((m) => m.ServicesComponent),
   },
   {
     path: 'references',
-    loadComponent: () => import('./pages/references/references').then((m) => m.References),
+    loadComponent: () => import('./features/references/references.component').then((m) => m.ReferencesComponent),
   },
   {
     path: 'contact',
-    loadComponent: () => import('./pages/contact/contact').then((m) => m.Contact),
+    loadComponent: () => import('./features/contact/contact.component').then((m) => m.ContactComponent),
   },
   {
     path: 'admin',
-    loadComponent: () => import('./shared/layout/admin-layout/admin-layout').then((m) => m.AdminLayout),
+    loadComponent: () => import('./shared/layout/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
     canActivate: [authGuard],
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./pages/admin/dashboard/dashboard').then((m) => m.Dashboard),
-      },
-      {
-        path: 'company',
-        loadComponent: () => import('./pages/admin/company/company').then((m) => m.CompanyAdmin),
-      },
-      {
-        path: 'home',
-        loadComponent: () => import('./pages/admin/home/home-admin').then((m) => m.AdminHome),
-      },
-      {
-        path: 'contact',
-        loadComponent: () => import('./pages/admin/contact/contact-admin').then((m) => m.AdminContact),
-      },
-    ],
+    children: adminRoutes,
   },
   {
     path: '**',
