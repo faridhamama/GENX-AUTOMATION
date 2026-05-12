@@ -38,6 +38,8 @@ export interface CompanyInfo {
   contact_phone: string;
   contact_address: string;
   mission_quote: string;
+  founded: number | null;
+  domain: string | null;
   updated_at: string;
 }
 

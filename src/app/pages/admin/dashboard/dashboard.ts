@@ -61,6 +61,8 @@ export class Dashboard implements OnInit {
   readonly formLabels = this.companyInfo.formLabels;
   readonly homepageHeroContent = this.companyInfo.homepageHeroContent;
 
+  readonly activeSection = signal<AdminSection>('emails');
+
   readonly searchQuery = signal('');
 
   readonly filteredRequests = computed(() => {
@@ -268,6 +270,48 @@ export class Dashboard implements OnInit {
     if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
     this.toast.success('Image mise à jour');
     this.cancelEditImage();
+  }
+
+  // CMS: Services Images
+  async startEditServicesImage(key: string): Promise<void> {
+    const img = this.servicesImages().find(i => i.image_key === key);
+    this.servicesImageForm = img ? { key: img.image_key, url: img.url, alt_text: img.alt_text } : { key, url: '', alt_text: '' };
+    this.editingServicesImageKey.set(key);
+  }
+  cancelEditServicesImage(): void { this.editingServicesImageKey.set(null); this.servicesImageForm = { key: '', url: '', alt_text: '' }; }
+  async saveServicesImage(): Promise<void> {
+    if (!this.servicesImageForm.url.trim()) { this.toast.error('L\'URL est requise'); return; }
+    const { error } = await this.companyInfo.upsertServicesImage(this.servicesImageForm.key, this.servicesImageForm.url, this.servicesImageForm.alt_text);
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Image mise à jour');
+    this.cancelEditServicesImage();
+  }
+
+  // CMS: Services Hero
+  servicesHeroForm = { label: '', headline: '', body: '' };
+  async saveServicesHero(): Promise<void> {
+    const hero = this.servicesPageHero();
+    if (!hero) return;
+    const { error } = await this.companyInfo.updateServicesPageHero({ ...hero, ...this.servicesHeroForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Hero mis à jour');
+  }
+
+  // CMS: Services Methodology
+  servicesMethodologyForm = { section_label: '', headline: '', subtext: '' };
+  async saveServicesMethodology(): Promise<void> {
+    const meth = this.servicesMethodology();
+    if (!meth) return;
+    const { error } = await this.companyInfo.updateServicesMethodology({ ...meth, ...this.servicesMethodologyForm });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Méthodologie mise à jour');
+  }
+
+  // CMS: Methodology Steps
+  async saveMethodologyStep(step: { id: string; step_number: number; title: string; description: string }): Promise<void> {
+    const { error } = await this.companyInfo.updateMethodologyStep(step.id, { step_number: step.step_number, title: step.title, description: step.description });
+    if (error) { this.toast.error('Erreur lors de la sauvegarde'); return; }
+    this.toast.success('Étape mise à jour');
   }
 
   // CMS: References Hero

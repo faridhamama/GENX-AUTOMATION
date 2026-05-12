@@ -32,6 +32,7 @@ export class Home implements OnInit {
   readonly ctaSectionLabel = computed(() => this.companyInfo.homepageHeroContent()?.cta_section_label ?? 'Me contacter');
 
   readonly heroStats = computed<{label: string; value: string; sub: string; accentClass: string}[]>(() => {
+    const stats = this.companyInfo.homepageHeroStats();
     if (!stats) return [];
     return [
       { label: stats.stat1_label, value: stats.stat1_value, sub: stats.stat1_sub, accentClass: stats.stat1_accent_class },

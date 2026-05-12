@@ -86,6 +86,13 @@ export interface HomepageHeroStatsRow {
   updated_at: string;
 }
 
+export interface HomepageImageRow {
+  image_key: string;
+  url: string;
+  alt_text: string;
+  updated_at: string;
+}
+
 export interface HomepageExpertiseCardRow {
   id: string;
   sort_order: number;

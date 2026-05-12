@@ -43,7 +43,7 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
-        @for (step of methodologySteps; track step.number) {
+        @for (step of methodologySteps(); track step.number) {
           <div class="relative group">
             <div class="mb-4 md:mb-6 flex items-center">
               <span class="text-3xl md:text-4xl font-headline font-black text-surface-variant group-hover:text-tertiary-container transition-colors duration-300 leading-none">
