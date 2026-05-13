@@ -2,7 +2,9 @@
   <h1 class="text-2xl font-medium text-on-surface">Contenu Contact</h1>
 
   @if (contact.contactLoading()) {
-    <p class="text-on-surface-variant">Chargement...</p>
+    <div class="flex items-center justify-center py-12">
+      <app-loader size="lg"></app-loader>
+    </div>
   } @else {
 
     <!-- Hero Section -->
@@ -16,17 +18,17 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte d'accroche court (ex: "Contactez-nous")</p>
-          <input type="text" [(ngModel)]="contactHeroForm.label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactHeroForm.label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Titre</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Titre principal de la page</p>
-          <input type="text" [(ngModel)]="contactHeroForm.headline" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactHeroForm.headline" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Corps</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Description sous le titre</p>
-          <input type="text" [(ngModel)]="contactHeroForm.body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactHeroForm.body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
       </div>
       <button (click)="saveContactHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
@@ -48,12 +50,12 @@
             <div class="flex-1">
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
               <p class="text-xs text-on-surface-variant mb-1">Nombre ou pourcentage affiché</p>
-              <input type="text" [(ngModel)]="stat.value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              <input type="text" [value]="stat.value" (input)="stat.value = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
             </div>
             <div class="flex-1">
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Libellé</label>
               <p class="text-xs text-on-surface-variant mb-1">Description de la statistique</p>
-              <input type="text" [(ngModel)]="stat.label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              <input type="text" [value]="stat.label" (input)="stat.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
             </div>
             <button (click)="saveContactStat(stat)" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer">
               <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
@@ -77,7 +79,7 @@
             <div class="flex-1">
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Libellé</label>
               <p class="text-xs text-on-surface-variant mb-1">Nom du type de projet</p>
-              <input type="text" [(ngModel)]="pt.label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              <input type="text" [value]="pt.label" (input)="pt.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
             </div>
             <button (click)="saveProjectType(pt)" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer">
               <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
@@ -99,37 +101,37 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Titre du formulaire</label>
           <p class="text-xs text-on-surface-variant mb-1.5">En-tête du formulaire de contact</p>
-          <input type="text" [(ngModel)]="contactFormContentForm.form_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactFormContentForm.form_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Texte de succès</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Titre affiché après envoi réussi</p>
-          <input type="text" [(ngModel)]="contactFormContentForm.success_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactFormContentForm.success_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Corps de succès</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Message détaillé après envoi réussi</p>
-          <input type="text" [(ngModel)]="contactFormContentForm.success_body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactFormContentForm.success_body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Message d'erreur</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte affiché en cas d'erreur d'envoi</p>
-          <input type="text" [(ngModel)]="contactFormContentForm.error_message" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactFormContentForm.error_message" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Note de pied</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte informatif sous le formulaire</p>
-          <input type="text" [(ngModel)]="contactFormContentForm.footer_note" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactFormContentForm.footer_note" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label submit</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton d'envoi</p>
-          <input type="text" [(ngModel)]="contactFormContentForm.submit_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactFormContentForm.submit_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label chargement</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte affiché pendant l'envoi</p>
-          <input type="text" [(ngModel)]="contactFormContentForm.loading_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="contactFormContentForm.loading_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
       </div>
       <button (click)="saveContactFormContent()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
@@ -149,77 +151,77 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Nom complet - Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ nom</p>
-          <input type="text" [(ngModel)]="formLabelsForm.full_name_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.full_name_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Nom complet - Placeholder</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
-          <input type="text" [(ngModel)]="formLabelsForm.full_name_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.full_name_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Nom complet - Erreur</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
-          <input type="text" [(ngModel)]="formLabelsForm.full_name_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.full_name_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Téléphone - Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ téléphone</p>
-          <input type="text" [(ngModel)]="formLabelsForm.phone_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.phone_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Téléphone - Placeholder</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
-          <input type="text" [(ngModel)]="formLabelsForm.phone_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.phone_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Téléphone - Erreur</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
-          <input type="text" [(ngModel)]="formLabelsForm.phone_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.phone_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Email - Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ email</p>
-          <input type="text" [(ngModel)]="formLabelsForm.email_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.email_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Email - Placeholder</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
-          <input type="text" [(ngModel)]="formLabelsForm.email_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.email_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Email - Erreur</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
-          <input type="text" [(ngModel)]="formLabelsForm.email_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.email_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Date souhaitée - Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ date</p>
-          <input type="text" [(ngModel)]="formLabelsForm.desired_date_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.desired_date_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Date souhaitée - Placeholder</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
-          <input type="text" [(ngModel)]="formLabelsForm.desired_date_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.desired_date_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Type de projet - Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ projet</p>
-          <input type="text" [(ngModel)]="formLabelsForm.project_type_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.project_type_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Description - Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ description</p>
-          <input type="text" [(ngModel)]="formLabelsForm.description_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.description_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Description - Placeholder</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
-          <input type="text" [(ngModel)]="formLabelsForm.description_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.description_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Description - Erreur</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
-          <input type="text" [(ngModel)]="formLabelsForm.description_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+          <input type="text" [formField]="formLabelsForm.description_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </div>
       </div>
       <button (click)="saveFormLabels()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">

@@ -82,7 +82,7 @@
           </div>
         }
 
-        @if (showErrors()) {
+        @if (submitStatus() === 'error') {
           <div
             class="mb-6 p-4 bg-error-container text-on-error-container text-sm font-label tracking-wide border-l-4 border-error"
             role="alert"
@@ -93,8 +93,7 @@
         }
 
         <form
-          [formGroup]="quoteForm"
-          (ngSubmit)="onSubmit()"
+          (submit)="onSubmit()"
           novalidate
           class="space-y-7 sm:space-y-8"
           aria-label="Formulaire de demande de devis"
@@ -112,18 +111,18 @@
               </label>
               <input
                 id="fullName"
-                formControlName="fullName"
+                [formField]="quoteForm.fullName"
                 type="text"
                 autocomplete="name"
                 autocapitalize="words"
                 [placeholder]="labels()?.full_name_placeholder || 'Votre nom et prénom'"
                 aria-required="true"
-                [attr.aria-invalid]="isInvalid('fullName') ? 'true' : null"
-                [attr.aria-describedby]="isInvalid('fullName') ? 'fullName-error' : null"
+                [attr.aria-invalid]="quoteForm.fullName().touched() && quoteForm.fullName().errors().length ? 'true' : null"
+                [attr.aria-describedby]="quoteForm.fullName().touched() && quoteForm.fullName().errors().length ? 'fullName-error' : null"
                 class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none focus:border-tertiary-container rounded-t-sm"
-                [class]="isInvalid('fullName') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+                [class]="quoteForm.fullName().touched() && quoteForm.fullName().errors().length ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
               >
-              @if (isInvalid('fullName')) {
+              @if (quoteForm.fullName().touched() && quoteForm.fullName().errors().length) {
                 <p id="fullName-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
                   {{ labels()?.full_name_error || 'Ce champ est requis' }}
                 </p>
@@ -140,17 +139,17 @@
               </label>
               <input
                 id="phone"
-                formControlName="phone"
+                [formField]="quoteForm.phone"
                 type="tel"
                 autocomplete="tel"
                 [placeholder]="labels()?.phone_placeholder || '+212 6XX-XXXXXX'"
                 aria-required="true"
-                [attr.aria-invalid]="isInvalid('phone') ? 'true' : null"
-                [attr.aria-describedby]="isInvalid('phone') ? 'phone-error' : null"
+                [attr.aria-invalid]="quoteForm.phone().touched() && quoteForm.phone().errors().length ? 'true' : null"
+                [attr.aria-describedby]="quoteForm.phone().touched() && quoteForm.phone().errors().length ? 'phone-error' : null"
                 class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none focus:border-tertiary-container rounded-t-sm"
-                [class]="isInvalid('phone') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+                [class]="quoteForm.phone().touched() && quoteForm.phone().errors().length ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
               >
-              @if (isInvalid('phone')) {
+              @if (quoteForm.phone().touched() && quoteForm.phone().errors().length) {
                 <p id="phone-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
                   {{ labels()?.phone_error || 'Ce champ est requis' }}
                 </p>
@@ -171,18 +170,18 @@
               </label>
               <input
                 id="email"
-                formControlName="email"
+                [formField]="quoteForm.email"
                 type="email"
                 autocomplete="email"
                 inputmode="email"
                 [placeholder]="labels()?.email_placeholder || 'contact@entreprise.com'"
                 aria-required="true"
-                [attr.aria-invalid]="isInvalid('email') ? 'true' : null"
-                [attr.aria-describedby]="isInvalid('email') ? 'email-error' : null"
+                [attr.aria-invalid]="quoteForm.email().touched() && quoteForm.email().errors().length ? 'true' : null"
+                [attr.aria-describedby]="quoteForm.email().touched() && quoteForm.email().errors().length ? 'email-error' : null"
                 class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 outline-none focus:border-tertiary-container rounded-t-sm"
-                [class]="isInvalid('email') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+                [class]="quoteForm.email().touched() && quoteForm.email().errors().length ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
               >
-              @if (isInvalid('email')) {
+              @if (quoteForm.email().touched() && quoteForm.email().errors().length) {
                 <p id="email-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
                   {{ labels()?.email_error || 'Un email valide est requis' }}
                 </p>
@@ -198,7 +197,7 @@
               </label>
               <input
                 id="desiredDate"
-                formControlName="desiredDate"
+                [formField]="quoteForm.desiredDate"
                 type="date"
                 autocomplete="off"
                 class="w-full bg-transparent border-b-2 border-outline-variant focus:border-tertiary-container transition-colors py-2.5 px-1 text-sm text-on-surface outline-none rounded-t-sm"
@@ -217,7 +216,7 @@
             <div class="relative">
               <select
                 id="projectType"
-                formControlName="projectType"
+                [formField]="quoteForm.projectType"
                 class="w-full bg-transparent border-b-2 border-outline-variant focus:border-tertiary-container transition-colors py-2.5 px-1 text-sm text-on-surface outline-none appearance-none cursor-pointer rounded-t-sm"
               >
                 @for (type of projectTypesList(); track type.id) {
@@ -242,16 +241,16 @@
             </label>
             <textarea
               id="description"
-              formControlName="description"
+              [formField]="quoteForm.description"
               rows="4"
               [placeholder]="labels()?.description_placeholder || 'Décrivez vos besoins techniques, contraintes et objectifs...'"
               aria-required="true"
-              [attr.aria-invalid]="isInvalid('description') ? 'true' : null"
-              [attr.aria-describedby]="isInvalid('description') ? 'description-error' : null"
+              [attr.aria-invalid]="quoteForm.description().touched() && quoteForm.description().errors().length ? 'true' : null"
+              [attr.aria-describedby]="quoteForm.description().touched() && quoteForm.description().errors().length ? 'description-error' : null"
               class="w-full bg-transparent border-b-2 transition-colors py-2.5 px-1 text-sm text-on-surface placeholder:text-on-surface-variant/40 resize-none outline-none focus:border-tertiary-container rounded-t-sm"
-              [class]="isInvalid('description') ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
+              [class]="quoteForm.description().touched() && quoteForm.description().errors().length ? 'border-error' : 'border-outline-variant focus:border-tertiary-container'"
             ></textarea>
-            @if (isInvalid('description')) {
+            @if (quoteForm.description().touched() && quoteForm.description().errors().length) {
               <p id="description-error" class="text-error text-[10px] font-label uppercase tracking-wide" role="alert">
                 {{ labels()?.description_error || 'Ce champ est requis' }}
               </p>
@@ -262,12 +261,12 @@
           <div class="pt-2 sm:pt-4">
             <button
               type="submit"
-              [disabled]="submitStatus() === 'loading'"
+              [disabled]="submitStatus() === 'loading' || quoteForm().invalid()"
               aria-disabled="submitStatus() === 'loading' ? true : null"
               class="w-full bg-primary text-on-primary py-4 sm:py-5 font-headline font-bold text-sm sm:text-base tracking-wider flex items-center justify-center gap-3 hover:bg-on-primary-fixed-variant transition-all active:scale-[0.99] border-b-4 border-primary-fixed disabled:opacity-60 disabled:cursor-not-allowed rounded-sm"
             >
               @if (submitStatus() === 'loading') {
-                <span class="material-symbols-outlined animate-spin" aria-hidden="true">progress_activity</span>
+                <app-loader size="sm"></app-loader>
                 <span>{{ loadingLabel() }}</span>
               } @else {
                 <span>{{ submitLabel() }}</span>

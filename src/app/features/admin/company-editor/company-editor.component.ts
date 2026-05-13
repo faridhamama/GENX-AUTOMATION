@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormField, form } from '@angular/forms/signals';
+import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ToastService } from '../../../shared/toast/toast.service';
+import { LoaderComponent } from '../../../shared/loader/loader.component';
 
 @Component({
   selector: 'app-company-editor',
-  imports: [FormsModule],
+  imports: [FormField, FormsModule, LoaderComponent],
   templateUrl: './company-editor.component.html',
   styleUrl: './company-editor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +23,16 @@ export class CompanyEditorComponent implements OnInit {
   readonly editingServiceId = signal<string | null>(null);
   readonly showAddService = signal(false);
   readonly editingValueId = signal<string | null>(null);
+
+  // Company Info Form - Signal Form
+  private companyInfoModel = signal({
+    contact_email: '',
+    contact_phone: '',
+    contact_address: '',
+    availability_hours: '',
+    availability_days: '',
+  });
+  readonly companyInfoForm = form(this.companyInfoModel);
 
   readonly serviceForm = { label: '', description: '' };
   readonly valueForm = { icon: '', title: '', description: '' };
@@ -40,10 +52,27 @@ export class CompanyEditorComponent implements OnInit {
     this.company.fetchCompanyInfo();
     this.company.fetchServices();
     this.company.fetchCompanyValues();
+    // Sync company info form once data is available
+    setTimeout(() => {
+      this.syncCompanyInfoForm();
+    }, 500);
   }
 
-  async saveCompanyInfo(form: NgForm): Promise<void> {
-    const { error } = await this.company.updateCompanyInfo(form.value);
+  syncCompanyInfoForm(): void {
+    const info = this.companyInfoData();
+    if (info) {
+      this.companyInfoModel.set({
+        contact_email: info.contact_email ?? '',
+        contact_phone: info.contact_phone ?? '',
+        contact_address: info.contact_address ?? '',
+        availability_hours: info.availability_hours ?? '',
+        availability_days: info.availability_days ?? '',
+      });
+    }
+  }
+
+  async saveCompanyInfo(): Promise<void> {
+    const { error } = await this.company.updateCompanyInfo(this.companyInfoModel());
     if (error) {
       this.toast.error('Erreur lors de la sauvegarde');
     } else {

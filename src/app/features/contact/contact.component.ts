@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormField, form, required, email, submit } from '@angular/forms/signals';
+import { LoaderComponent } from '../../shared/loader/loader.component';
 import { CompanyFacade } from '../../core/company.facade';
 import { ContactFacade } from '../../core/contact.facade';
 import type { QuoteRequest } from '../../core/models/index';
@@ -8,13 +9,12 @@ import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule],
+  imports: [FormField, LoaderComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent implements OnInit {
-  private readonly fb = inject(FormBuilder);
   private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
   private readonly company = inject(CompanyFacade);
@@ -42,57 +42,67 @@ export class ContactComponent implements OnInit {
 
   readonly firstProjectType = computed(() => this.projectTypesList()[0]?.label ?? 'Automatisation industrielle');
 
-  readonly quoteForm = this.fb.group({
-    fullName: ['', Validators.required],
-    phone: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    desiredDate: [''],
-    projectType: [this.firstProjectType()],
-    description: ['', Validators.required],
+  // Form Model - Signal Form with validation
+  private contactModel = signal({
+    fullName: '',
+    phone: '',
+    email: '',
+    desiredDate: '',
+    projectType: '',
+    description: '',
   });
 
-  private readonly submitted = signal(false);
-  readonly submitStatus = signal<'idle' | 'loading' | 'success' | 'error'>('idle');
+  readonly quoteForm = form(this.contactModel, (s) => {
+    required(s.fullName, { message: 'Le nom est requis' });
+    required(s.phone, { message: 'Le téléphone est requis' });
+    required(s.email, { message: 'L\'email est requis' });
+    email(s.email, { message: 'Email invalide' });
+    required(s.description, { message: 'La description est requise' });
+  });
 
-  readonly showErrors = computed(() => this.submitted() && this.quoteForm.invalid);
+  readonly submitStatus = signal<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   ngOnInit(): void {
     this.company.fetchCompanyInfo();
     this.contact.fetchContactContent();
-    this.quoteForm.get('projectType')?.setValue(this.firstProjectType());
-  }
-
-  isInvalid(field: string): boolean {
-    return this.submitted() && (this.quoteForm.get(field)?.invalid ?? false);
+    // Set default project type
+    const firstType = this.firstProjectType();
+    if (firstType) {
+      this.contactModel.update(m => ({ ...m, projectType: firstType }));
+    }
   }
 
   async onSubmit(): Promise<void> {
-    this.submitted.set(true);
+    submit(this.quoteForm, async () => {
+      this.submitStatus.set('loading');
 
-    if (this.quoteForm.invalid) return;
+      const v = this.contactModel();
+      const payload: QuoteRequest = {
+        full_name: v.fullName,
+        phone: v.phone,
+        email: v.email,
+        desired_date: v.desiredDate || null,
+        project_type: v.projectType,
+        description: v.description,
+      };
 
-    this.submitStatus.set('loading');
+      const { error } = await this.supabase.insertQuoteRequest(payload);
 
-    const v = this.quoteForm.value;
-    const payload: QuoteRequest = {
-      full_name: v.fullName ?? '',
-      phone: v.phone ?? '',
-      email: v.email ?? '',
-      desired_date: v.desiredDate || null,
-      project_type: v.projectType ?? '',
-      description: v.description ?? '',
-    };
-
-    const { error } = await this.supabase.insertQuoteRequest(payload);
-
-    if (error) {
-      this.submitStatus.set('idle');
-      this.toast.error();
-    } else {
-      this.submitStatus.set('success');
-      this.toast.success("Votre demande a bien été envoyée. Je vous répondrai sous 48h.");
-      this.quoteForm.reset({ projectType: this.firstProjectType() });
-      this.submitted.set(false);
-    }
+      if (error) {
+        this.submitStatus.set('idle');
+        this.toast.error();
+      } else {
+        this.submitStatus.set('success');
+        this.toast.success("Votre demande a bien été envoyée. Je vous répondrai sous 48h.");
+        this.contactModel.set({
+          fullName: '',
+          phone: '',
+          email: '',
+          desiredDate: '',
+          projectType: this.firstProjectType(),
+          description: '',
+        });
+      }
+    });
   }
 }

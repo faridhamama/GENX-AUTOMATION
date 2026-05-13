@@ -11,17 +11,17 @@
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Short label shown above the headline</p>
-        <input [(ngModel)]="referencesHeroForm.label" type="text" placeholder="Nos realisations" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="referencesHeroForm.label" type="text" placeholder="Nos realisations" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Headline</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Main title of the section</p>
-        <input [(ngModel)]="referencesHeroForm.headline" type="text" placeholder="Solutions industrielles sur mesure" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="referencesHeroForm.headline" type="text" placeholder="Solutions industrielles sur mesure" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Body</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Descriptive text below the headline</p>
-        <textarea [(ngModel)]="referencesHeroForm.body" rows="3" placeholder="Texte descriptif..." class="w-full bg-transparent border-2 border-outline-variant focus:border-primary transition-colors py-2 px-3 text-sm outline-none resize-none"></textarea>
+        <textarea [formField]="referencesHeroForm.body" rows="3" placeholder="Texte descriptif..." class="w-full bg-transparent border-2 border-outline-variant focus:border-primary transition-colors py-2 px-3 text-sm outline-none resize-none"></textarea>
       </div>
       <button type="button" (click)="saveReferencesHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-primary-fixed-variant transition-colors cursor-pointer">
         <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
@@ -41,42 +41,42 @@
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Secteur</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Industry or sector this project belongs to</p>
-        <input [(ngModel)]="featuredProjectForm.sector" type="text" placeholder="Automate industrielle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.sector" type="text" placeholder="Automate industrielle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Titre</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Project title</p>
-        <input [(ngModel)]="featuredProjectForm.title" type="text" placeholder="Systeme de controle centralise" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.title" type="text" placeholder="Systeme de controle centralise" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Technologie</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Main technology or equipment used</p>
-        <input [(ngModel)]="featuredProjectForm.technology" type="text" placeholder="Siemens S7-1500" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.technology" type="text" placeholder="Siemens S7-1500" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Tech Label</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Short label for the technology (e.g. PLC)</p>
-        <input [(ngModel)]="featuredProjectForm.tech_label" type="text" placeholder="PLC" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.tech_label" type="text" placeholder="PLC" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5 sm:col-span-2">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Specs JSON</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Technical specifications in JSON format</p>
-        <input [(ngModel)]="featuredProjectForm.specs_json" type="text" placeholder='{"cpu":"1515-2 PN","memory":"4MB"}' class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.specs_json" type="text" placeholder='{"cpu":"1515-2 PN","memory":"4MB"}' class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Image Key</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Storage key for the project image</p>
-        <input [(ngModel)]="featuredProjectForm.image_key" type="text" placeholder="featured_project_1" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.image_key" type="text" placeholder="featured_project_1" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Image Alt</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Alternative text for the project image</p>
-        <input [(ngModel)]="featuredProjectForm.image_alt" type="text" placeholder="Armoire electrique automate" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.image_alt" type="text" placeholder="Armoire electrique automate" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
       <div class="space-y-1.5 sm:col-span-2">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Resultat</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Key result or improvement achieved</p>
-        <input [(ngModel)]="featuredProjectForm.result" type="text" placeholder="+40% de productivite" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
+        <input [formField]="featuredProjectForm.result" type="text" placeholder="+40% de productivite" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </div>
     </div>
     <button type="button" (click)="saveFeaturedProject()" class="flex items-center gap-1.5 mt-4 bg-secondary text-on-secondary px-5 py-2.5 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-secondary-fixed-variant transition-colors cursor-pointer">

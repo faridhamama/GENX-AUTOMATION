@@ -11,34 +11,34 @@
         <p class="text-xs text-on-surface-variant">Coordonnées affichées sur le site (page Contact, Footer, etc.)</p>
       </div>
       <div class="p-5">
-        <form #companyForm="ngForm" (ngSubmit)="saveCompanyInfo(companyForm)" class="space-y-6">
+        <form (submit)="saveCompanyInfo()" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Email</label>
               <p class="text-xs text-on-surface-variant mb-1.5">Adresse email principale de contact</p>
-              <input name="contact_email" [ngModel]="info.contact_email" placeholder="contact@genx-automation.ma" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+              <input [formField]="companyInfoForm.contact_email" placeholder="contact@genx-automation.ma" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Téléphone</label>
               <p class="text-xs text-on-surface-variant mb-1.5">Numéro de téléphone principal (avec indicatif pays)</p>
-              <input name="contact_phone" [ngModel]="info.contact_phone" placeholder="+212 6XX-XXXXXX" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+              <input [formField]="companyInfoForm.contact_phone" placeholder="+212 6XX-XXXXXX" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
           </div>
           <div>
             <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Adresse</label>
             <p class="text-xs text-on-surface-variant mb-1.5">Adresse physique complète</p>
-            <input name="contact_address" [ngModel]="info.contact_address" placeholder="Zone Industrielle, Tit Mellil, Casablanca" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+            <input [formField]="companyInfoForm.contact_address" placeholder="Zone Industrielle, Tit Mellil, Casablanca" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Heures d'ouverture</label>
               <p class="text-xs text-on-surface-variant mb-1.5">Horaires de travail (ex: "08:00 - 18:00")</p>
-              <input name="availability_hours" [ngModel]="info.availability_hours" placeholder="08:00 - 18:00" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+              <input [formField]="companyInfoForm.availability_hours" placeholder="08:00 - 18:00" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
             <div>
               <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Jours de disponibilité</label>
               <p class="text-xs text-on-surface-variant mb-1.5">Jours ouvrables (ex: "Lundi - Vendredi")</p>
-              <input name="availability_days" [ngModel]="info.availability_days" placeholder="Lundi - Vendredi" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+              <input [formField]="companyInfoForm.availability_days" placeholder="Lundi - Vendredi" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
             </div>
           </div>
           <div class="flex justify-end pt-2">
@@ -52,7 +52,7 @@
     </section>
   } @else {
     <div class="flex items-center justify-center py-12">
-      <span class="material-symbols-outlined text-4xl text-outline animate-spin" aria-hidden="true">progress_activity</span>
+      <app-loader size="lg"></app-loader>
     </div>
   }
 

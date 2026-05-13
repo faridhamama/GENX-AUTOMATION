@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { FormField, form } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { HomeFacade } from '../../../core/home.facade';
@@ -7,7 +8,7 @@ import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-home-editor',
-  imports: [FormsModule],
+  imports: [FormField, FormsModule],
   templateUrl: './home-editor.component.html',
   styleUrl: './home-editor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,21 +26,8 @@ export class HomeEditorComponent implements OnInit {
   readonly selectedImageFile = signal<File | null>(null);
   readonly selectedImageKey = signal<string | null>(null);
 
-  // Homepage hero content form (badge, headline, body, CTAs, expertise section, CTA section)
-  heroContentForm: {
-    hero_badge: string;
-    hero_headline: string;
-    hero_body: string;
-    cta_primary_label: string;
-    cta_secondary_label: string;
-    stats_image_caption: string;
-    expertise_label: string;
-    expertise_headline: string;
-    expertise_subtext: string;
-    cta_section_headline: string;
-    cta_section_body: string;
-    cta_section_label: string;
-  } = {
+  // Hero Content Form - Signal Form
+  private heroContentModel = signal({
     hero_badge: '',
     hero_headline: '',
     hero_body: '',
@@ -52,26 +40,21 @@ export class HomeEditorComponent implements OnInit {
     cta_section_headline: '',
     cta_section_body: '',
     cta_section_label: '',
-  };
+  });
+  readonly heroContentForm = form(this.heroContentModel);
 
-  // Hero stats form
-  heroStatsForm: {
-    stat1_label: string;
-    stat1_value: string;
-    stat1_sub: string;
-    stat2_label: string;
-    stat2_value: string;
-    stat2_sub: string;
-  } = {
+  // Hero Stats Form - Signal Form
+  private heroStatsModel = signal({
     stat1_label: '',
     stat1_value: '',
     stat1_sub: '',
     stat2_label: '',
     stat2_value: '',
     stat2_sub: '',
-  };
+  });
+  readonly heroStatsForm = form(this.heroStatsModel);
 
-  // Expertise card form
+  // Expertise card form - kept as NgModel for select
   cardForm: {
     icon: string;
     title: string;
@@ -118,20 +101,20 @@ export class HomeEditorComponent implements OnInit {
   private syncHeroContentForm(): void {
     const content = this.home.homepageHeroContent();
     if (content) {
-      this.heroContentForm = {
-        hero_badge: content.hero_badge,
-        hero_headline: content.hero_headline,
-        hero_body: content.hero_body,
-        cta_primary_label: content.cta_primary_label,
-        cta_secondary_label: content.cta_secondary_label,
-        stats_image_caption: content.stats_image_caption,
-        expertise_label: content.expertise_label,
-        expertise_headline: content.expertise_headline,
-        expertise_subtext: content.expertise_subtext,
-        cta_section_headline: content.cta_section_headline,
-        cta_section_body: content.cta_section_body,
-        cta_section_label: content.cta_section_label,
-      };
+      this.heroContentModel.set({
+        hero_badge: content.hero_badge ?? '',
+        hero_headline: content.hero_headline ?? '',
+        hero_body: content.hero_body ?? '',
+        cta_primary_label: content.cta_primary_label ?? '',
+        cta_secondary_label: content.cta_secondary_label ?? '',
+        stats_image_caption: content.stats_image_caption ?? '',
+        expertise_label: content.expertise_label ?? '',
+        expertise_headline: content.expertise_headline ?? '',
+        expertise_subtext: content.expertise_subtext ?? '',
+        cta_section_headline: content.cta_section_headline ?? '',
+        cta_section_body: content.cta_section_body ?? '',
+        cta_section_label: content.cta_section_label ?? '',
+      });
     }
   }
 
@@ -140,7 +123,7 @@ export class HomeEditorComponent implements OnInit {
     if (!content) return;
     const { error } = await this.home.updateHomepageHeroContent({
       ...content,
-      ...this.heroContentForm,
+      ...this.heroContentModel(),
     });
     if (error) {
       this.toast.error();
@@ -152,14 +135,14 @@ export class HomeEditorComponent implements OnInit {
   private syncHeroStatsForm(): void {
     const stats = this.home.homepageHeroStats();
     if (stats) {
-      this.heroStatsForm = {
-        stat1_label: stats.stat1_label,
-        stat1_value: stats.stat1_value,
-        stat1_sub: stats.stat1_sub,
-        stat2_label: stats.stat2_label,
-        stat2_value: stats.stat2_value,
-        stat2_sub: stats.stat2_sub,
-      };
+      this.heroStatsModel.set({
+        stat1_label: stats.stat1_label ?? '',
+        stat1_value: stats.stat1_value ?? '',
+        stat1_sub: stats.stat1_sub ?? '',
+        stat2_label: stats.stat2_label ?? '',
+        stat2_value: stats.stat2_value ?? '',
+        stat2_sub: stats.stat2_sub ?? '',
+      });
     }
   }
 
@@ -168,7 +151,7 @@ export class HomeEditorComponent implements OnInit {
     if (!stats) return;
     const { error } = await this.home.updateHomepageHeroStats({
       ...stats,
-      ...this.heroStatsForm,
+      ...this.heroStatsModel(),
     });
     if (error) {
       this.toast.error();

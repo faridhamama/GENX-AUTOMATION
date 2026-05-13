@@ -6,10 +6,11 @@ import { CompanyFacade } from './core/company.facade';
 import { Navbar } from './shared/navbar/navbar';
 import { Footer } from './shared/footer/footer';
 import { Toast } from './shared/toast/toast';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, Footer, Toast],
+  imports: [RouterOutlet, Navbar, Footer, Toast, LoaderComponent],
   template: `
     @if (isReady()) {
       <app-navbar />
@@ -22,10 +23,8 @@ import { Toast } from './shared/toast/toast';
       <div class="initial-loader">
         <div class="loader-content">
           <img src="GENX AUTOMATION FAVICON.svg" alt="GENX AUTOMATION" class="loader-logo" />
-          <div class="loader-bar">
-            <div class="loader-progress"></div>
-          </div>
-          <p class="loader-text">Chargement...</p>
+          <span class="loader-wordmark">GenX Automation</span>
+          <app-loader size="md" label="Chargement" />
         </div>
       </div>
     }
@@ -35,7 +34,7 @@ import { Toast } from './shared/toast/toast';
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: #f7f9fb;
+      background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-container-low) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -44,42 +43,26 @@ import { Toast } from './shared/toast/toast';
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
+      gap: 2.5rem;
     }
     .loader-logo {
-      width: 4rem;
+      width: 4.5rem;
       height: auto;
-      animation: pulse 1.5s ease-in-out infinite;
+      animation: logo-float 3s ease-in-out infinite;
+      filter: drop-shadow(0 4px 12px rgba(0, 124, 124, 0.15));
     }
-    .loader-bar {
-      width: 12rem;
-      height: 3px;
-      background: #e0e0e0;
-      border-radius: 9999px;
-      overflow: hidden;
-    }
-    .loader-progress {
-      height: 100%;
-      background: #91de672e;
-      border-radius: 9999px;
-      animation: load 1.2s ease-in-out infinite;
-    }
-    .loader-text {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
+    .loader-wordmark {
+      font-family: var(--font-headline);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: #91de672e;
+      color: var(--color-primary);
+      margin-top: -0.5rem;
     }
-    @keyframes load {
-      0% { width: 0%; margin-left: 0; }
-      50% { width: 60%; margin-left: 20%; }
-      100% { width: 0%; margin-left: 100%; }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.7; transform: scale(0.95); }
+    @keyframes logo-float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-6px) scale(1.02); opacity: 0.85; }
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,

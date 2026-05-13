@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { FormField, form } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ServicesPageFacade } from '../../../core/services-page.facade';
@@ -7,7 +8,7 @@ import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule],
+  imports: [FormField, FormsModule],
   templateUrl: './services-editor.component.html',
 })
 export class ServicesEditorComponent implements OnInit {
@@ -21,17 +22,21 @@ export class ServicesEditorComponent implements OnInit {
   protected readonly methodologySteps = this.servicesPage.methodologySteps;
   protected readonly servicesImages = this.servicesPage.servicesImages;
 
-  servicesHeroForm = {
+  // Hero Form
+  private heroModel = signal({
     label: '',
     headline: '',
     body: '',
-  };
+  });
+  readonly servicesHeroForm = form(this.heroModel);
 
-  servicesMethodologyForm = {
+  // Methodology Form
+  private methodologyModel = signal({
     section_label: '',
     headline: '',
     subtext: '',
-  };
+  });
+  readonly servicesMethodologyForm = form(this.methodologyModel);
 
   editingServicesImageKey = signal<string | null>(null);
   servicesImageForm = {
@@ -46,19 +51,19 @@ export class ServicesEditorComponent implements OnInit {
     this.servicesPage.fetchServicesContent();
     // Auto-load forms once data is available
     setTimeout(() => {
-      this.setupHeroForm();
-      this.setupMethodologyForm();
+      this.syncHeroForm();
+      this.syncMethodologyForm();
     }, 500);
   }
 
-  protected setupHeroForm(): void {
+  protected syncHeroForm(): void {
     const hero = this.servicesPageHero();
-    if (hero && !this.servicesHeroForm.headline) {
-      this.servicesHeroForm = {
+    if (hero) {
+      this.heroModel.set({
         label: hero.label ?? '',
         headline: hero.headline ?? '',
         body: hero.body ?? '',
-      };
+      });
     }
   }
 
@@ -68,7 +73,7 @@ export class ServicesEditorComponent implements OnInit {
 
     const { error } = await this.servicesPage.updateServicesPageHero({
       ...hero,
-      ...this.servicesHeroForm,
+      ...this.heroModel(),
     });
 
     if (error) {
@@ -78,14 +83,14 @@ export class ServicesEditorComponent implements OnInit {
     }
   }
 
-  protected setupMethodologyForm(): void {
+  protected syncMethodologyForm(): void {
     const meth = this.servicesMethodology();
-    if (meth && !this.servicesMethodologyForm.headline) {
-      this.servicesMethodologyForm = {
+    if (meth) {
+      this.methodologyModel.set({
         section_label: meth.section_label ?? '',
         headline: meth.headline ?? '',
         subtext: meth.subtext ?? '',
-      };
+      });
     }
   }
 
@@ -95,7 +100,7 @@ export class ServicesEditorComponent implements OnInit {
 
     const { error } = await this.servicesPage.updateServicesMethodology({
       ...meth,
-      ...this.servicesMethodologyForm,
+      ...this.methodologyModel(),
     });
 
     if (error) {

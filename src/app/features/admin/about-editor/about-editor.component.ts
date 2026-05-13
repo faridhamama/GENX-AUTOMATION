@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { FormField, form } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { AboutFacade } from '../../../core/about.facade';
 import { CompanyFacade } from '../../../core/company.facade';
 import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
+import { LoaderComponent } from '../../../shared/loader/loader.component';
 
 interface AboutImageForm {
   key: string;
@@ -13,7 +15,7 @@ interface AboutImageForm {
 
 @Component({
   selector: 'app-about-editor',
-  imports: [FormsModule],
+  imports: [FormField, FormsModule, LoaderComponent],
   templateUrl: './about-editor.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -23,21 +25,41 @@ export class AboutEditorComponent implements OnInit {
   private readonly supabase = inject(SupabaseService);
   private readonly toast = inject(ToastService);
 
-  // Forms
-  aboutHeroForm = { label: '', headline: '', body: '' };
-  aboutAvailForm = { label: '', days: '', hours: '' };
-  aboutMissionForm = { label: '', quote: '' };
-  aboutCompanyForm = { label: '', body: '' };
-  aboutServicesSectionForm = { headline: '', subtext: '' };
-  aboutValuesSectionForm = { headline: '', subtext: '' };
-  aboutCtaSectionForm = {
+  // Hero Form
+  private aboutHeroModel = signal({ label: '', headline: '', body: '' });
+  readonly aboutHeroForm = form(this.aboutHeroModel);
+
+  // Availability Form
+  private aboutAvailModel = signal({ label: '', days: '', hours: '' });
+  readonly aboutAvailForm = form(this.aboutAvailModel);
+
+  // Mission Form
+  private aboutMissionModel = signal({ label: '', quote: '' });
+  readonly aboutMissionForm = form(this.aboutMissionModel);
+
+  // Company Form
+  private aboutCompanyModel = signal({ label: '', body: '' });
+  readonly aboutCompanyForm = form(this.aboutCompanyModel);
+
+  // Services Section Form
+  private aboutServicesSectionModel = signal({ headline: '', subtext: '' });
+  readonly aboutServicesSectionForm = form(this.aboutServicesSectionModel);
+
+  // Values Section Form
+  private aboutValuesSectionModel = signal({ headline: '', subtext: '' });
+  readonly aboutValuesSectionForm = form(this.aboutValuesSectionModel);
+
+  // CTA Section Form
+  private aboutCtaSectionModel = signal({
     headline: '',
     subtext: '',
     cta_primary_label: '',
     cta_primary_link: '',
     cta_secondary_label: '',
     cta_secondary_link: '',
-  };
+  });
+  readonly aboutCtaSectionForm = form(this.aboutCtaSectionModel);
+
   aboutImageForm: AboutImageForm = { key: '', url: '', alt_text: '' };
 
   // Image editing state
@@ -66,38 +88,38 @@ export class AboutEditorComponent implements OnInit {
   private syncForms(): void {
     const h = this.aboutHero();
     if (h) {
-      this.aboutHeroForm = { label: h.label, headline: h.headline, body: h.body };
+      this.aboutHeroModel.set({ label: h.label ?? '', headline: h.headline ?? '', body: h.body ?? '' });
     }
     const a = this.aboutAvailability();
     if (a) {
-      this.aboutAvailForm = { label: a.label, days: a.days, hours: a.hours };
+      this.aboutAvailModel.set({ label: a.label ?? '', days: a.days ?? '', hours: a.hours ?? '' });
     }
     const m = this.aboutMission();
     if (m) {
-      this.aboutMissionForm = { label: m.label, quote: m.quote };
+      this.aboutMissionModel.set({ label: m.label ?? '', quote: m.quote ?? '' });
     }
     const c = this.aboutCompany();
     if (c) {
-      this.aboutCompanyForm = { label: c.label, body: c.body };
+      this.aboutCompanyModel.set({ label: c.label ?? '', body: c.body ?? '' });
     }
     const ss = this.aboutServicesSection();
     if (ss) {
-      this.aboutServicesSectionForm = { headline: ss.headline, subtext: ss.subtext };
+      this.aboutServicesSectionModel.set({ headline: ss.headline ?? '', subtext: ss.subtext ?? '' });
     }
     const vs = this.aboutValuesSection();
     if (vs) {
-      this.aboutValuesSectionForm = { headline: vs.headline, subtext: vs.subtext };
+      this.aboutValuesSectionModel.set({ headline: vs.headline ?? '', subtext: vs.subtext ?? '' });
     }
     const cs = this.aboutCtaSection();
     if (cs) {
-      this.aboutCtaSectionForm = {
-        headline: cs.headline,
-        subtext: cs.subtext,
-        cta_primary_label: cs.cta_primary_label,
-        cta_primary_link: cs.cta_primary_link,
-        cta_secondary_label: cs.cta_secondary_label,
-        cta_secondary_link: cs.cta_secondary_link,
-      };
+      this.aboutCtaSectionModel.set({
+        headline: cs.headline ?? '',
+        subtext: cs.subtext ?? '',
+        cta_primary_label: cs.cta_primary_label ?? '',
+        cta_primary_link: cs.cta_primary_link ?? '',
+        cta_secondary_label: cs.cta_secondary_label ?? '',
+        cta_secondary_link: cs.cta_secondary_link ?? '',
+      });
     }
   }
 
@@ -106,7 +128,7 @@ export class AboutEditorComponent implements OnInit {
     if (!hero) return;
     const { error } = await this.about.updateAboutHero({
       ...hero,
-      ...this.aboutHeroForm,
+      ...this.aboutHeroModel(),
     });
     if (error) {
       this.toast.error();
@@ -120,7 +142,7 @@ export class AboutEditorComponent implements OnInit {
     if (!avail) return;
     const { error } = await this.about.updateAboutAvailability({
       ...avail,
-      ...this.aboutAvailForm,
+      ...this.aboutAvailModel(),
     });
     if (error) {
       this.toast.error();
@@ -134,7 +156,7 @@ export class AboutEditorComponent implements OnInit {
     if (!mission) return;
     const { error } = await this.about.updateAboutMission({
       ...mission,
-      ...this.aboutMissionForm,
+      ...this.aboutMissionModel(),
     });
     if (error) {
       this.toast.error();
@@ -148,7 +170,7 @@ export class AboutEditorComponent implements OnInit {
     if (!company) return;
     const { error } = await this.about.updateAboutCompany({
       ...company,
-      ...this.aboutCompanyForm,
+      ...this.aboutCompanyModel(),
     });
     if (error) {
       this.toast.error();
@@ -162,7 +184,7 @@ export class AboutEditorComponent implements OnInit {
     if (!section) return;
     const { error } = await this.about.updateAboutServicesSection({
       ...section,
-      ...this.aboutServicesSectionForm,
+      ...this.aboutServicesSectionModel(),
     });
     if (error) {
       this.toast.error();
@@ -176,7 +198,7 @@ export class AboutEditorComponent implements OnInit {
     if (!section) return;
     const { error } = await this.about.updateAboutValuesSection({
       ...section,
-      ...this.aboutValuesSectionForm,
+      ...this.aboutValuesSectionModel(),
     });
     if (error) {
       this.toast.error();
@@ -190,7 +212,7 @@ export class AboutEditorComponent implements OnInit {
     if (!section) return;
     const { error } = await this.about.updateAboutCtaSection({
       ...section,
-      ...this.aboutCtaSectionForm,
+      ...this.aboutCtaSectionModel(),
     });
     if (error) {
       this.toast.error();

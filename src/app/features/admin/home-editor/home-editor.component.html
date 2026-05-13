@@ -12,34 +12,34 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Badge</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte court affiché au-dessus du titre principal (ex: "Solutions d'automatisation sur mesure")</p>
-          <input [(ngModel)]="heroContentForm.hero_badge" placeholder="Solutions d'automatisation sur mesure" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.hero_badge" placeholder="Solutions d'automatisation sur mesure" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Légende de l'image stats</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte sous l'image des statistiques (ex: "Équipe GENX en action")</p>
-          <input [(ngModel)]="heroContentForm.stats_image_caption" placeholder="Équipe GENX en action" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.stats_image_caption" placeholder="Équipe GENX en action" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
       <div>
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre principal</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Titre en grand — HTML simple autorisé (&lt;strong&gt;, &lt;em&gt;, &lt;br&gt;)</p>
-        <input [(ngModel)]="heroContentForm.hero_headline" placeholder="Automatisation industrielle<br>et robotique avanzada" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [formField]="heroContentForm.hero_headline" placeholder="Automatisation industrielle<br>et robotique avanzada" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
       </div>
       <div>
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Corps de texte</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Paragraphe sous le titre — HTML simple autorisé</p>
-        <textarea [(ngModel)]="heroContentForm.hero_body" rows="3" placeholder="Decrivez votre entreprise en quelques phrases..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded resize-none"></textarea>
+        <textarea [formField]="heroContentForm.hero_body" rows="3" placeholder="Decrivez votre entreprise en quelques phrases..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded resize-none"></textarea>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton principal</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton d'action principal (ex: "Demander un devis")</p>
-          <input [(ngModel)]="heroContentForm.cta_primary_label" placeholder="Demander un devis" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.cta_primary_label" placeholder="Demander un devis" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton secondaire</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte du second bouton (ex: "Découvrir nos services")</p>
-          <input [(ngModel)]="heroContentForm.cta_secondary_label" placeholder="Découvrir nos services" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.cta_secondary_label" placeholder="Découvrir nos services" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
     </div>
@@ -50,18 +50,18 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Petit texte au-dessus du titre (ex: "Notre Expertise")</p>
-          <input [(ngModel)]="heroContentForm.expertise_label" placeholder="Notre Expertise" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.expertise_label" placeholder="Notre Expertise" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div class="md:col-span-2">
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section expertise</p>
-          <input [(ngModel)]="heroContentForm.expertise_headline" placeholder="Expertise en automatisation et robotique" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.expertise_headline" placeholder="Expertise en automatisation et robotique" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
       <div class="mt-3">
         <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-texte</label>
         <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif de la section expertise</p>
-        <input [(ngModel)]="heroContentForm.expertise_subtext" placeholder="Des solutions adaptées à chaque secteur..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <input [formField]="heroContentForm.expertise_subtext" placeholder="Des solutions adaptées à chaque secteur..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
       </div>
     </div>
 
@@ -71,17 +71,17 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre CTA</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section appel à l'action</p>
-          <input [(ngModel)]="heroContentForm.cta_section_headline" placeholder="Prêt à automatiser ?" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.cta_section_headline" placeholder="Prêt à automatiser ?" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Corps CTA</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif de la section CTA</p>
-          <input [(ngModel)]="heroContentForm.cta_section_body" placeholder="Discutons de votre projet..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.cta_section_body" placeholder="Discutons de votre projet..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton CTA</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton CTA</p>
-          <input [(ngModel)]="heroContentForm.cta_section_label" placeholder="Contactez-nous" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroContentForm.cta_section_label" placeholder="Contactez-nous" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
     </div>
@@ -105,17 +105,17 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Nom de la statistique (ex: "Projets livrés")</p>
-          <input [(ngModel)]="heroStatsForm.stat1_label" placeholder="Projets livrés" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroStatsForm.stat1_label" placeholder="Projets livrés" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Le chiffre ou pourcentage (ex: "150+" ou "98%")</p>
-          <input [(ngModel)]="heroStatsForm.stat1_value" placeholder="150+" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroStatsForm.stat1_value" placeholder="150+" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-titre</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte sous la valeur (ex: "Depuis 2025")</p>
-          <input [(ngModel)]="heroStatsForm.stat1_sub" placeholder="Depuis 2025" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroStatsForm.stat1_sub" placeholder="Depuis 2025" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
       <div class="space-y-4">
@@ -123,17 +123,17 @@
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Nom de la statistique (ex: "Clients actifs")</p>
-          <input [(ngModel)]="heroStatsForm.stat2_label" placeholder="Clients actifs" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroStatsForm.stat2_label" placeholder="Clients actifs" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Le chiffre ou pourcentage (ex: "98%")</p>
-          <input [(ngModel)]="heroStatsForm.stat2_value" placeholder="98%" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroStatsForm.stat2_value" placeholder="98%" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
         <div>
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-titre</label>
           <p class="text-xs text-on-surface-variant mb-1.5">Texte sous la valeur (ex: "Satisfaction client")</p>
-          <input [(ngModel)]="heroStatsForm.stat2_sub" placeholder="Satisfaction client" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <input [formField]="heroStatsForm.stat2_sub" placeholder="Satisfaction client" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
         </div>
       </div>
     </div>

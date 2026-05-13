@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { FormField, form } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ReferencesFacade } from '../../../core/references.facade';
@@ -7,7 +8,7 @@ import { ToastService } from '../../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-references-editor',
-  imports: [FormsModule],
+  imports: [FormField, FormsModule],
   templateUrl: './references-editor.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -26,9 +27,12 @@ export class ReferencesEditorComponent implements OnInit {
   readonly referencesImages = this.refs.referencesImages;
   readonly services = this.company.services;
 
-  // Forms
-  readonly referencesHeroForm = { label: '', headline: '', body: '' };
-  readonly featuredProjectForm = {
+  // Hero Form - Signal Form
+  private heroModel = signal({ label: '', headline: '', body: '' });
+  readonly referencesHeroForm = form(this.heroModel);
+
+  // Featured Project Form - Signal Form
+  private featuredProjectModel = signal({
     sector: '',
     title: '',
     technology: '',
@@ -37,7 +41,9 @@ export class ReferencesEditorComponent implements OnInit {
     image_key: '',
     image_alt: '',
     result: '',
-  };
+  });
+  readonly featuredProjectForm = form(this.featuredProjectModel);
+
   readonly refImageForm = { key: '', url: '', alt_text: '' };
 
   // Editing states
@@ -77,14 +83,16 @@ export class ReferencesEditorComponent implements OnInit {
   initHeroForm(): void {
     const hero = this.referencesHero();
     if (hero) {
-      this.referencesHeroForm.label = hero.label;
-      this.referencesHeroForm.headline = hero.headline;
-      this.referencesHeroForm.body = hero.body;
+      this.heroModel.set({
+        label: hero.label ?? '',
+        headline: hero.headline ?? '',
+        body: hero.body ?? '',
+      });
     }
   }
 
   async saveReferencesHero(): Promise<void> {
-    const { label, headline, body } = this.referencesHeroForm;
+    const { label, headline, body } = this.heroModel();
     if (!label.trim() || !headline.trim()) return;
 
     const hero = this.referencesHero();
@@ -109,19 +117,21 @@ export class ReferencesEditorComponent implements OnInit {
   initFeaturedProjectForm(): void {
     const project = this.referencesFeaturedProject();
     if (project) {
-      this.featuredProjectForm.sector = project.sector;
-      this.featuredProjectForm.title = project.title;
-      this.featuredProjectForm.technology = project.technology;
-      this.featuredProjectForm.tech_label = project.tech_label;
-      this.featuredProjectForm.specs_json = project.specs_json;
-      this.featuredProjectForm.image_key = project.image_key;
-      this.featuredProjectForm.image_alt = project.image_alt;
-      this.featuredProjectForm.result = project.result;
+      this.featuredProjectModel.set({
+        sector: project.sector ?? '',
+        title: project.title ?? '',
+        technology: project.technology ?? '',
+        tech_label: project.tech_label ?? '',
+        specs_json: project.specs_json ?? '',
+        image_key: project.image_key ?? '',
+        image_alt: project.image_alt ?? '',
+        result: project.result ?? '',
+      });
     }
   }
 
   async saveFeaturedProject(): Promise<void> {
-    const form = this.featuredProjectForm;
+    const form = this.featuredProjectModel();
     if (!form.title.trim() || !form.sector.trim()) return;
 
     const project = this.referencesFeaturedProject();
