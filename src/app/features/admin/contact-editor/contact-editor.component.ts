@@ -4,10 +4,12 @@ import { CompanyFacade } from '../../../core/company.facade';
 import { ContactFacade } from '../../../core/contact.facade';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { LoaderComponent } from '../../../shared/loader/loader.component';
+import { SectionCardComponent } from '../../../shared/section-card/section-card.component';
+import { FormFieldComponent } from '../../../shared/form-field/form-field.component';
 
 @Component({
   selector: 'app-contact-editor',
-  imports: [FormField, LoaderComponent],
+  imports: [FormField, LoaderComponent, SectionCardComponent, FormFieldComponent],
   templateUrl: './contact-editor.component.html',
   styleUrl: './contact-editor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

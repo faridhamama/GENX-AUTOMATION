@@ -8,54 +8,38 @@
   } @else {
 
     <!-- Hero Section -->
-    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary">manage_accounts</span>
-        <h2 class="font-headline font-bold text-on-surface">En-tête</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Configurez le titre principal et la description de la page contact</p>
+    <app-section-card icon="manage_accounts" title="En-tête" description="Configurez le titre principal et la description de la page contact">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte d'accroche court (ex: "Contactez-nous")</p>
+        <app-form-field label="Label" helper="Texte d'accroche court (ex: Contactez-nous)">
           <input type="text" [formField]="contactHeroForm.label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Titre</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Titre principal de la page</p>
+        </app-form-field>
+        <app-form-field label="Titre" helper="Titre principal de la page">
           <input type="text" [formField]="contactHeroForm.headline" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Corps</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Description sous le titre</p>
+        </app-form-field>
+        <app-form-field label="Corps" helper="Description sous le titre">
           <input type="text" [formField]="contactHeroForm.body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
+        </app-form-field>
       </div>
       <button (click)="saveContactHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
         <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
         Enregistrer
       </button>
-    </section>
+    </app-section-card>
 
     <!-- Stats Section -->
-    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary">bar_chart</span>
-        <h2 class="font-headline font-bold text-on-surface">Statistiques</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Définissez les valeurs et libellés de vos indicateurs clés</p>
+    <app-section-card icon="bar_chart" title="Statistiques" description="Définissez les valeurs et libellés de vos indicateurs clés">
       <div class="space-y-3">
         @for (stat of contact.contactStats(); track stat.id) {
           <div class="flex gap-3 items-center">
             <div class="flex-1">
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
-              <p class="text-xs text-on-surface-variant mb-1">Nombre ou pourcentage affiché</p>
-              <input type="text" [value]="stat.value" (input)="stat.value = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              <app-form-field label="Valeur" helper="Nombre ou pourcentage affiché">
+                <input type="text" [value]="stat.value" (input)="stat.value = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              </app-form-field>
             </div>
             <div class="flex-1">
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Libellé</label>
-              <p class="text-xs text-on-surface-variant mb-1">Description de la statistique</p>
-              <input type="text" [value]="stat.label" (input)="stat.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              <app-form-field label="Libellé" helper="Description de la statistique">
+                <input type="text" [value]="stat.label" (input)="stat.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              </app-form-field>
             </div>
             <button (click)="saveContactStat(stat)" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer">
               <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
@@ -64,22 +48,17 @@
           </div>
         }
       </div>
-    </section>
+    </app-section-card>
 
     <!-- Project Types Section -->
-    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary">category</span>
-        <h2 class="font-headline font-bold text-on-surface">Types de projet</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Ajoutez ou modifiez les catégories de projets proposées</p>
+    <app-section-card icon="category" title="Types de projet" description="Ajoutez ou modifiez les catégories de projets proposées">
       <div class="space-y-3">
         @for (pt of contact.projectTypes(); track pt.id) {
           <div class="flex gap-3 items-center">
             <div class="flex-1">
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Libellé</label>
-              <p class="text-xs text-on-surface-variant mb-1">Nom du type de projet</p>
-              <input type="text" [value]="pt.label" (input)="pt.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              <app-form-field label="Libellé" helper="Nom du type de projet">
+                <input type="text" [value]="pt.label" (input)="pt.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
+              </app-form-field>
             </div>
             <button (click)="saveProjectType(pt)" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer">
               <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
@@ -88,147 +67,93 @@
           </div>
         }
       </div>
-    </section>
+    </app-section-card>
 
     <!-- Form Content Section -->
-    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary">description</span>
-        <h2 class="font-headline font-bold text-on-surface">Contenu du formulaire</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Personnalisez les textes affichés dans le formulaire de contact</p>
+    <app-section-card icon="description" title="Contenu du formulaire" description="Personnalisez les textes affichés dans le formulaire de contact">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Titre du formulaire</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">En-tête du formulaire de contact</p>
+        <app-form-field label="Titre du formulaire" helper="En-tête du formulaire de contact">
           <input type="text" [formField]="contactFormContentForm.form_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Texte de succès</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Titre affiché après envoi réussi</p>
+        </app-form-field>
+        <app-form-field label="Texte de succès" helper="Titre affiché après envoi réussi">
           <input type="text" [formField]="contactFormContentForm.success_title" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Corps de succès</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Message détaillé après envoi réussi</p>
+        </app-form-field>
+        <app-form-field label="Corps de succès" helper="Message détaillé après envoi réussi">
           <input type="text" [formField]="contactFormContentForm.success_body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Message d'erreur</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte affiché en cas d'erreur d'envoi</p>
+        </app-form-field>
+        <app-form-field label="Message d'erreur" helper="Texte affiché en cas d'erreur d'envoi">
           <input type="text" [formField]="contactFormContentForm.error_message" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Note de pied</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte informatif sous le formulaire</p>
+        </app-form-field>
+        <app-form-field label="Note de pied" helper="Texte informatif sous le formulaire">
           <input type="text" [formField]="contactFormContentForm.footer_note" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label submit</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton d'envoi</p>
+        </app-form-field>
+        <app-form-field label="Label submit" helper="Texte du bouton d'envoi">
           <input type="text" [formField]="contactFormContentForm.submit_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Label chargement</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte affiché pendant l'envoi</p>
+        </app-form-field>
+        <app-form-field label="Label chargement" helper="Texte affiché pendant l'envoi">
           <input type="text" [formField]="contactFormContentForm.loading_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
+        </app-form-field>
       </div>
       <button (click)="saveContactFormContent()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
         <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
         Enregistrer
       </button>
-    </section>
+    </app-section-card>
 
     <!-- Form Labels Section -->
-    <section class="bg-surface-container-low rounded-lg p-4 space-y-4">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary">label</span>
-        <h2 class="font-headline font-bold text-on-surface">Libellés du formulaire</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Personnalisez les étiquettes, placeholders et messages d'erreur de chaque champ</p>
+    <app-section-card icon="label" title="Libellés du formulaire" description="Personnalisez les étiquettes, placeholders et messages d'erreur de chaque champ">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Nom complet - Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ nom</p>
+        <app-form-field label="Nom complet - Label" helper="Étiquette du champ nom">
           <input type="text" [formField]="formLabelsForm.full_name_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Nom complet - Placeholder</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
+        </app-form-field>
+        <app-form-field label="Nom complet - Placeholder" helper="Texte d'exemple dans le champ">
           <input type="text" [formField]="formLabelsForm.full_name_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Nom complet - Erreur</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
+        </app-form-field>
+        <app-form-field label="Nom complet - Erreur" helper="Message si validation échoue">
           <input type="text" [formField]="formLabelsForm.full_name_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Téléphone - Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ téléphone</p>
+        </app-form-field>
+        <app-form-field label="Téléphone - Label" helper="Étiquette du champ téléphone">
           <input type="text" [formField]="formLabelsForm.phone_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Téléphone - Placeholder</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
+        </app-form-field>
+        <app-form-field label="Téléphone - Placeholder" helper="Texte d'exemple dans le champ">
           <input type="text" [formField]="formLabelsForm.phone_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Téléphone - Erreur</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
+        </app-form-field>
+        <app-form-field label="Téléphone - Erreur" helper="Message si validation échoue">
           <input type="text" [formField]="formLabelsForm.phone_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Email - Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ email</p>
+        </app-form-field>
+        <app-form-field label="Email - Label" helper="Étiquette du champ email">
           <input type="text" [formField]="formLabelsForm.email_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Email - Placeholder</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
+        </app-form-field>
+        <app-form-field label="Email - Placeholder" helper="Texte d'exemple dans le champ">
           <input type="text" [formField]="formLabelsForm.email_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Email - Erreur</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
+        </app-form-field>
+        <app-form-field label="Email - Erreur" helper="Message si validation échoue">
           <input type="text" [formField]="formLabelsForm.email_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Date souhaitée - Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ date</p>
+        </app-form-field>
+        <app-form-field label="Date souhaitée - Label" helper="Étiquette du champ date">
           <input type="text" [formField]="formLabelsForm.desired_date_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Date souhaitée - Placeholder</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
+        </app-form-field>
+        <app-form-field label="Date souhaitée - Placeholder" helper="Texte d'exemple dans le champ">
           <input type="text" [formField]="formLabelsForm.desired_date_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Type de projet - Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ projet</p>
+        </app-form-field>
+        <app-form-field label="Type de projet - Label" helper="Étiquette du champ projet">
           <input type="text" [formField]="formLabelsForm.project_type_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Description - Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Étiquette du champ description</p>
+        </app-form-field>
+        <app-form-field label="Description - Label" helper="Étiquette du champ description">
           <input type="text" [formField]="formLabelsForm.description_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Description - Placeholder</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte d'exemple dans le champ</p>
+        </app-form-field>
+        <app-form-field label="Description - Placeholder" helper="Texte d'exemple dans le champ">
           <input type="text" [formField]="formLabelsForm.description_placeholder" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase">Description - Erreur</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Message si validation échoue</p>
+        </app-form-field>
+        <app-form-field label="Description - Erreur" helper="Message si validation échoue">
           <input type="text" [formField]="formLabelsForm.description_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
-        </div>
+        </app-form-field>
       </div>
       <button (click)="saveFormLabels()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
         <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
         Enregistrer
       </button>
-    </section>
+    </app-section-card>
 
   }
 </div>
