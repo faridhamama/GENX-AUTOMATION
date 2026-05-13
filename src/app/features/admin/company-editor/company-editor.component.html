@@ -2,7 +2,7 @@
 
   <!-- Company Info -->
   @if (companyInfoData(); as info) {
-    <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
+    <form (submit)="saveCompanyInfo()" class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
       <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
         <div class="flex items-center gap-2 mb-1">
           <span class="material-symbols-outlined text-primary" aria-hidden="true">domain</span>
@@ -10,46 +10,34 @@
         </div>
         <p class="text-xs text-on-surface-variant">Coordonnées affichées sur le site (page Contact, Footer, etc.)</p>
       </div>
-      <div class="p-5">
-        <form (submit)="saveCompanyInfo()" class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Email</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Adresse email principale de contact</p>
-              <input [formField]="companyInfoForm.contact_email" placeholder="contact@genx-automation.ma" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
-            </div>
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Téléphone</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Numéro de téléphone principal (avec indicatif pays)</p>
-              <input [formField]="companyInfoForm.contact_phone" placeholder="+212 6XX-XXXXXX" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
-            </div>
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Adresse</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Adresse physique complète</p>
-            <input [formField]="companyInfoForm.contact_address" placeholder="Zone Industrielle, Tit Mellil, Casablanca" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Heures d'ouverture</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Horaires de travail (ex: "08:00 - 18:00")</p>
-              <input [formField]="companyInfoForm.availability_hours" placeholder="08:00 - 18:00" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
-            </div>
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Jours de disponibilité</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Jours ouvrables (ex: "Lundi - Vendredi")</p>
-              <input [formField]="companyInfoForm.availability_days" placeholder="Lundi - Vendredi" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
-            </div>
-          </div>
-          <div class="flex justify-end pt-2">
-            <button type="submit" class="flex items-center gap-1.5 px-6 py-2.5 bg-primary text-on-primary font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-all rounded-sm cursor-pointer">
-              <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-              Enregistrer
-            </button>
-          </div>
-        </form>
+      <div class="p-5 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <app-form-field label="Email" helper="Adresse email principale de contact">
+            <input [formField]="companyInfoForm.contact_email" type="email" placeholder="contact@genx-automation.ma" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+          </app-form-field>
+          <app-form-field label="Téléphone" helper="Numéro de téléphone principal (avec indicatif pays)">
+            <input [formField]="companyInfoForm.contact_phone" type="tel" placeholder="+212 6XX-XXXXXX" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+          </app-form-field>
+        </div>
+        <app-form-field label="Adresse" helper="Adresse physique complète">
+          <input [formField]="companyInfoForm.contact_address" type="text" placeholder="Zone Industrielle, Tit Mellil, Casablanca" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+        </app-form-field>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <app-form-field label="Heures d'ouverture" helper="Horaires de travail (ex: 08:00 - 18:00)">
+            <input [formField]="companyInfoForm.availability_hours" type="text" placeholder="08:00 - 18:00" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+          </app-form-field>
+          <app-form-field label="Jours de disponibilité" helper="Jours ouvrables (ex: Lundi - Vendredi)">
+            <input [formField]="companyInfoForm.availability_days" type="text" placeholder="Lundi - Vendredi" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40" />
+          </app-form-field>
+        </div>
+        <div class="flex justify-end pt-2">
+          <button type="submit" class="flex items-center gap-1.5 px-6 py-2.5 bg-primary text-on-primary font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-all rounded-sm cursor-pointer">
+            <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+            Enregistrer
+          </button>
+        </div>
       </div>
-    </section>
+    </form>
   } @else {
     <div class="flex items-center justify-center py-12">
       <app-loader size="lg"></app-loader>
@@ -57,15 +45,8 @@
   }
 
   <!-- Services Card -->
-  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low flex items-center justify-between">
-      <div>
-        <div class="flex items-center gap-2 mb-1">
-          <span class="material-symbols-outlined text-primary" aria-hidden="true">handyman</span>
-          <h2 class="font-headline font-bold text-on-surface">Services</h2>
-        </div>
-        <p class="text-xs text-on-surface-variant">Services proposés par l'entreprise</p>
-      </div>
+  <app-section-card icon="handyman" title="Services" description="Services proposés par l'entreprise">
+    <div class="flex justify-end mb-4">
       @if (!showAddService() && !editingServiceId()) {
         <button (click)="showAddServiceForm()" class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">add</span>
@@ -74,129 +55,81 @@
       }
     </div>
 
-    <div class="p-5">
-      @if (showAddService() || editingServiceId()) {
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-sm p-4 mb-5">
-          <h3 class="font-label font-bold text-[10px] uppercase tracking-widest text-primary mb-4">
-            {{ editingServiceId() ? 'Modifier le service' : 'Nouveau service' }}
-          </h3>
-          <div class="space-y-4">
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Nom du service</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Titre court du service (ex: "Automatisation Industrielle")</p>
-              <input [(ngModel)]="serviceForm.label" type="text" placeholder="Automatisation Industrielle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
-            </div>
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Description courte du service proposé</p>
-              <textarea [(ngModel)]="serviceForm.description" rows="3" placeholder="Conception et integration de solutions d'automatisation..." class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40 resize-none"></textarea>
-            </div>
-            <div class="flex gap-2 pt-1">
-              <button (click)="saveService()" class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-                <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-                Enregistrer
-              </button>
-              <button (click)="cancelEditService()" class="flex items-center gap-1.5 bg-surface-container text-on-surface px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-high transition-colors rounded-sm cursor-pointer">
-                Annuler
-              </button>
-            </div>
-          </div>
+    @if (showAddService() || editingServiceId()) {
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-sm p-4 mb-5">
+        <h3 class="font-label font-bold text-[10px] uppercase tracking-widest text-primary mb-4">
+          {{ editingServiceId() ? 'Modifier le service' : 'Nouveau service' }}
+        </h3>
+        <div class="space-y-4">
+          <app-form-field label="Nom du service" helper="Titre court du service (ex: Automatisation Industrielle)">
+            <input [(ngModel)]="serviceForm.label" type="text" placeholder="Automatisation Industrielle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
+          </app-form-field>
+          <app-form-field label="Description" helper="Description courte du service proposé">
+            <textarea [(ngModel)]="serviceForm.description" rows="3" placeholder="Conception et integration de solutions d'automatisation..." class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40 resize-none"></textarea>
+          </app-form-field>
+          <app-save-cancel-group (save)="saveService()" (cancel)="cancelEditService()"></app-save-cancel-group>
         </div>
-      }
+      </div>
+    }
 
-      @if (services().length === 0) {
-        <div class="text-center py-8">
-          <span class="material-symbols-outlined text-4xl text-outline mb-3 block" aria-hidden="true">handyman</span>
-          <p class="text-sm text-on-surface-variant">Aucun service enregistré — cliquez sur "Ajouter" pour commencer</p>
-        </div>
-      } @else {
-        <ul class="space-y-2">
-          @for (service of services(); track service.id) {
-            <li class="flex items-start gap-3 bg-surface-container-low p-4 rounded-sm group">
-              <div class="flex-1 min-w-0">
-                <div class="font-label font-bold text-[11px] uppercase tracking-wider text-on-surface truncate">{{ service.label }}</div>
-                <div class="text-[11px] text-on-surface-variant mt-1 line-clamp-2">{{ service.description }}</div>
-              </div>
-              <div class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button (click)="moveService(service.id, 'up')" aria-label="Déplacer vers le haut" class="material-symbols-outlined text-outline hover:text-on-surface transition-colors p-1 cursor-pointer">expand_less</button>
-                <button (click)="moveService(service.id, 'down')" aria-label="Déplacer vers le bas" class="material-symbols-outlined text-outline hover:text-on-surface transition-colors p-1 cursor-pointer">expand_more</button>
-                <button (click)="startEditService(service.id)" aria-label="Modifier" class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1 cursor-pointer">edit</button>
-                <button (click)="deleteService(service.id)" aria-label="Supprimer" class="material-symbols-outlined text-outline hover:text-error transition-colors p-1 cursor-pointer">delete</button>
-              </div>
-            </li>
-          }
-        </ul>
-      }
-    </div>
-  </section>
+    @if (services().length === 0) {
+      <app-empty-state icon="handyman" message="Aucun service enregistré — cliquez sur Ajouter pour commencer"></app-empty-state>
+    } @else {
+      <ul class="space-y-2">
+        @for (service of services(); track service.id) {
+          <li class="flex items-start gap-3 bg-surface-container-low p-4 rounded-sm group">
+            <div class="flex-1 min-w-0">
+              <div class="font-label font-bold text-[11px] uppercase tracking-wider text-on-surface truncate">{{ service.label }}</div>
+              <div class="text-[11px] text-on-surface-variant mt-1 line-clamp-2">{{ service.description }}</div>
+            </div>
+            <div class="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button (click)="moveService(service.id, 'up')" aria-label="Déplacer vers le haut" class="material-symbols-outlined text-outline hover:text-on-surface transition-colors p-1 cursor-pointer">expand_less</button>
+              <button (click)="moveService(service.id, 'down')" aria-label="Déplacer vers le bas" class="material-symbols-outlined text-outline hover:text-on-surface transition-colors p-1 cursor-pointer">expand_more</button>
+              <button (click)="startEditService(service.id)" aria-label="Modifier" class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1 cursor-pointer">edit</button>
+              <button (click)="deleteService(service.id)" aria-label="Supprimer" class="material-symbols-outlined text-outline hover:text-error transition-colors p-1 cursor-pointer">delete</button>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </app-section-card>
 
   <!-- Engagements (Values) Card -->
-  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">verified</span>
-        <h2 class="font-headline font-bold text-on-surface">Engagements</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant">Valeurs et engagements de l'entreprise</p>
-    </div>
-
-    <div class="p-5">
-      @if (companyValues().length === 0) {
-        <div class="text-center py-8">
-          <span class="material-symbols-outlined text-4xl text-outline mb-3 block" aria-hidden="true">verified</span>
-          <p class="text-sm text-on-surface-variant">Aucun engagement enregistré</p>
-        </div>
-      } @else {
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          @for (value of companyValues(); track value.id) {
-            <li class="bg-surface-container-low rounded-sm p-4">
-              @if (editingValueId() === value.id) {
-                <div class="space-y-3">
-                  <h3 class="font-label font-bold text-[10px] uppercase tracking-widest text-primary">Modifier l'engagement</h3>
-                  <div>
-                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icône</label>
-                    <p class="text-xs text-on-surface-variant mb-1.5">Nom de l'icône Material Symbols</p>
-                    <select [(ngModel)]="valueForm.icon" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none cursor-pointer">
-                      @for (icon of availableIcons; track icon) {
-                        <option [value]="icon">{{ icon }}</option>
-                      }
-                    </select>
-                  </div>
-                  <div>
-                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
-                    <p class="text-xs text-on-surface-variant mb-1.5">Nom court de l'engagement (ex: "Excellence technique")</p>
-                    <input [(ngModel)]="valueForm.title" type="text" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
-                  </div>
-                  <div>
-                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
-                    <p class="text-xs text-on-surface-variant mb-1.5">Description courte de l'engagement</p>
-                    <textarea [(ngModel)]="valueForm.description" rows="2" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none resize-none"></textarea>
-                  </div>
-                  <div class="flex gap-2 pt-1">
-                    <button (click)="saveValue()" class="flex items-center gap-1 bg-primary text-on-primary px-3 py-1.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-                      <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-                      Enregistrer
-                    </button>
-                    <button (click)="cancelEditValue()" class="flex items-center gap-1 bg-surface-container text-on-surface px-3 py-1.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-high transition-colors rounded-sm cursor-pointer">
-                      Annuler
-                    </button>
-                  </div>
+  <app-section-card icon="verified" title="Engagements" description="Valeurs et engagements de l'entreprise">
+    @if (companyValues().length === 0) {
+      <app-empty-state icon="verified" message="Aucun engagement enregistré"></app-empty-state>
+    } @else {
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        @for (value of companyValues(); track value.id) {
+          <li class="bg-surface-container-low rounded-sm p-4">
+            @if (editingValueId() === value.id) {
+              <div class="space-y-3">
+                <h3 class="font-label font-bold text-[10px] uppercase tracking-widest text-primary">Modifier l'engagement</h3>
+                <app-form-field label="Icône" helper="Nom de l'icône Material Symbols">
+                  <app-icon-select [value]="valueForm.icon" (valueChange)="onIconChange($event)"></app-icon-select>
+                </app-form-field>
+                <app-form-field label="Titre" helper="Nom court de l'engagement (ex: Excellence technique)">
+                  <input [(ngModel)]="valueForm.title" type="text" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none placeholder:text-on-surface-variant/40" />
+                </app-form-field>
+                <app-form-field label="Description" helper="Description courte de l'engagement">
+                  <textarea [(ngModel)]="valueForm.description" rows="2" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm outline-none resize-none"></textarea>
+                </app-form-field>
+                <app-save-cancel-group (save)="saveValue()" (cancel)="cancelEditValue()"></app-save-cancel-group>
+              </div>
+            } @else {
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary text-2xl shrink-0" aria-hidden="true">{{ value.icon }}</span>
+                <div class="flex-1 min-w-0">
+                  <div class="font-label font-bold text-[11px] uppercase tracking-wider text-on-surface">{{ value.title }}</div>
+                  <div class="text-[11px] text-on-surface-variant mt-1 line-clamp-3">{{ value.description }}</div>
                 </div>
-              } @else {
-                <div class="flex items-start gap-3">
-                  <span class="material-symbols-outlined text-primary text-2xl shrink-0" aria-hidden="true">{{ value.icon }}</span>
-                  <div class="flex-1 min-w-0">
-                    <div class="font-label font-bold text-[11px] uppercase tracking-wider text-on-surface">{{ value.title }}</div>
-                    <div class="text-[11px] text-on-surface-variant mt-1 line-clamp-3">{{ value.description }}</div>
-                  </div>
-                  <button (click)="startEditValue(value.id)" aria-label="Modifier" class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1 shrink-0 cursor-pointer">edit</button>
-                </div>
-              }
-            </li>
-          }
-        </ul>
-      }
-    </div>
-  </section>
+                <button (click)="startEditValue(value.id)" aria-label="Modifier" class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1 shrink-0 cursor-pointer">edit</button>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </app-section-card>
 
 </div>

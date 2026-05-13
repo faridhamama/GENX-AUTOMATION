@@ -5,10 +5,23 @@ import { CompanyFacade } from '../../../core/company.facade';
 import { HomeFacade } from '../../../core/home.facade';
 import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
+import { SectionCardComponent } from '../../../shared/section-card/section-card.component';
+import { FormFieldComponent } from '../../../shared/form-field/form-field.component';
+import { IconSelectComponent } from '../../../shared/icon-select/icon-select.component';
+import { EmptyStateComponent } from '../../../shared/empty-state/empty-state.component';
+import { SaveCancelGroupComponent } from '../../../shared/save-cancel-group/save-cancel-group.component';
 
 @Component({
   selector: 'app-home-editor',
-  imports: [FormField, FormsModule],
+  imports: [
+    FormField,
+    FormsModule,
+    SectionCardComponent,
+    FormFieldComponent,
+    IconSelectComponent,
+    EmptyStateComponent,
+    SaveCancelGroupComponent,
+  ],
   templateUrl: './home-editor.component.html',
   styleUrl: './home-editor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -172,6 +185,7 @@ export class HomeEditorComponent implements OnInit {
 
   cancelEditCard(): void {
     this.editingCardId.set(null);
+    this.showAddCard.set(false);
     this.resetCardForm();
   }
 
@@ -210,7 +224,6 @@ export class HomeEditorComponent implements OnInit {
         this.cancelEditCard();
       }
     } else {
-      // Adding a new card - would need create method; for now show error if not implemented
       this.toast.error('Creation de carte non implantee');
     }
   }
@@ -286,5 +299,9 @@ export class HomeEditorComponent implements OnInit {
       this.toast.success('Image uploadee et sauvegardee');
       this.cancelEditImage();
     }
+  }
+
+  onCardIconChange(icon: string): void {
+    this.cardForm.icon = icon;
   }
 }

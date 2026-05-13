@@ -4,10 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { LoaderComponent } from '../../../shared/loader/loader.component';
+import { EmptyStateComponent } from '../../../shared/empty-state/empty-state.component';
+import { SaveCancelGroupComponent } from '../../../shared/save-cancel-group/save-cancel-group.component';
+import { IconSelectComponent } from '../../../shared/icon-select/icon-select.component';
+import { SectionCardComponent } from '../../../shared/section-card/section-card.component';
+import { FormFieldComponent } from '../../../shared/form-field/form-field.component';
 
 @Component({
   selector: 'app-company-editor',
-  imports: [FormField, FormsModule, LoaderComponent],
+  imports: [
+    FormField,
+    FormsModule,
+    LoaderComponent,
+    EmptyStateComponent,
+    SaveCancelGroupComponent,
+    IconSelectComponent,
+    SectionCardComponent,
+    FormFieldComponent,
+  ],
   templateUrl: './company-editor.component.html',
   styleUrl: './company-editor.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,22 +51,10 @@ export class CompanyEditorComponent implements OnInit {
   readonly serviceForm = { label: '', description: '' };
   readonly valueForm = { icon: '', title: '', description: '' };
 
-  readonly availableIcons = [
-    'engineering',
-    'handshake',
-    'workspace_premium',
-    'precision_manufacturing',
-    'monitoring',
-    'support_agent',
-    'verified',
-    'security',
-  ];
-
   ngOnInit(): void {
     this.company.fetchCompanyInfo();
     this.company.fetchServices();
     this.company.fetchCompanyValues();
-    // Sync company info form once data is available
     setTimeout(() => {
       this.syncCompanyInfoForm();
     }, 500);
@@ -177,5 +179,9 @@ export class CompanyEditorComponent implements OnInit {
     }
     this.toast.success('Valeur mise à jour');
     this.cancelEditValue();
+  }
+
+  onIconChange(icon: string): void {
+    this.valueForm.icon = icon;
   }
 }

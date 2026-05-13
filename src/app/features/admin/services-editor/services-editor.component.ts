@@ -5,10 +5,22 @@ import { CompanyFacade } from '../../../core/company.facade';
 import { ServicesPageFacade } from '../../../core/services-page.facade';
 import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
+import { SectionCardComponent } from '../../../shared/section-card/section-card.component';
+import { FormFieldComponent } from '../../../shared/form-field/form-field.component';
+import { EmptyStateComponent } from '../../../shared/empty-state/empty-state.component';
+import { SaveCancelGroupComponent } from '../../../shared/save-cancel-group/save-cancel-group.component';
 
 @Component({
+  selector: 'app-services-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormField, FormsModule],
+  imports: [
+    FormField,
+    FormsModule,
+    SectionCardComponent,
+    FormFieldComponent,
+    EmptyStateComponent,
+    SaveCancelGroupComponent,
+  ],
   templateUrl: './services-editor.component.html',
 })
 export class ServicesEditorComponent implements OnInit {
@@ -49,7 +61,6 @@ export class ServicesEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.servicesPage.fetchServicesContent();
-    // Auto-load forms once data is available
     setTimeout(() => {
       this.syncHeroForm();
       this.syncMethodologyForm();

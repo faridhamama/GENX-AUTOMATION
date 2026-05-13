@@ -6,6 +6,9 @@ import { CompanyFacade } from '../../../core/company.facade';
 import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
 import { LoaderComponent } from '../../../shared/loader/loader.component';
+import { SectionCardComponent } from '../../../shared/section-card/section-card.component';
+import { EmptyStateComponent } from '../../../shared/empty-state/empty-state.component';
+import { FormFieldComponent } from '../../../shared/form-field/form-field.component';
 
 interface AboutImageForm {
   key: string;
@@ -15,7 +18,14 @@ interface AboutImageForm {
 
 @Component({
   selector: 'app-about-editor',
-  imports: [FormField, FormsModule, LoaderComponent],
+  imports: [
+    FormField,
+    FormsModule,
+    LoaderComponent,
+    SectionCardComponent,
+    EmptyStateComponent,
+    FormFieldComponent,
+  ],
   templateUrl: './about-editor.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

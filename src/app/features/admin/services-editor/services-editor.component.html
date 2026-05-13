@@ -1,189 +1,118 @@
 <div class="p-6 max-w-5xl mx-auto space-y-8">
 
   <!-- Hero Section -->
-  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">display_settings</span>
-        <h2 class="font-headline font-bold text-on-surface">Hero — Page Services</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant">Contenu de la section d'en-tête de la page Services</p>
-    </div>
-    <div class="p-5 space-y-4">
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Texte court affiché au-dessus du titre (ex: "Nos Services")</p>
+  <app-section-card icon="display_settings" title="Hero — Page Services" description="Contenu de la section d'en-tête de la page Services">
+    <div class="space-y-4">
+      <app-form-field label="Label" helper="Texte court affiché au-dessus du titre (ex: Nos Services)">
         <input [formField]="servicesHeroForm.label" type="text" placeholder="Nos Services" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded-sm" />
-      </div>
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre principal</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Titre en grand (HTML simple autorisé: &lt;strong&gt;, &lt;em&gt;, &lt;br&gt;)</p>
+      </app-form-field>
+      <app-form-field label="Titre principal" helper="Titre en grand (HTML simple autorisé: &lt;strong&gt;, &lt;em&gt;, &lt;br&gt;)">
         <input [formField]="servicesHeroForm.headline" type="text" placeholder="Solutions d'automatisation sur mesure" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded-sm" />
-      </div>
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Corps de texte</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Paragraphe descriptif sous le titre (HTML simple autorisé)</p>
+      </app-form-field>
+      <app-form-field label="Corps de texte" helper="Paragraphe descriptif sous le titre (HTML simple autorisé)">
         <textarea [formField]="servicesHeroForm.body" rows="3" placeholder="Decrivez vos services en quelques phrases..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded-sm resize-none"></textarea>
-      </div>
+      </app-form-field>
       <button (click)="saveServicesHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
         <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
         Enregistrer
       </button>
     </div>
-  </section>
+  </app-section-card>
 
   <!-- Methodology Section -->
-  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">linear_scale</span>
-        <h2 class="font-headline font-bold text-on-surface">Méthodologie</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant">Section qui explique votre méthode de travail</p>
-    </div>
-    <div class="p-5 space-y-4">
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label de section</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Texte court au-dessus du titre (ex: "Notre Méthodologie")</p>
+  <app-section-card icon="linear_scale" title="Méthodologie" description="Section qui explique votre méthode de travail">
+    <div class="space-y-4">
+      <app-form-field label="Label de section" helper="Texte court au-dessus du titre (ex: Notre Méthodologie)">
         <input [formField]="servicesMethodologyForm.section_label" type="text" placeholder="Notre Méthodologie" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded-sm" />
-      </div>
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Titre principal de la section méthodologie</p>
+      </app-form-field>
+      <app-form-field label="Titre" helper="Titre principal de la section méthodologie">
         <input [formField]="servicesMethodologyForm.headline" type="text" placeholder="Une approche en 4 étapes" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded-sm" />
-      </div>
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-texte</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Texte d'accompagnement sous le titre</p>
+      </app-form-field>
+      <app-form-field label="Sous-texte" helper="Texte d'accompagnement sous le titre">
         <textarea [formField]="servicesMethodologyForm.subtext" rows="2" placeholder="Description de votre approche..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded-sm resize-none"></textarea>
-      </div>
+      </app-form-field>
       <button (click)="saveServicesMethodology()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
         <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
         Enregistrer
       </button>
     </div>
-  </section>
+  </app-section-card>
 
   <!-- Methodology Steps -->
-  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">step</span>
-        <h2 class="font-headline font-bold text-on-surface">Étapes de la Méthodologie</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant">Les 4 étapes de votre processus de travail</p>
-    </div>
-    <div class="p-5">
-      @if (methodologySteps().length === 0) {
-        <div class="text-center py-8">
-          <span class="material-symbols-outlined text-4xl text-outline mb-3 block" aria-hidden="true">step</span>
-          <p class="text-sm text-on-surface-variant">Aucune étape enregistrée</p>
-        </div>
-      } @else {
-        <div class="space-y-4">
-          @for (step of methodologySteps(); track step.id) {
-            <div class="bg-surface-container-low border border-outline-variant rounded-sm p-4 space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="font-label text-[10px] font-bold uppercase tracking-widest text-primary">Étape {{ step.step_number }}</span>
-              </div>
-              <div class="grid gap-3">
-                <div>
-                  <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre de l'étape</label>
-                  <input [(ngModel)]="step.title" type="text" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded-sm" />
-                </div>
-                <div>
-                  <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
-                  <textarea [(ngModel)]="step.description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded-sm resize-none"></textarea>
-                </div>
-              </div>
-              <div class="flex justify-end">
-                <button (click)="saveMethodologyStep(step)" class="flex items-center gap-1 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-                  <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-                  Enregistrer
-                </button>
-              </div>
+  <app-section-card icon="step" title="Étapes de la Méthodologie" description="Les 4 étapes de votre processus de travail">
+    @if (methodologySteps().length === 0) {
+      <app-empty-state icon="step" message="Aucune étape enregistrée"></app-empty-state>
+    } @else {
+      <div class="space-y-4">
+        @for (step of methodologySteps(); track step.id) {
+          <div class="bg-surface-container-low border border-outline-variant rounded-sm p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-label text-[10px] font-bold uppercase tracking-widest text-primary">Étape {{ step.step_number }}</span>
             </div>
-          }
-        </div>
-      }
-    </div>
-  </section>
+            <div class="grid gap-3">
+              <app-form-field label="Titre de l'étape" helper="Titre de cette étape">
+                <input [(ngModel)]="step.title" type="text" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded-sm" />
+              </app-form-field>
+              <app-form-field label="Description" helper="Description de cette étape">
+                <textarea [(ngModel)]="step.description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded-sm resize-none"></textarea>
+              </app-form-field>
+            </div>
+            <div class="flex justify-end">
+              <button (click)="saveMethodologyStep(step)" class="flex items-center gap-1 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+                <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+                Enregistrer
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </app-section-card>
 
   <!-- Images Section -->
-  <section class="bg-surface border border-outline-variant rounded-sm overflow-hidden">
-    <div class="px-5 py-4 border-b border-outline-variant bg-surface-container-low">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">image</span>
-        <h2 class="font-headline font-bold text-on-surface">Images de la Page Services</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant">URL des images affichées sur la page Services</p>
-    </div>
-    <div class="p-5">
-      @if (servicesImages().length === 0) {
-        <div class="text-center py-8">
-          <span class="material-symbols-outlined text-4xl text-outline mb-3 block" aria-hidden="true">image</span>
-          <p class="text-sm text-on-surface-variant">Aucune image enregistrée</p>
-        </div>
-      } @else {
-        <div class="space-y-4">
-          @for (img of servicesImages(); track img.image_key) {
-            <div class="bg-surface-container-low border border-outline-variant rounded-sm p-4">
-              <div class="flex items-center justify-between mb-3">
-                <span class="font-label text-[10px] font-bold uppercase tracking-widest text-outline">{{ img.image_key }}</span>
-                <button (click)="startEditServicesImage(img.image_key)" class="flex items-center gap-1 text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer">
+  <app-section-card icon="image" title="Images de la Page Services" description="URL des images affichées sur la page Services">
+    @if (servicesImages().length === 0) {
+      <app-empty-state icon="image" message="Aucune image enregistrée"></app-empty-state>
+    } @else {
+      <div class="space-y-4">
+        @for (img of servicesImages(); track img.image_key) {
+          <div class="bg-surface-container-low border border-outline-variant rounded-sm p-4">
+            @if (editingServicesImageKey() === img.image_key) {
+              <div class="space-y-3">
+                <app-form-field label="Fichier image" helper="Choisissez un fichier image (PNG, JPG, WebP, SVG)">
+                  <input (change)="onImageFileSelected($event, img.image_key)" type="file" accept="image/*" class="w-full text-sm text-on-surface file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:bg-primary file:text-on-primary file:font-bold file:font-label file:uppercase file:tracking-widest file:text-[10px]" />
+                </app-form-field>
+                <app-form-field label="Texte alternatif" helper="Description de l'image pour les moteurs de recherche et l'accessibilité">
+                  <input [(ngModel)]="servicesImageForm.alt_text" type="text" placeholder="Armoire électrique automate Siemens" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded-sm" />
+                </app-form-field>
+                <app-save-cancel-group (save)="uploadServicesImage()" (cancel)="cancelEditServicesImage()"></app-save-cancel-group>
+              </div>
+            } @else {
+              <div class="flex items-start gap-4">
+                <div class="shrink-0">
+                  @if (img.url) {
+                    <img [src]="img.url" [alt]="img.alt_text || img.image_key" class="h-20 w-20 object-cover rounded-sm border border-outline" />
+                  } @else {
+                    <div class="h-20 w-20 rounded-sm border border-dashed border-outline flex items-center justify-center">
+                      <span class="material-symbols-outlined text-outline text-2xl" aria-hidden="true">image_not_supported</span>
+                    </div>
+                  }
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="font-label text-[10px] font-bold uppercase tracking-widest text-primary">{{ img.image_key }}</span>
+                  <p class="text-xs text-on-surface-variant mt-1">{{ img.alt_text || 'Pas de texte alternatif' }}</p>
+                  <p class="text-[10px] text-on-surface-variant mt-1 truncate">{{ img.url || 'Aucune URL définie' }}</p>
+                </div>
+                <button (click)="startEditServicesImage(img.image_key)" class="flex items-center gap-1 text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer shrink-0">
                   <span class="material-symbols-outlined text-base" aria-hidden="true">edit</span>
                   Modifier
                 </button>
               </div>
-              @if (editingServicesImageKey() === img.image_key) {
-                <div class="space-y-3">
-                  <div>
-                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Fichier image</label>
-                    <p class="text-xs text-on-surface-variant mb-1.5">Choisissez un fichier image (PNG, JPG, WebP, SVG)</p>
-                    <input (change)="onImageFileSelected($event, img.image_key)" type="file" accept="image/*" class="w-full text-sm text-on-surface file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:bg-primary file:text-on-primary file:font-bold file:font-label file:uppercase file:tracking-widest file:text-[10px]" />
-                  </div>
-                  <div>
-                    <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Texte alternatif</label>
-                    <p class="text-xs text-on-surface-variant mb-1.5">Description de l'image pour les moteurs de recherche et l'accessibilité</p>
-                    <input [(ngModel)]="servicesImageForm.alt_text" type="text" placeholder="Armoire électrique automate Siemens" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded-sm" />
-                  </div>
-                  <div class="flex gap-2 justify-end">
-                    <button (click)="cancelEditServicesImage()" class="flex items-center gap-1 bg-surface text-on-surface px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-high transition-colors rounded-sm cursor-pointer">
-                      Annuler
-                    </button>
-                    <button (click)="uploadServicesImage()" class="flex items-center gap-1 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-                      <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-                      Enregistrer
-                    </button>
-                  </div>
-                </div>
-              } @else {
-                <div class="flex items-start gap-4">
-                  <div class="shrink-0">
-                    @if (img.url) {
-                      <img [src]="img.url" [alt]="img.alt_text || img.image_key" class="h-20 w-20 object-cover rounded-sm border border-outline" />
-                    } @else {
-                      <div class="h-20 w-20 rounded-sm border border-dashed border-outline flex items-center justify-center">
-                        <span class="material-symbols-outlined text-outline text-2xl" aria-hidden="true">image_not_supported</span>
-                      </div>
-                    }
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <span class="font-label text-[10px] font-bold uppercase tracking-widest text-primary">{{ img.image_key }}</span>
-                    <p class="text-xs text-on-surface-variant mt-1">{{ img.alt_text || 'Pas de texte alternatif' }}</p>
-                    <p class="text-[10px] text-on-surface-variant mt-1 truncate">{{ img.url || 'Aucune URL définie' }}</p>
-                  </div>
-                  <button (click)="startEditServicesImage(img.image_key)" class="flex items-center gap-1 text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer shrink-0">
-                    <span class="material-symbols-outlined text-base" aria-hidden="true">edit</span>
-                    Modifier
-                  </button>
-                </div>
-              }
-            </div>
-          }
-        </div>
-      }
-    </div>
-  </section>
+            }
+          </div>
+        }
+      </div>
+    }
+  </app-section-card>
 
 </div>

@@ -6,259 +6,160 @@
   <div class="p-6 space-y-6 max-w-5xl mx-auto">
 
     <!-- Hero Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">person</span>
-        <h2 class="font-headline font-bold text-on-surface">Hero</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Introduction principale de la section A propos</p>
-      <form (ngSubmit)="saveAboutHero()" class="space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Texte d'accent au-dessus du titre principal</p>
-            <input [formField]="aboutHeroForm.label"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Titre principal de la section Hero</p>
-            <input [formField]="aboutHeroForm.headline"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Body</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Paragraphe de description sous le titre</p>
-            <textarea [formField]="aboutHeroForm.body"  rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
-          </div>
-        </div>
+    <app-section-card icon="person" title="Hero" description="Introduction principale de la section A propos">
+      <form (submit)="saveAboutHero()" class="space-y-4">
+        <app-form-field label="Label" helper="Texte d'accent au-dessus du titre principal">
+          <input [formField]="aboutHeroForm.label" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
+        <app-form-field label="Headline" helper="Titre principal de la section Hero">
+          <input [formField]="aboutHeroForm.headline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
+        <app-form-field label="Body" helper="Paragraphe de description sous le titre">
+          <textarea [formField]="aboutHeroForm.body" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+        </app-form-field>
         <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
           Enregistrer
         </button>
       </form>
-    </div>
+    </app-section-card>
 
     <!-- Availability Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">schedule</span>
-        <h2 class="font-headline font-bold text-on-surface">Disponibilite</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Horaires et jours de disponibilite pour les rendez-vous</p>
-      <form (ngSubmit)="saveAboutAvailability()" class="space-y-4">
+    <app-section-card icon="schedule" title="Disponibilite" description="Horaires et jours de disponibilite pour les rendez-vous">
+      <form (submit)="saveAboutAvailability()" class="space-y-4">
+        <app-form-field label="Label" helper="Titre de la section disponibilite">
+          <input [formField]="aboutAvailForm.label" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section disponibilite</p>
-            <input [formField]="aboutAvailForm.label"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Jours</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Jours de la semaine disponibles</p>
-            <input [formField]="aboutAvailForm.days"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Heures</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Plage horaire quotidienne</p>
-            <input [formField]="aboutAvailForm.hours"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
+          <app-form-field label="Jours" helper="Jours de la semaine disponibles">
+            <input [formField]="aboutAvailForm.days" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </app-form-field>
+          <app-form-field label="Heures" helper="Plage horaire quotidienne">
+            <input [formField]="aboutAvailForm.hours" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </app-form-field>
         </div>
         <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
           Enregistrer
         </button>
       </form>
-    </div>
+    </app-section-card>
 
     <!-- Mission Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">format_quote</span>
-        <h2 class="font-headline font-bold text-on-surface">Mission</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Citation ou declaration de mission de l'entreprise</p>
-      <form (ngSubmit)="saveAboutMission()" class="space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section mission</p>
-            <input [formField]="aboutMissionForm.label"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Quote</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Citation ou declaration inspirante</p>
-            <textarea [formField]="aboutMissionForm.quote"  rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
-          </div>
-        </div>
+    <app-section-card icon="format_quote" title="Mission" description="Citation ou declaration de mission de l'entreprise">
+      <form (submit)="saveAboutMission()" class="space-y-4">
+        <app-form-field label="Label" helper="Titre de la section mission">
+          <input [formField]="aboutMissionForm.label" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
+        <app-form-field label="Quote" helper="Citation ou declaration inspirante">
+          <textarea [formField]="aboutMissionForm.quote" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+        </app-form-field>
         <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
           Enregistrer
         </button>
       </form>
-    </div>
+    </app-section-card>
 
     <!-- Company Description Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">domain</span>
-        <h2 class="font-headline font-bold text-on-surface">Description Entreprise</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Presentation de l'entreprise et de son activite</p>
-      <form (ngSubmit)="saveAboutCompany()" class="space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Label</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section description</p>
-            <input [formField]="aboutCompanyForm.label"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Body</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Description detaillee de l'entreprise</p>
-            <textarea [formField]="aboutCompanyForm.body"  rows="4" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
-          </div>
-        </div>
+    <app-section-card icon="domain" title="Description Entreprise" description="Presentation de l'entreprise et de son activite">
+      <form (submit)="saveAboutCompany()" class="space-y-4">
+        <app-form-field label="Label" helper="Titre de la section description">
+          <input [formField]="aboutCompanyForm.label" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
+        <app-form-field label="Body" helper="Description detaillee de l'entreprise">
+          <textarea [formField]="aboutCompanyForm.body" rows="4" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+        </app-form-field>
         <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
           Enregistrer
         </button>
       </form>
-    </div>
+    </app-section-card>
 
     <!-- Services Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">handyman</span>
-        <h2 class="font-headline font-bold text-on-surface">Section Services</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">En-tete et texte d'introduction pour la section services</p>
-      <form (ngSubmit)="saveAboutServicesSection()" class="space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section services</p>
-            <input [formField]="aboutServicesSectionForm.headline"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif sous le titre</p>
-            <textarea [formField]="aboutServicesSectionForm.subtext"  rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
-          </div>
-        </div>
+    <app-section-card icon="handyman" title="Section Services" description="En-tete et texte d'introduction pour la section services">
+      <form (submit)="saveAboutServicesSection()" class="space-y-4">
+        <app-form-field label="Headline" helper="Titre de la section services">
+          <input [formField]="aboutServicesSectionForm.headline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
+        <app-form-field label="Subtext" helper="Texte descriptif sous le titre">
+          <textarea [formField]="aboutServicesSectionForm.subtext" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+        </app-form-field>
         <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
           Enregistrer
         </button>
       </form>
-    </div>
+    </app-section-card>
 
     <!-- Values Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">emoji_events</span>
-        <h2 class="font-headline font-bold text-on-surface">Section Valeurs</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">En-tete et texte d'introduction pour la section valeurs</p>
-      <form (ngSubmit)="saveAboutValuesSection()" class="space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section valeurs</p>
-            <input [formField]="aboutValuesSectionForm.headline"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif sous le titre</p>
-            <textarea [formField]="aboutValuesSectionForm.subtext"  rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
-          </div>
-        </div>
+    <app-section-card icon="emoji_events" title="Section Valeurs" description="En-tete et texte d'introduction pour la section valeurs">
+      <form (submit)="saveAboutValuesSection()" class="space-y-4">
+        <app-form-field label="Headline" helper="Titre de la section valeurs">
+          <input [formField]="aboutValuesSectionForm.headline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
+        <app-form-field label="Subtext" helper="Texte descriptif sous le titre">
+          <textarea [formField]="aboutValuesSectionForm.subtext" rows="3" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+        </app-form-field>
         <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
           Enregistrer
         </button>
       </form>
-    </div>
+    </app-section-card>
 
     <!-- CTA Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">campaign</span>
-        <h2 class="font-headline font-bold text-on-surface">Section CTA</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Appels a l'action et liens vers les pages de contact</p>
-      <form (ngSubmit)="saveAboutCtaSection()" class="space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Headline</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section CTA</p>
-            <input [formField]="aboutCtaSectionForm.headline"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-          </div>
-          <div>
-            <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Subtext</label>
-            <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif sous le titre</p>
-            <textarea [formField]="aboutCtaSectionForm.subtext"  rows="2" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Primary Label</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton principal</p>
-              <input [formField]="aboutCtaSectionForm.cta_primary_label"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-            </div>
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Primary Link</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">URL du bouton principal</p>
-              <input [formField]="aboutCtaSectionForm.cta_primary_link"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-            </div>
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Secondary Label</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton secondaire</p>
-              <input [formField]="aboutCtaSectionForm.cta_secondary_label"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-            </div>
-            <div>
-              <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">CTA Secondary Link</label>
-              <p class="text-xs text-on-surface-variant mb-1.5">URL du bouton secondaire</p>
-              <input [formField]="aboutCtaSectionForm.cta_secondary_link"  class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-            </div>
-          </div>
+    <app-section-card icon="campaign" title="Section CTA" description="Appels a l'action et liens vers les pages de contact">
+      <form (submit)="saveAboutCtaSection()" class="space-y-4">
+        <app-form-field label="Headline" helper="Titre de la section CTA">
+          <input [formField]="aboutCtaSectionForm.headline" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+        </app-form-field>
+        <app-form-field label="Subtext" helper="Texte descriptif sous le titre">
+          <textarea [formField]="aboutCtaSectionForm.subtext" rows="2" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm resize-y"></textarea>
+        </app-form-field>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <app-form-field label="CTA Primary Label" helper="Texte du bouton principal">
+            <input [formField]="aboutCtaSectionForm.cta_primary_label" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </app-form-field>
+          <app-form-field label="CTA Primary Link" helper="URL du bouton principal">
+            <input [formField]="aboutCtaSectionForm.cta_primary_link" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </app-form-field>
+          <app-form-field label="CTA Secondary Label" helper="Texte du bouton secondaire">
+            <input [formField]="aboutCtaSectionForm.cta_secondary_label" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </app-form-field>
+          <app-form-field label="CTA Secondary Link" helper="URL du bouton secondaire">
+            <input [formField]="aboutCtaSectionForm.cta_secondary_link" class="w-full bg-surface-container-low border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+          </app-form-field>
         </div>
         <button type="submit" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
           <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
           Enregistrer
         </button>
       </form>
-    </div>
+    </app-section-card>
 
     <!-- Images Section -->
-    <div class="bg-surface border border-outline-variant rounded-sm p-5">
-      <div class="flex items-center gap-2 mb-1">
-        <span class="material-symbols-outlined text-primary" aria-hidden="true">image</span>
-        <h2 class="font-headline font-bold text-on-surface">Images</h2>
-      </div>
-      <p class="text-xs text-on-surface-variant mb-4">Modifier les images utilisees dans la section A propos</p>
-
+    <app-section-card icon="image" title="Images" description="Modifier les images utilisees dans la section A propos">
       @if (editingAboutImageKey()) {
         <div class="bg-surface-container-low border border-outline-variant rounded-sm p-4 mb-4">
           <h3 class="font-label text-[10px] font-bold uppercase tracking-widest text-outline mb-3">Modifier l'image: {{ aboutImageForm.key }}</h3>
           <div class="space-y-4">
-            <div class="grid grid-cols-1 gap-4">
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Fichier image</label>
-                <p class="text-xs text-on-surface-variant mb-1.5">Choisissez un fichier image (PNG, JPG, WebP, SVG)</p>
-                <input (change)="onImageFileSelected($event, aboutImageForm.key)" type="file" accept="image/*" class="w-full text-sm text-on-surface file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:bg-primary file:text-on-primary file:font-bold file:font-label file:uppercase file:tracking-widest file:text-[10px]" />
-              </div>
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1.5">Alt Text</label>
-                <p class="text-xs text-on-surface-variant mb-1.5">Texte alternatif pour l'accessibilite</p>
-                <input [(ngModel)]="aboutImageForm.alt_text" name="aboutImageAlt" class="w-full bg-surface border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
-              </div>
-            </div>
-            <div class="flex gap-2">
-              <button type="button" (click)="uploadAboutImage()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
-                <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-                Enregistrer
-              </button>
-              <button type="button" (click)="cancelEditAboutImage()" class="bg-surface-container-high text-on-surface px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-lowest transition-colors rounded-sm cursor-pointer">
-                Annuler
-              </button>
-            </div>
+            <app-form-field label="Fichier image" helper="Choisissez un fichier image (PNG, JPG, WebP, SVG)">
+              <input (change)="onImageFileSelected($event, aboutImageForm.key)" type="file" accept="image/*" class="w-full text-sm text-on-surface file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:bg-primary file:text-on-primary file:font-bold file:font-label file:uppercase file:tracking-widest file:text-[10px]" />
+            </app-form-field>
+            <app-form-field label="Alt Text" helper="Texte alternatif pour l'accessibilite">
+              <input [(ngModel)]="aboutImageForm.alt_text" name="aboutImageAlt" class="w-full bg-surface border border-outline-variant focus:border-primary outline-none px-3 py-2.5 text-sm transition-colors rounded-sm" />
+            </app-form-field>
+          </div>
+          <div class="flex gap-2 mt-4">
+            <button type="button" (click)="uploadAboutImage()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer">
+              <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+              Enregistrer
+            </button>
+            <button type="button" (click)="cancelEditAboutImage()" class="bg-surface-container-high text-on-surface px-5 py-2.5 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-surface-container-lowest transition-colors rounded-sm cursor-pointer">
+              Annuler
+            </button>
           </div>
         </div>
       }
@@ -282,12 +183,10 @@
             </button>
           </div>
         } @empty {
-          <div class="text-center py-6 text-on-surface-variant text-sm">
-            Aucune image trouvee
-          </div>
+          <app-empty-state icon="image" message="Aucune image trouvee"></app-empty-state>
         }
       </div>
-    </div>
+    </app-section-card>
 
   </div>
 }

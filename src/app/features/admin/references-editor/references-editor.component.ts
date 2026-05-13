@@ -5,10 +5,21 @@ import { CompanyFacade } from '../../../core/company.facade';
 import { ReferencesFacade } from '../../../core/references.facade';
 import { SupabaseService } from '../../../core/supabase.service';
 import { ToastService } from '../../../shared/toast/toast.service';
+import { SectionCardComponent } from '../../../shared/section-card/section-card.component';
+import { EmptyStateComponent } from '../../../shared/empty-state/empty-state.component';
+import { IconSelectComponent } from '../../../shared/icon-select/icon-select.component';
+import { FormFieldComponent } from '../../../shared/form-field/form-field.component';
 
 @Component({
   selector: 'app-references-editor',
-  imports: [FormField, FormsModule],
+  imports: [
+    FormField,
+    FormsModule,
+    SectionCardComponent,
+    EmptyStateComponent,
+    IconSelectComponent,
+    FormFieldComponent,
+  ],
   templateUrl: './references-editor.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -58,21 +69,6 @@ export class ReferencesEditorComponent implements OnInit {
   readonly perfStatForm = { value: '', label: '' };
   readonly sideProjectForm = { sector: '', title: '', description: '', key_spec: '' };
   readonly qualityPointForm = { icon: '', title: '', description: '' };
-
-  readonly availableIcons = [
-    'engineering',
-    'handshake',
-    'workspace_premium',
-    'precision_manufacturing',
-    'monitoring',
-    'support_agent',
-    'verified',
-    'security',
-    'bolt',
-    'build',
-    'settings',
-    'stars',
-  ];
 
   ngOnInit(): void {
     this.refs.fetchReferencesContent();
@@ -339,5 +335,9 @@ export class ReferencesEditorComponent implements OnInit {
       this.toast.success('Image uploadee et sauvegardee');
       this.cancelEditRefImage();
     }
+  }
+
+  onQualityPointIconChange(icon: string): void {
+    this.qualityPointForm.icon = icon;
   }
 }

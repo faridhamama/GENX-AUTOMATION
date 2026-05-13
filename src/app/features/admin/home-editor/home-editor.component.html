@@ -1,88 +1,63 @@
 <div class="p-6 max-w-5xl mx-auto space-y-6">
 
   <!-- Hero Content -->
-  <div class="bg-surface border border-outline rounded p-6">
-    <div class="flex items-center gap-2 mb-1">
-      <span class="material-symbols-outlined text-primary" aria-hidden="true">home</span>
-      <h2 class="text-lg font-headline font-bold text-on-surface">Contenu du Hero</h2>
-    </div>
-    <p class="text-xs text-on-surface-variant mb-4">Section principale de la page d'accueil — titre, description et boutons</p>
+  <app-section-card icon="home" title="Contenu du Hero" description="Section principale de la page d'accueil — titre, description et boutons">
     <div class="space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Badge</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte court affiché au-dessus du titre principal (ex: "Solutions d'automatisation sur mesure")</p>
+        <app-form-field label="Badge" helper="Texte court affiché au-dessus du titre principal (ex: Solutions d'automatisation sur mesure)">
           <input [formField]="heroContentForm.hero_badge" placeholder="Solutions d'automatisation sur mesure" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Légende de l'image stats</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte sous l'image des statistiques (ex: "Équipe GENX en action")</p>
+        </app-form-field>
+        <app-form-field label="Légende de l'image stats" helper="Texte sous l'image des statistiques (ex: Équipe GENX en action)">
           <input [formField]="heroContentForm.stats_image_caption" placeholder="Équipe GENX en action" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
+        </app-form-field>
       </div>
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre principal</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Titre en grand — HTML simple autorisé (&lt;strong&gt;, &lt;em&gt;, &lt;br&gt;)</p>
+      <app-form-field label="Titre principal" helper="Titre en grand — HTML simple autorisé (&lt;strong&gt;, &lt;em&gt;, &lt;br&gt;)">
         <input [formField]="heroContentForm.hero_headline" placeholder="Automatisation industrielle<br>et robotique avanzada" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-      </div>
-      <div>
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Corps de texte</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Paragraphe sous le titre — HTML simple autorisé</p>
+      </app-form-field>
+      <app-form-field label="Corps de texte" helper="Paragraphe sous le titre — HTML simple autorisé">
         <textarea [formField]="heroContentForm.hero_body" rows="3" placeholder="Decrivez votre entreprise en quelques phrases..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded resize-none"></textarea>
-      </div>
+      </app-form-field>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton principal</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton d'action principal (ex: "Demander un devis")</p>
+        <app-form-field label="Bouton principal" helper="Texte du bouton d'action principal (ex: Demander un devis)">
           <input [formField]="heroContentForm.cta_primary_label" placeholder="Demander un devis" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton secondaire</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte du second bouton (ex: "Découvrir nos services")</p>
+        </app-form-field>
+        <app-form-field label="Bouton secondaire" helper="Texte du second bouton (ex: Découvrir nos services)">
           <input [formField]="heroContentForm.cta_secondary_label" placeholder="Découvrir nos services" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
+        </app-form-field>
       </div>
     </div>
 
     <div class="border-t border-outline-variant pt-4 mt-4">
       <h3 class="text-sm font-bold text-outline uppercase mb-3">Section Expertise</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Petit texte au-dessus du titre (ex: "Notre Expertise")</p>
+        <app-form-field label="Label" helper="Petit texte au-dessus du titre (ex: Notre Expertise)">
           <input [formField]="heroContentForm.expertise_label" placeholder="Notre Expertise" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
+        </app-form-field>
         <div class="md:col-span-2">
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section expertise</p>
-          <input [formField]="heroContentForm.expertise_headline" placeholder="Expertise en automatisation et robotique" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          <app-form-field label="Titre" helper="Titre de la section expertise">
+            <input [formField]="heroContentForm.expertise_headline" placeholder="Expertise en automatisation et robotique" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+          </app-form-field>
         </div>
       </div>
       <div class="mt-3">
-        <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-texte</label>
-        <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif de la section expertise</p>
-        <input [formField]="heroContentForm.expertise_subtext" placeholder="Des solutions adaptées à chaque secteur..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        <app-form-field label="Sous-texte" helper="Texte descriptif de la section expertise">
+          <input [formField]="heroContentForm.expertise_subtext" placeholder="Des solutions adaptées à chaque secteur..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
+        </app-form-field>
       </div>
     </div>
 
     <div class="border-t border-outline-variant pt-4 mt-4">
       <h3 class="text-sm font-bold text-outline uppercase mb-3">Section CTA</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre CTA</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Titre de la section appel à l'action</p>
+        <app-form-field label="Titre CTA" helper="Titre de la section appel à l'action">
           <input [formField]="heroContentForm.cta_section_headline" placeholder="Prêt à automatiser ?" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Corps CTA</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte descriptif de la section CTA</p>
+        </app-form-field>
+        <app-form-field label="Corps CTA" helper="Texte descriptif de la section CTA">
           <input [formField]="heroContentForm.cta_section_body" placeholder="Discutons de votre projet..." class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Bouton CTA</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte du bouton CTA</p>
+        </app-form-field>
+        <app-form-field label="Bouton CTA" helper="Texte du bouton CTA">
           <input [formField]="heroContentForm.cta_section_label" placeholder="Contactez-nous" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
+        </app-form-field>
       </div>
     </div>
 
@@ -90,106 +65,68 @@
       <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
       Enregistrer
     </button>
-  </div>
+  </app-section-card>
 
   <!-- Hero Stats -->
-  <div class="bg-surface border border-outline rounded p-6">
-    <div class="flex items-center gap-2 mb-1">
-      <span class="material-symbols-outlined text-primary" aria-hidden="true">bar_chart</span>
-      <h2 class="text-lg font-headline font-bold text-on-surface">Statistiques du Hero</h2>
-    </div>
-    <p class="text-xs text-on-surface-variant mb-4">Les 2 chiffres clés affichés sur la page d'accueil</p>
+  <app-section-card icon="bar_chart" title="Statistiques du Hero" description="Les 2 chiffres clés affichés sur la page d'accueil">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="space-y-4">
         <h3 class="text-sm font-bold text-outline uppercase">Statistique 1</h3>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Nom de la statistique (ex: "Projets livrés")</p>
+        <app-form-field label="Label" helper="Nom de la statistique (ex: Projets livrés)">
           <input [formField]="heroStatsForm.stat1_label" placeholder="Projets livrés" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Le chiffre ou pourcentage (ex: "150+" ou "98%")</p>
+        </app-form-field>
+        <app-form-field label="Valeur" helper="Le chiffre ou pourcentage (ex: 150+ ou 98%)">
           <input [formField]="heroStatsForm.stat1_value" placeholder="150+" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-titre</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte sous la valeur (ex: "Depuis 2025")</p>
+        </app-form-field>
+        <app-form-field label="Sous-titre" helper="Texte sous la valeur (ex: Depuis 2025)">
           <input [formField]="heroStatsForm.stat1_sub" placeholder="Depuis 2025" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
+        </app-form-field>
       </div>
       <div class="space-y-4">
         <h3 class="text-sm font-bold text-outline uppercase">Statistique 2</h3>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Label</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Nom de la statistique (ex: "Clients actifs")</p>
+        <app-form-field label="Label" helper="Nom de la statistique (ex: Clients actifs)">
           <input [formField]="heroStatsForm.stat2_label" placeholder="Clients actifs" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Valeur</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Le chiffre ou pourcentage (ex: "98%")</p>
+        </app-form-field>
+        <app-form-field label="Valeur" helper="Le chiffre ou pourcentage (ex: 98%)">
           <input [formField]="heroStatsForm.stat2_value" placeholder="98%" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Sous-titre</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Texte sous la valeur (ex: "Satisfaction client")</p>
+        </app-form-field>
+        <app-form-field label="Sous-titre" helper="Texte sous la valeur (ex: Satisfaction client)">
           <input [formField]="heroStatsForm.stat2_sub" placeholder="Satisfaction client" class="w-full px-3 py-2 bg-surface-container-low border border-outline text-sm text-on-surface rounded" />
-        </div>
+        </app-form-field>
       </div>
     </div>
     <button (click)="saveHeroStats()" class="flex items-center gap-1.5 mt-6 px-6 py-2.5 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
       <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
       Enregistrer
     </button>
-  </div>
+  </app-section-card>
 
   <!-- Expertise Cards -->
-  <div class="bg-surface border border-outline rounded p-6">
-    <div class="flex items-center gap-2 mb-1">
-      <span class="material-symbols-outlined text-primary" aria-hidden="true">apps</span>
-      <h2 class="text-lg font-headline font-bold text-on-surface">Cartes d'Expertise</h2>
-    </div>
-    <p class="text-xs text-on-surface-variant mb-4">Les domaines de compétence affichés après le hero sur la page d'accueil</p>
+  <app-section-card icon="apps" title="Cartes d'Expertise" description="Les domaines de compétence affichés après le hero sur la page d'accueil">
     <div class="flex justify-between items-center mb-4">
-      <span class="text-xs text-on-surface-variant">{{ home.homepageExpertiseCards().length }} carte(s)存在</span>
-      <button (click)="showAddCardForm()" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
-        <span class="material-symbols-outlined text-base" aria-hidden="true">add</span>
-        Ajouter une carte
-      </button>
+      <span class="text-xs text-on-surface-variant">{{ home.homepageExpertiseCards().length }} carte(s)</span>
+      @if (!showAddCard() && !editingCardId()) {
+        <button (click)="showAddCardForm()" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
+          <span class="material-symbols-outlined text-base" aria-hidden="true">add</span>
+          Ajouter une carte
+        </button>
+      }
     </div>
-    @if (showAddCard()) {
+    @if (showAddCard() || editingCardId()) {
       <div class="bg-surface-container-low border border-outline p-4 mb-4 rounded space-y-3">
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icône</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Nom de l'icône Material Symbols (ex: "precision_manufacturing")</p>
-          <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
-            @for (icon of cardIcons; track icon) {
-              <option [value]="icon">{{ icon }}</option>
-            }
-          </select>
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Nom court du domaine d'expertise</p>
+        <app-form-field label="Icône" helper="Nom de l'icône Material Symbols">
+          <app-icon-select [value]="cardForm.icon" (valueChange)="onCardIconChange($event)"></app-icon-select>
+        </app-form-field>
+        <app-form-field label="Titre" helper="Nom court du domaine d'expertise">
           <input [(ngModel)]="cardForm.title" placeholder="Automatisation Industrielle" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Description courte du domaine</p>
+        </app-form-field>
+        <app-form-field label="Description" helper="Description courte du domaine">
           <textarea [(ngModel)]="cardForm.description" placeholder="Conception et intégration de systèmes automatisés..." rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded resize-none"></textarea>
-        </div>
-        <div>
-          <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Tags</label>
-          <p class="text-xs text-on-surface-variant mb-1.5">Mots-clés séparés par des virgules (ex: "PLC, SCADA, Robotique")</p>
+        </app-form-field>
+        <app-form-field label="Tags" helper="Mots-clés séparés par des virgules (ex: PLC, SCADA, Robotique)">
           <input [(ngModel)]="cardForm.tags" placeholder="PLC, SCADA, Robotique" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-        </div>
-        <div class="flex gap-2">
-          <button (click)="saveCard()" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
-            <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-            Enregistrer
-          </button>
-          <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
-        </div>
+        </app-form-field>
+        <app-save-cancel-group (save)="saveCard()" (cancel)="cancelEditCard()"></app-save-cancel-group>
       </div>
     }
     <div class="space-y-3">
@@ -197,33 +134,19 @@
         <div class="bg-surface-container-low border border-outline p-4 rounded">
           @if (editingCardId() === card.id) {
             <div class="space-y-3">
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Icône</label>
-                <select [(ngModel)]="cardForm.icon" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded">
-                  @for (icon of cardIcons; track icon) {
-                    <option [value]="icon">{{ icon }}</option>
-                  }
-                </select>
-              </div>
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Titre</label>
+              <app-form-field label="Icône" helper="Nom de l'icône Material Symbols">
+                <app-icon-select [value]="cardForm.icon" (valueChange)="onCardIconChange($event)"></app-icon-select>
+              </app-form-field>
+              <app-form-field label="Titre" helper="Nom court du domaine d'expertise">
                 <input [(ngModel)]="cardForm.title" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-              </div>
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Description</label>
+              </app-form-field>
+              <app-form-field label="Description" helper="Description courte du domaine">
                 <textarea [(ngModel)]="cardForm.description" rows="2" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded resize-none"></textarea>
-              </div>
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Tags</label>
+              </app-form-field>
+              <app-form-field label="Tags" helper="Mots-clés séparés par des virgules">
                 <input [(ngModel)]="cardForm.tags" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-              </div>
-              <div class="flex gap-2">
-                <button (click)="saveCard()" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
-                  <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-                  Enregistrer
-                </button>
-                <button (click)="cancelEditCard()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
-              </div>
+              </app-form-field>
+              <app-save-cancel-group (save)="saveCard()" (cancel)="cancelEditCard()"></app-save-cancel-group>
             </div>
           } @else {
             <div class="flex items-start justify-between">
@@ -252,42 +175,29 @@
             </div>
           }
         </div>
+      } @empty {
+        <app-empty-state icon="apps" message="Aucune carte d'expertise — cliquez sur Ajouter pour commencer"></app-empty-state>
       }
     </div>
-  </div>
+  </app-section-card>
 
   <!-- Images -->
-  <div class="bg-surface border border-outline rounded p-6">
-    <div class="flex items-center gap-2 mb-1">
-      <span class="material-symbols-outlined text-primary" aria-hidden="true">image</span>
-      <h2 class="text-lg font-headline font-bold text-on-surface">Images de la Page d'Accueil</h2>
-    </div>
-    <p class="text-xs text-on-surface-variant mb-4">URL et description des images affichées sur la page d'accueil</p>
+  <app-section-card icon="image" title="Images de la Page d'Accueil" description="URL et description des images affichées sur la page d'accueil">
     <div class="space-y-4">
       @for (img of home.homepageImages(); track img.image_key) {
         <div class="bg-surface-container-low border border-outline p-4 rounded">
           @if (editingImageKey() === img.image_key) {
             <div class="space-y-3">
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Fichier image</label>
-                <p class="text-xs text-on-surface-variant mb-1.5">Choisissez un fichier image (PNG, JPG, WebP, SVG)</p>
+              <app-form-field label="Fichier image" helper="Choisissez un fichier image (PNG, JPG, WebP, SVG)">
                 <input (change)="onImageFileSelected($event, img.image_key)" type="file" accept="image/*" class="w-full text-sm text-on-surface file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:bg-primary file:text-on-primary file:font-bold file:font-label file:uppercase file:tracking-widest file:text-[10px]" />
-              </div>
-              <div>
-                <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Texte alternatif</label>
-                <p class="text-xs text-on-surface-variant mb-1.5">Description de l'image pour les moteurs de recherche</p>
+              </app-form-field>
+              <app-form-field label="Texte alternatif" helper="Description de l'image pour les moteurs de recherche">
                 <input [(ngModel)]="imageForm.alt_text" placeholder="Armoire électrique automate" class="w-full px-3 py-2 bg-surface border border-outline text-sm text-on-surface rounded" />
-              </div>
+              </app-form-field>
               @if (img.url) {
                 <img [src]="img.url" [alt]="img.alt_text" class="h-32 object-cover rounded" />
               }
-              <div class="flex gap-2">
-                <button (click)="uploadImage(img.image_key)" class="flex items-center gap-1 px-4 py-2 bg-primary text-white text-sm font-bold rounded hover:brightness-110 cursor-pointer">
-                  <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-                  Enregistrer
-                </button>
-                <button (click)="cancelEditImage()" class="px-4 py-2 bg-surface text-on-surface text-sm border border-outline rounded cursor-pointer">Annuler</button>
-              </div>
+              <app-save-cancel-group (save)="uploadImage(img.image_key)" (cancel)="cancelEditImage()"></app-save-cancel-group>
             </div>
           } @else {
             <div class="flex items-start gap-4">
@@ -312,8 +222,10 @@
             </div>
           }
         </div>
+      } @empty {
+        <app-empty-state icon="image" message="Aucune image disponible"></app-empty-state>
       }
     </div>
-  </div>
+  </app-section-card>
 
 </div>
