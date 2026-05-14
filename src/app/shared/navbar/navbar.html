@@ -17,11 +17,11 @@
   <nav class="flex justify-between items-center w-full px-4 sm:px-8 py-4 font-headline tracking-tight">
 
     <!-- Logo -->
-    <a routerLink="/" (click)="closeMenu()" class="flex items-center gap-2 shrink-0 cursor-pointer">
+    <a routerLink="/" (click)="closeMenu()" class="flex items-center gap-2 shrink-0 min-w-0 cursor-pointer">
       <img src="GENX AUTOMATION FAVICON.svg" alt="GENX AUTOMATION" class="navbar-logo-icon">
-      <span class="flex flex-col leading-tight">
-        <span class="text-lg sm:text-xl font-bold tracking-tighter">GENX</span>
-        <span class="text-s sm:text-m font-bold uppercase tracking-widest text-slate-700">AUTOMATION</span>
+      <span class="flex flex-col leading-tight min-w-0">
+        <span class="text-lg sm:text-xl font-bold tracking-tighter whitespace-nowrap">GENX</span>
+        <span class="text-s sm:text-m font-bold uppercase tracking-widest text-slate-700 whitespace-nowrap overflow-hidden">AUTOMATION</span>
       </span>
     </a>
 
