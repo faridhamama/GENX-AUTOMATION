@@ -1,11 +1,16 @@
 .navbar-logo-icon {
-  height: 2.75rem !important;
-  width: 2rem !important;
+  height: 4.5rem !important;
+  width: 3.25rem !important;
   max-width: none !important;
   object-fit: contain;
 
+  @media (max-width: 640px) {
+    height: 3.5rem !important;
+    width: 3rem !important;
+  }
+
   @media (max-width: 380px) {
-    height: 2.25rem !important;
-    width: 1.625rem !important;
+    height: 3rem !important;
+    width: 2.125rem !important;
   }
 }
