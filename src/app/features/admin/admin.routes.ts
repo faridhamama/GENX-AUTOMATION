@@ -20,7 +20,7 @@ export const adminRoutes: Routes = [
   },
   {
     path: 'contact',
-    loadComponent: () => import('./company-editor/company-editor.component').then((m) => m.CompanyEditorComponent),
+    loadComponent: () => import('./contact-editor/contact-editor.component').then((m) => m.ContactEditorComponent),
   },
   {
     path: 'references',
