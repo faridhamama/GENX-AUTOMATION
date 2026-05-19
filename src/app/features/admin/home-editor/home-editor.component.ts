@@ -149,7 +149,7 @@ export class HomeEditorComponent implements OnInit {
         ...this.heroContentModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Contenu hero sauvegarde');
       }
@@ -182,7 +182,7 @@ export class HomeEditorComponent implements OnInit {
         ...this.heroStatsModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Statistiques sauvegardees');
       }
@@ -238,7 +238,7 @@ export class HomeEditorComponent implements OnInit {
           tags,
         });
         if (error) {
-          this.toast.error();
+          this.toast.error('Erreur lors de la mise a jour de la carte');
           return;
         }
         this.toast.success('Carte mise a jour');

@@ -155,7 +155,7 @@ export class AboutEditorComponent implements OnInit {
         ...this.aboutHeroModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde du hero');
       } else {
         this.toast.success('Section Hero sauvegardee');
       }
@@ -174,7 +174,7 @@ export class AboutEditorComponent implements OnInit {
         ...this.aboutAvailModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Section Disponibilite sauvegardee');
       }
@@ -193,7 +193,7 @@ export class AboutEditorComponent implements OnInit {
         ...this.aboutMissionModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Section Mission sauvegardee');
       }
@@ -212,7 +212,7 @@ export class AboutEditorComponent implements OnInit {
         ...this.aboutCompanyModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Section Entreprise sauvegardee');
       }
@@ -231,7 +231,7 @@ export class AboutEditorComponent implements OnInit {
         ...this.aboutServicesSectionModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Section Services sauvegardee');
       }
@@ -250,7 +250,7 @@ export class AboutEditorComponent implements OnInit {
         ...this.aboutValuesSectionModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Section Valeurs sauvegardee');
       }
@@ -269,7 +269,7 @@ export class AboutEditorComponent implements OnInit {
         ...this.aboutCtaSectionModel(),
       });
       if (error) {
-        this.toast.error();
+        this.toast.error('Erreur lors de la sauvegarde');
       } else {
         this.toast.success('Section CTA sauvegardee');
       }
