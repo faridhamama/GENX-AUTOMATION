@@ -23,7 +23,20 @@ export class ReferencesComponent implements OnInit {
   readonly featuredProjectSpecs = computed(() => {
     const fp = this.featuredProject();
     if (!fp) return [];
-    try { return JSON.parse(fp.specs_json) as { label: string; value: string }[]; } catch { return []; }
+    try {
+      const parsed = JSON.parse(fp.specs_json);
+      if (Array.isArray(parsed)) {
+        return parsed as { label: string; value: string }[];
+      } else if (parsed && typeof parsed === 'object') {
+        return Object.entries(parsed).map(([key, val]) => ({
+          label: key,
+          value: String(val),
+        }));
+      }
+      return [];
+    } catch {
+      return [];
+    }
   });
   readonly featuredProjectImageUrl = computed(() => {
     const fp = this.featuredProject();

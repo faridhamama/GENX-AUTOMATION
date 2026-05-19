@@ -9,6 +9,7 @@ export class AuthService {
 
   private readonly _user = signal<{ id: string; email?: string } | null>(null);
   private readonly _isLoading = signal(true);
+  private _authUnsubscribe: (() => void) | null = null;
 
   readonly user = this._user.asReadonly();
   readonly isLoading = this._isLoading.asReadonly();
@@ -26,7 +27,7 @@ export class AuthService {
     });
 
     // Keep signal in sync with future auth events
-    this.supabase.onAuthStateChange((_event, session) => {
+    this._authUnsubscribe = this.supabase.onAuthStateChange((_event, session) => {
       this._user.set((session as { user: { id: string; email?: string } } | null)?.user ?? null);
       this._isLoading.set(false);
     });

@@ -100,10 +100,10 @@ export class AboutEditorComponent implements OnInit {
   readonly aboutImages = this.about.aboutImages;
   readonly aboutLoading = this.about.aboutLoading;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.company.fetchServices();
     this.company.fetchCompanyValues();
-    this.about.fetchAboutContent();
+    await this.about.fetchAboutContent();
     this.syncForms();
   }
 

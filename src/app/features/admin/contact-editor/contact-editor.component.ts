@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormField, form } from '@angular/forms/signals';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ContactFacade } from '../../../core/contact.facade';
@@ -64,26 +64,11 @@ export class ContactEditorComponent implements OnInit {
   });
   readonly formLabelsForm = form(this.formLabelsModel);
 
-  ngOnInit(): void {
-    this.contact.fetchContactContent();
-    effect(() => {
-      const hero = this.contact.contactPageHero();
-      if (hero) {
-        this.syncContactHero();
-      }
-    });
-    effect(() => {
-      const content = this.contact.contactFormContent();
-      if (content) {
-        this.syncContactFormContent();
-      }
-    });
-    effect(() => {
-      const labels = this.contact.formLabels();
-      if (labels) {
-        this.syncFormLabels();
-      }
-    });
+  async ngOnInit(): Promise<void> {
+    await this.contact.fetchContactContent();
+    this.syncContactHero();
+    this.syncContactFormContent();
+    this.syncFormLabels();
   }
 
   private syncContactHero(): void {

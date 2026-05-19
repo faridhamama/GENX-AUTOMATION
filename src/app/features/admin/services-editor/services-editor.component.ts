@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormField, form } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
@@ -66,20 +66,10 @@ export class ServicesEditorComponent implements OnInit {
   readonly savingMethodology = signal(false);
   readonly uploadingImage = signal(false);
 
-  ngOnInit(): void {
-    this.servicesPage.fetchServicesContent();
-    effect(() => {
-      const hero = this.servicesPageHero();
-      if (hero) {
-        this.syncHeroForm();
-      }
-    });
-    effect(() => {
-      const meth = this.servicesMethodology();
-      if (meth) {
-        this.syncMethodologyForm();
-      }
-    });
+  async ngOnInit(): Promise<void> {
+    await this.servicesPage.fetchServicesContent();
+    this.syncHeroForm();
+    this.syncMethodologyForm();
   }
 
   protected syncHeroForm(): void {

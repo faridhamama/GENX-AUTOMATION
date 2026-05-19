@@ -88,9 +88,11 @@ export class ReferencesEditorComponent implements OnInit {
   readonly sideProjectForm = signal({ sector: '', title: '', description: '', key_spec: '' });
   readonly qualityPointForm = signal({ icon: '', title: '', description: '' });
 
-  ngOnInit(): void {
-    this.refs.fetchReferencesContent();
+  async ngOnInit(): Promise<void> {
     this.company.fetchServices();
+    await this.refs.fetchReferencesContent();
+    this.initHeroForm();
+    this.initFeaturedProjectForm();
   }
 
   // Hero methods

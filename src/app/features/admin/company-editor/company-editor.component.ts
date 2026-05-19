@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormField, form } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
@@ -56,16 +56,11 @@ export class CompanyEditorComponent implements OnInit {
   readonly serviceForm = signal({ label: '', description: '' });
   readonly valueForm = signal({ icon: '', title: '', description: '' });
 
-  ngOnInit(): void {
-    this.company.fetchCompanyInfo();
+  async ngOnInit(): Promise<void> {
     this.company.fetchServices();
     this.company.fetchCompanyValues();
-    effect(() => {
-      const info = this.companyInfoData();
-      if (info) {
-        this.syncCompanyInfoForm();
-      }
-    });
+    await this.company.fetchCompanyInfo();
+    this.syncCompanyInfoForm();
   }
 
   syncCompanyInfoForm(): void {
