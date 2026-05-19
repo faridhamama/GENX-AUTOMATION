@@ -77,7 +77,11 @@ export class App implements OnInit {
 
   ngOnInit(): void {
     this._seo.init();
-    this._company.fetchCompanyInfo().finally(() => this.isReady.set(true));
+
+    Promise.race([
+      this._company.fetchCompanyInfo(),
+      new Promise(resolve => setTimeout(resolve, 5000)),
+    ]).finally(() => this.isReady.set(true));
 
     this._router.events.pipe(
       filter(e => e instanceof NavigationEnd)
