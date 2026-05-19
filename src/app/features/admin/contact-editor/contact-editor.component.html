@@ -20,8 +20,12 @@
           <input type="text" [formField]="contactHeroForm.body" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </app-form-field>
       </div>
-      <button (click)="saveContactHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
-        <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+      <button (click)="saveContactHero()" [disabled]="savingContactHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer disabled:opacity-50">
+        @if (savingContactHero()) {
+          <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+        } @else {
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+        }
         Enregistrer
       </button>
     </app-section-card>
@@ -41,8 +45,12 @@
                 <input type="text" [value]="stat.label" (input)="stat.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
               </app-form-field>
             </div>
-            <button (click)="saveContactStat(stat)" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer">
-              <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+            <button (click)="saveContactStat(stat)" [disabled]="savingContactStat()" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer disabled:opacity-50">
+              @if (savingContactStat()) {
+                <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+              } @else {
+                <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+              }
               Enregistrer
             </button>
           </div>
@@ -60,8 +68,12 @@
                 <input type="text" [value]="pt.label" (input)="pt.label = $any($event.target).value" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
               </app-form-field>
             </div>
-            <button (click)="saveProjectType(pt)" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer">
-              <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+            <button (click)="saveProjectType(pt)" [disabled]="savingProjectType()" class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-high rounded hover:bg-surface-container-hover transition-colors text-sm cursor-pointer disabled:opacity-50">
+              @if (savingProjectType()) {
+                <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+              } @else {
+                <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+              }
               Enregistrer
             </button>
           </div>
@@ -94,8 +106,12 @@
           <input type="text" [formField]="contactFormContentForm.loading_label" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </app-form-field>
       </div>
-      <button (click)="saveContactFormContent()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
-        <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+      <button (click)="saveContactFormContent()" [disabled]="savingContactFormContent()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer disabled:opacity-50">
+        @if (savingContactFormContent()) {
+          <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+        } @else {
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+        }
         Enregistrer
       </button>
     </app-section-card>
@@ -149,8 +165,12 @@
           <input type="text" [formField]="formLabelsForm.description_error" class="w-full px-3 py-2 bg-surface-container-high rounded text-on-surface" />
         </app-form-field>
       </div>
-      <button (click)="saveFormLabels()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer">
-        <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+      <button (click)="saveFormLabels()" [disabled]="savingFormLabels()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded hover:bg-primary-container transition-colors cursor-pointer disabled:opacity-50">
+        @if (savingFormLabels()) {
+          <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+        } @else {
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+        }
         Enregistrer
       </button>
     </app-section-card>

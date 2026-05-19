@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeoService } from './core/seo.service';
 import { CompanyFacade } from './core/company.facade';
 import { Navbar } from './shared/navbar/navbar';
@@ -71,6 +72,7 @@ export class App implements OnInit {
   private readonly _seo = inject(SeoService);
   private readonly _company = inject(CompanyFacade);
   private readonly _router = inject(Router);
+  private readonly _destroyRef = inject(DestroyRef);
 
   isReady = signal(false);
   isAdminRoute = signal(false);
@@ -84,7 +86,8 @@ export class App implements OnInit {
     ]).finally(() => this.isReady.set(true));
 
     this._router.events.pipe(
-      filter(e => e instanceof NavigationEnd)
+      filter(e => e instanceof NavigationEnd),
+      takeUntilDestroyed(this._destroyRef)
     ).subscribe((e: any) => {
       this.isAdminRoute.set(e.urlAfterRedirects.startsWith('/admin'));
     });

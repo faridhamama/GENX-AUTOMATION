@@ -9,9 +9,14 @@ import { ChangeDetectionStrategy, Component, output, input } from '@angular/core
       <button
         type="submit"
         (click)="save.emit()"
-        class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer"
+        [disabled]="disabled()"
+        class="flex items-center gap-1.5 bg-primary text-on-primary px-4 py-2 font-label font-bold uppercase tracking-widest text-[10px] hover:bg-on-primary-fixed-variant transition-colors rounded-sm cursor-pointer disabled:opacity-50"
       >
-        <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+        @if (loading()) {
+          <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+        } @else {
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+        }
         {{ saveLabel() }}
       </button>
       <button
@@ -28,6 +33,8 @@ import { ChangeDetectionStrategy, Component, output, input } from '@angular/core
 export class SaveCancelGroupComponent {
   saveLabel = input<string>('Enregistrer');
   cancelLabel = input<string>('Annuler');
+  disabled = input<boolean>(false);
+  loading = input<boolean>(false);
   save = output<void>();
   cancel = output<void>();
 }

@@ -86,6 +86,12 @@ export class ReferencesFacade {
     return { error };
   }
 
+  async createReferencesSideProject(project: Omit<ReferencesSideProjectRow, 'updated_at'>): Promise<{ error: string | null }> {
+    const { error } = await this.db.insertReferencesSideProject(project);
+    if (!error) await this.fetchReferencesSideProjects();
+    return { error };
+  }
+
   async deleteReferencesSideProject(id: string): Promise<{ error: string | null }> {
     const { error } = await this.db.deleteReferencesSideProject(id);
     if (!error) await this.fetchReferencesSideProjects();
@@ -105,6 +111,12 @@ export class ReferencesFacade {
 
   async updateReferencesQualityPoint(id: string, point: Partial<ReferencesQualityPointRow>): Promise<{ error: string | null }> {
     const { error } = await this.db.upsertReferencesQualityPoint(id, point);
+    if (!error) await this.fetchReferencesQualityPoints();
+    return { error };
+  }
+
+  async createReferencesQualityPoint(point: Omit<ReferencesQualityPointRow, 'updated_at'>): Promise<{ error: string | null }> {
+    const { error } = await this.db.insertReferencesQualityPoint(point);
     if (!error) await this.fetchReferencesQualityPoints();
     return { error };
   }

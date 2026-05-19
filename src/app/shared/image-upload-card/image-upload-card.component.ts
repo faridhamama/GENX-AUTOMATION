@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, output, input, signal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, output, input, signal, effect } from '@angular/core';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-image-upload-card',
@@ -23,7 +24,7 @@ import { ChangeDetectionStrategy, Component, output, input, signal, effect } fro
           <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Texte alternatif</label>
           <input
             [value]="editAltText()"
-            (input)="editAltText.set($any($event.target).value)"
+            (input)="onAltTextInput($event)"
             type="text"
             placeholder="Description de l'image"
             class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-2 px-0 text-sm text-on-surface outline-none placeholder:text-on-surface-variant/40"
@@ -77,6 +78,10 @@ import { ChangeDetectionStrategy, Component, output, input, signal, effect } fro
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageUploadCardComponent {
+  private readonly toast = inject(ToastService);
+
+  readonly MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
   imageKey = input.required<string>();
   imageUrl = input<string>('');
   altText = input<string>('');
@@ -100,7 +105,21 @@ export class ImageUploadCardComponent {
   protected onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile.set(input.files[0]);
+      const file = input.files[0];
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        this.toast.error('Veuillez sélectionner un fichier image valide');
+        return;
+      }
+
+      // Validate file size
+      if (file.size > this.MAX_SIZE) {
+        this.toast.error('Le fichier est trop volumineux (max 5 Mo)');
+        return;
+      }
+
+      this.selectedFile.set(file);
     }
   }
 
@@ -108,5 +127,10 @@ export class ImageUploadCardComponent {
     this.selectedFile.set(null);
     this.editAltText.set('');
     this.cancel.emit();
+  }
+
+  protected onAltTextInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.editAltText.set(target.value ?? '');
   }
 }

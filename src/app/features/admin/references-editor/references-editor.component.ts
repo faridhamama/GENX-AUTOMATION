@@ -10,6 +10,10 @@ import { EmptyStateComponent } from '../../../shared/empty-state/empty-state.com
 import { IconSelectComponent } from '../../../shared/icon-select/icon-select.component';
 import { FormFieldComponent } from '../../../shared/form-field/form-field.component';
 
+function generateId(): string {
+  return crypto.randomUUID();
+}
+
 @Component({
   selector: 'app-references-editor',
   imports: [
@@ -55,7 +59,7 @@ export class ReferencesEditorComponent implements OnInit {
   });
   readonly featuredProjectForm = form(this.featuredProjectModel);
 
-  readonly refImageForm = { key: '', url: '', alt_text: '' };
+  readonly refImageForm = signal({ key: '', url: '', alt_text: '' });
 
   // Editing states
   readonly editingRefImageKey = signal<string | null>(null);
@@ -65,10 +69,24 @@ export class ReferencesEditorComponent implements OnInit {
   readonly selectedImageFile = signal<File | null>(null);
   readonly selectedImageKey = signal<string | null>(null);
 
+  // Adding new states
+  readonly addingSideProject = signal(false);
+  readonly addingQualityPoint = signal(false);
+
+  // Loading states
+  readonly savingHero = signal(false);
+  readonly savingFeaturedProject = signal(false);
+  readonly savingPerfStat = signal(false);
+  readonly savingSideProject = signal(false);
+  readonly savingQualityPoint = signal(false);
+  readonly uploadingImage = signal(false);
+
+  private readonly MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
   // Inline edit forms
-  readonly perfStatForm = { value: '', label: '' };
-  readonly sideProjectForm = { sector: '', title: '', description: '', key_spec: '' };
-  readonly qualityPointForm = { icon: '', title: '', description: '' };
+  readonly perfStatForm = signal({ value: '', label: '' });
+  readonly sideProjectForm = signal({ sector: '', title: '', description: '', key_spec: '' });
+  readonly qualityPointForm = signal({ icon: '', title: '', description: '' });
 
   ngOnInit(): void {
     this.refs.fetchReferencesContent();
@@ -94,19 +112,24 @@ export class ReferencesEditorComponent implements OnInit {
     const hero = this.referencesHero();
     if (!hero) return;
 
-    const payload: typeof hero = {
-      ...hero,
-      label: label.trim(),
-      headline: headline.trim(),
-      body: body.trim(),
-    };
+    this.savingHero.set(true);
+    try {
+      const payload: typeof hero = {
+        ...hero,
+        label: label.trim(),
+        headline: headline.trim(),
+        body: body.trim(),
+      };
 
-    const { error } = await this.refs.updateReferencesHero(payload);
-    if (error) {
-      this.toast.error();
-      return;
+      const { error } = await this.refs.updateReferencesHero(payload);
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour du hero references');
+        return;
+      }
+      this.toast.success('Hero references mis a jour');
+    } finally {
+      this.savingHero.set(false);
     }
-    this.toast.success('Hero references mis a jour');
   }
 
   // Featured project methods
@@ -133,94 +156,110 @@ export class ReferencesEditorComponent implements OnInit {
     const project = this.referencesFeaturedProject();
     if (!project) return;
 
-    const payload: typeof project = {
-      ...project,
-      sector: form.sector.trim(),
-      title: form.title.trim(),
-      technology: form.technology.trim(),
-      tech_label: form.tech_label.trim(),
-      specs_json: form.specs_json.trim(),
-      image_key: form.image_key.trim(),
-      image_alt: form.image_alt.trim(),
-      result: form.result.trim(),
-    };
+    this.savingFeaturedProject.set(true);
+    try {
+      const payload: typeof project = {
+        ...project,
+        sector: form.sector.trim(),
+        title: form.title.trim(),
+        technology: form.technology.trim(),
+        tech_label: form.tech_label.trim(),
+        specs_json: form.specs_json.trim(),
+        image_key: form.image_key.trim(),
+        image_alt: form.image_alt.trim(),
+        result: form.result.trim(),
+      };
 
-    const { error } = await this.refs.updateReferencesFeaturedProject(payload);
-    if (error) {
-      this.toast.error();
-      return;
+      const { error } = await this.refs.updateReferencesFeaturedProject(payload);
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour du projet en vedette');
+        return;
+      }
+      this.toast.success('Projet en vedette mis a jour');
+    } finally {
+      this.savingFeaturedProject.set(false);
     }
-    this.toast.success('Projet en vedette mis a jour');
   }
 
   // Performance stats methods
   startEditPerfStat(id: string): void {
     const stat = this.referencesPerformanceStats().find((s) => s.id === id);
     if (!stat) return;
-    this.perfStatForm.value = stat.value;
-    this.perfStatForm.label = stat.label;
+    this.perfStatForm.update(f => ({ ...f, value: stat.value, label: stat.label }));
     this.editingPerfStatId.set(id);
   }
 
   cancelEditPerfStat(): void {
     this.editingPerfStatId.set(null);
-    this.perfStatForm.value = '';
-    this.perfStatForm.label = '';
+    this.perfStatForm.update(f => ({ ...f, value: '', label: '' }));
   }
 
   async savePerfStat(): Promise<void> {
     const id = this.editingPerfStatId();
     if (!id) return;
-    const value = this.perfStatForm.value.trim();
-    const label = this.perfStatForm.label.trim();
-    if (!value || !label) return;
+    const { value, label } = this.perfStatForm();
+    const trimmedValue = value.trim();
+    const trimmedLabel = label.trim();
+    if (!trimmedValue || !trimmedLabel) return;
 
-    const { error } = await this.refs.updateReferencesPerformanceStat({ id, value, label });
-    if (error) {
-      this.toast.error();
-      return;
+    this.savingPerfStat.set(true);
+    try {
+      const { error } = await this.refs.updateReferencesPerformanceStat({ id, value: trimmedValue, label: trimmedLabel });
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour de la statistique');
+        return;
+      }
+      this.toast.success('Statistique mise a jour');
+      this.cancelEditPerfStat();
+    } finally {
+      this.savingPerfStat.set(false);
     }
-    this.toast.success('Statistique mise a jour');
-    this.cancelEditPerfStat();
   }
 
   // Side projects methods
   startEditSideProject(id: string): void {
     const project = this.referencesSideProjects().find((p) => p.id === id);
     if (!project) return;
-    this.sideProjectForm.sector = project.sector;
-    this.sideProjectForm.title = project.title;
-    this.sideProjectForm.description = project.description;
-    this.sideProjectForm.key_spec = project.key_spec;
+    this.sideProjectForm.update(f => ({
+      ...f,
+      sector: project.sector,
+      title: project.title,
+      description: project.description,
+      key_spec: project.key_spec,
+    }));
     this.editingSideProjectId.set(id);
   }
 
   cancelEditSideProject(): void {
     this.editingSideProjectId.set(null);
-    this.sideProjectForm.sector = '';
-    this.sideProjectForm.title = '';
-    this.sideProjectForm.description = '';
-    this.sideProjectForm.key_spec = '';
+    this.sideProjectForm.update(f => ({ ...f, sector: '', title: '', description: '', key_spec: '' }));
   }
 
   async saveSideProject(): Promise<void> {
     const id = this.editingSideProjectId();
     if (!id) return;
-    const { sector, title, description, key_spec } = this.sideProjectForm;
-    if (!title.trim() || !sector.trim()) return;
+    const { sector, title, description, key_spec } = this.sideProjectForm();
+    const trimmedSector = sector.trim();
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle || !trimmedSector) return;
 
-    const { error } = await this.refs.updateReferencesSideProject(id, {
-      sector: sector.trim(),
-      title: title.trim(),
-      description: description.trim(),
-      key_spec: key_spec.trim(),
-    });
-    if (error) {
-      this.toast.error();
-      return;
+    this.savingSideProject.set(true);
+    try {
+      const { error } = await this.refs.updateReferencesSideProject(id, {
+        sector: trimmedSector,
+        title: trimmedTitle,
+        description: description.trim(),
+        key_spec: key_spec.trim(),
+      });
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour du projet parallele');
+        return;
+      }
+      this.toast.success('Projet parallel mis a jour');
+      this.cancelEditSideProject();
+    } finally {
+      this.savingSideProject.set(false);
     }
-    this.toast.success('Projet parallel mis a jour');
-    this.cancelEditSideProject();
   }
 
   async deleteSideProject(id: string): Promise<void> {
@@ -234,40 +273,86 @@ export class ReferencesEditorComponent implements OnInit {
     if (this.editingSideProjectId() === id) this.cancelEditSideProject();
   }
 
+  // Add new side project methods
+  startAddSideProject(): void {
+    this.sideProjectForm.update(f => ({ ...f, sector: '', title: '', description: '', key_spec: '' }));
+    this.addingSideProject.set(true);
+  }
+
+  cancelAddSideProject(): void {
+    this.addingSideProject.set(false);
+    this.sideProjectForm.update(f => ({ ...f, sector: '', title: '', description: '', key_spec: '' }));
+  }
+
+  async saveNewSideProject(): Promise<void> {
+    const { sector, title, description, key_spec } = this.sideProjectForm();
+    const trimmedSector = sector.trim();
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle || !trimmedSector) return;
+
+    this.savingSideProject.set(true);
+    try {
+      const { error } = await this.refs.createReferencesSideProject({
+        id: generateId(),
+        sector: trimmedSector,
+        title: trimmedTitle,
+        description: description.trim(),
+        key_spec: key_spec.trim(),
+        sort_order: 0,
+      });
+      if (error) {
+        this.toast.error('Erreur lors de la creation du projet parallel');
+        return;
+      }
+      this.toast.success('Projet parallel cree');
+      this.cancelAddSideProject();
+    } finally {
+      this.savingSideProject.set(false);
+    }
+  }
+
   // Quality points methods
   startEditQualityPoint(id: string): void {
     const point = this.referencesQualityPoints().find((p) => p.id === id);
     if (!point) return;
-    this.qualityPointForm.icon = point.icon;
-    this.qualityPointForm.title = point.title;
-    this.qualityPointForm.description = point.description;
+    this.qualityPointForm.update(f => ({
+      ...f,
+      icon: point.icon,
+      title: point.title,
+      description: point.description,
+    }));
     this.editingQualityPointId.set(id);
   }
 
   cancelEditQualityPoint(): void {
     this.editingQualityPointId.set(null);
-    this.qualityPointForm.icon = '';
-    this.qualityPointForm.title = '';
-    this.qualityPointForm.description = '';
+    this.qualityPointForm.update(f => ({ ...f, icon: '', title: '', description: '' }));
   }
 
   async saveQualityPoint(): Promise<void> {
     const id = this.editingQualityPointId();
     if (!id) return;
-    const { icon, title, description } = this.qualityPointForm;
-    if (!icon.trim() || !title.trim()) return;
+    const { icon, title, description } = this.qualityPointForm();
+    const trimmedIcon = icon.trim();
+    const trimmedTitle = title.trim();
+    if (!trimmedIcon || !trimmedTitle) return;
 
-    const { error } = await this.refs.updateReferencesQualityPoint(id, {
-      icon: icon.trim(),
-      title: title.trim(),
-      description: description.trim(),
-    });
-    if (error) {
-      this.toast.error();
-      return;
+    this.savingQualityPoint.set(true);
+    try {
+      const { error } = await this.refs.updateReferencesQualityPoint(id, {
+        icon: trimmedIcon,
+        title: trimmedTitle,
+        description: description.trim(),
+      });
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour du point qualite');
+        return;
+      }
+      this.toast.success('Point qualite mis a jour');
+      this.cancelEditQualityPoint();
+    } finally {
+      this.savingQualityPoint.set(false);
     }
-    this.toast.success('Point qualite mis a jour');
-    this.cancelEditQualityPoint();
   }
 
   async deleteQualityPoint(id: string): Promise<void> {
@@ -281,13 +366,48 @@ export class ReferencesEditorComponent implements OnInit {
     if (this.editingQualityPointId() === id) this.cancelEditQualityPoint();
   }
 
+  // Add new quality point methods
+  startAddQualityPoint(): void {
+    this.qualityPointForm.update(f => ({ ...f, icon: '', title: '', description: '' }));
+    this.addingQualityPoint.set(true);
+  }
+
+  cancelAddQualityPoint(): void {
+    this.addingQualityPoint.set(false);
+    this.qualityPointForm.update(f => ({ ...f, icon: '', title: '', description: '' }));
+  }
+
+  async saveNewQualityPoint(): Promise<void> {
+    const { icon, title, description } = this.qualityPointForm();
+    const trimmedIcon = icon.trim();
+    const trimmedTitle = title.trim();
+    if (!trimmedIcon || !trimmedTitle) return;
+
+    this.savingQualityPoint.set(true);
+    try {
+      const { error } = await this.refs.createReferencesQualityPoint({
+        id: generateId(),
+        icon: trimmedIcon,
+        title: trimmedTitle,
+        description: description.trim(),
+        sort_order: 0,
+      });
+      if (error) {
+        this.toast.error('Erreur lors de la creation du point qualite');
+        return;
+      }
+      this.toast.success('Point qualite cree');
+      this.cancelAddQualityPoint();
+    } finally {
+      this.savingQualityPoint.set(false);
+    }
+  }
+
   // References images methods
   startEditRefImage(key: string): void {
     const image = this.refs.referencesImagesMap()[key];
     if (!image) return;
-    this.refImageForm.key = key;
-    this.refImageForm.url = image.url;
-    this.refImageForm.alt_text = image.alt_text;
+    this.refImageForm.set({ key, url: image.url, alt_text: image.alt_text });
     this.editingRefImageKey.set(key);
     this.selectedImageFile.set(null);
     this.selectedImageKey.set(null);
@@ -296,9 +416,23 @@ export class ReferencesEditorComponent implements OnInit {
   onImageFileSelected(event: Event, key: string): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedImageFile.set(input.files[0]);
+      const file = input.files[0];
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        this.toast.error('Veuillez sélectionner un fichier image valide');
+        return;
+      }
+
+      // Validate file size
+      if (file.size > this.MAX_SIZE) {
+        this.toast.error('Le fichier est trop volumineux (max 5 Mo)');
+        return;
+      }
+
+      this.selectedImageFile.set(file);
       this.selectedImageKey.set(key);
-      this.refImageForm.key = key;
+      this.refImageForm.update(f => ({ ...f, key }));
     }
   }
 
@@ -306,9 +440,7 @@ export class ReferencesEditorComponent implements OnInit {
     this.editingRefImageKey.set(null);
     this.selectedImageFile.set(null);
     this.selectedImageKey.set(null);
-    this.refImageForm.key = '';
-    this.refImageForm.url = '';
-    this.refImageForm.alt_text = '';
+    this.refImageForm.set({ key: '', url: '', alt_text: '' });
   }
 
   async uploadRefImage(): Promise<void> {
@@ -318,26 +450,31 @@ export class ReferencesEditorComponent implements OnInit {
       this.toast.error('Veuillez selectionner un fichier image');
       return;
     }
-    const path = `references/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
-    const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
-    if (error) {
-      this.toast.error('Erreur lors de l\'upload: ' + error);
-      return;
-    }
-    if (!publicUrl) {
-      this.toast.error('URL publique non disponible apres upload');
-      return;
-    }
-    const { error: dbError } = await this.refs.upsertReferencesImage(key, publicUrl, this.refImageForm.alt_text);
-    if (dbError) {
-      this.toast.error('Erreur lors de la sauvegarde en base');
-    } else {
-      this.toast.success('Image uploadee et sauvegardee');
-      this.cancelEditRefImage();
+    this.uploadingImage.set(true);
+    try {
+      const path = `references/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+      const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
+      if (error) {
+        this.toast.error('Erreur lors de l\'upload: ' + error);
+        return;
+      }
+      if (!publicUrl) {
+        this.toast.error('URL publique non disponible apres upload');
+        return;
+      }
+      const { error: dbError } = await this.refs.upsertReferencesImage(key, publicUrl, this.refImageForm().alt_text);
+      if (dbError) {
+        this.toast.error('Erreur lors de la sauvegarde en base');
+      } else {
+        this.toast.success('Image uploadee et sauvegardee');
+        this.cancelEditRefImage();
+      }
+    } finally {
+      this.uploadingImage.set(false);
     }
   }
 
   onQualityPointIconChange(icon: string): void {
-    this.qualityPointForm.icon = icon;
+    this.qualityPointForm.update(f => ({ ...f, icon }));
   }
 }

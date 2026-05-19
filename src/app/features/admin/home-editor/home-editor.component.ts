@@ -39,6 +39,14 @@ export class HomeEditorComponent implements OnInit {
   readonly selectedImageFile = signal<File | null>(null);
   readonly selectedImageKey = signal<string | null>(null);
 
+  // Loading states
+  readonly savingHeroContent = signal(false);
+  readonly savingHeroStats = signal(false);
+  readonly savingCard = signal(false);
+  readonly uploadingImage = signal(false);
+
+  private readonly MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
   // Hero Content Form - Signal Form
   private heroContentModel = signal({
     hero_badge: '',
@@ -134,14 +142,19 @@ export class HomeEditorComponent implements OnInit {
   async saveHeroContent(): Promise<void> {
     const content = this.home.homepageHeroContent();
     if (!content) return;
-    const { error } = await this.home.updateHomepageHeroContent({
-      ...content,
-      ...this.heroContentModel(),
-    });
-    if (error) {
-      this.toast.error();
-    } else {
-      this.toast.success('Contenu hero sauvegarde');
+    this.savingHeroContent.set(true);
+    try {
+      const { error } = await this.home.updateHomepageHeroContent({
+        ...content,
+        ...this.heroContentModel(),
+      });
+      if (error) {
+        this.toast.error();
+      } else {
+        this.toast.success('Contenu hero sauvegarde');
+      }
+    } finally {
+      this.savingHeroContent.set(false);
     }
   }
 
@@ -162,14 +175,19 @@ export class HomeEditorComponent implements OnInit {
   async saveHeroStats(): Promise<void> {
     const stats = this.home.homepageHeroStats();
     if (!stats) return;
-    const { error } = await this.home.updateHomepageHeroStats({
-      ...stats,
-      ...this.heroStatsModel(),
-    });
-    if (error) {
-      this.toast.error();
-    } else {
-      this.toast.success('Statistiques sauvegardees');
+    this.savingHeroStats.set(true);
+    try {
+      const { error } = await this.home.updateHomepageHeroStats({
+        ...stats,
+        ...this.heroStatsModel(),
+      });
+      if (error) {
+        this.toast.error();
+      } else {
+        this.toast.success('Statistiques sauvegardees');
+      }
+    } finally {
+      this.savingHeroStats.set(false);
     }
   }
 
@@ -211,17 +229,22 @@ export class HomeEditorComponent implements OnInit {
 
     const editingId = this.editingCardId();
     if (editingId) {
-      const { error } = await this.home.updateHomepageExpertiseCard(editingId, {
-        icon: this.cardForm.icon,
-        title: this.cardForm.title,
-        description: this.cardForm.description,
-        tags,
-      });
-      if (error) {
-        this.toast.error();
-      } else {
+      this.savingCard.set(true);
+      try {
+        const { error } = await this.home.updateHomepageExpertiseCard(editingId, {
+          icon: this.cardForm.icon,
+          title: this.cardForm.title,
+          description: this.cardForm.description,
+          tags,
+        });
+        if (error) {
+          this.toast.error();
+          return;
+        }
         this.toast.success('Carte mise a jour');
         this.cancelEditCard();
+      } finally {
+        this.savingCard.set(false);
       }
     } else {
       this.toast.error('Creation de carte non implantee');
@@ -270,7 +293,21 @@ export class HomeEditorComponent implements OnInit {
   onImageFileSelected(event: Event, key: string): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedImageFile.set(input.files[0]);
+      const file = input.files[0];
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        this.toast.error('Veuillez sélectionner un fichier image valide');
+        return;
+      }
+
+      // Validate file size
+      if (file.size > this.MAX_SIZE) {
+        this.toast.error('Le fichier est trop volumineux (max 5 Mo)');
+        return;
+      }
+
+      this.selectedImageFile.set(file);
       this.selectedImageKey.set(key);
       this.imageForm.key = key;
     }
@@ -282,22 +319,27 @@ export class HomeEditorComponent implements OnInit {
       this.toast.error('Veuillez selectionner un fichier image');
       return;
     }
-    const path = `homepage/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
-    const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
-    if (error) {
-      this.toast.error('Erreur lors de l\'upload: ' + error);
-      return;
-    }
-    if (!publicUrl) {
-      this.toast.error('URL publique non disponible apres upload');
-      return;
-    }
-    const { error: dbError } = await this.home.upsertHomepageImage(key, publicUrl, this.imageForm.alt_text);
-    if (dbError) {
-      this.toast.error('Erreur lors de la sauvegarde en base');
-    } else {
-      this.toast.success('Image uploadee et sauvegardee');
-      this.cancelEditImage();
+    this.uploadingImage.set(true);
+    try {
+      const path = `homepage/${key}-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+      const { publicUrl, error } = await this.supabase.uploadImage('images', path, file);
+      if (error) {
+        this.toast.error('Erreur lors de l\'upload: ' + error);
+        return;
+      }
+      if (!publicUrl) {
+        this.toast.error('URL publique non disponible apres upload');
+        return;
+      }
+      const { error: dbError } = await this.home.upsertHomepageImage(key, publicUrl, this.imageForm.alt_text);
+      if (dbError) {
+        this.toast.error('Erreur lors de la sauvegarde en base');
+      } else {
+        this.toast.success('Image uploadee et sauvegardee');
+        this.cancelEditImage();
+      }
+    } finally {
+      this.uploadingImage.set(false);
     }
   }
 

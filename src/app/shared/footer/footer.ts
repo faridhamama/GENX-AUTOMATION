@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NAV_LINKS, NavLink } from '../../core/navigation.config';
 import { CompanyFacade } from '../../core/company.facade';
@@ -10,7 +10,7 @@ import { CompanyFacade } from '../../core/company.facade';
   styleUrl: './footer.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Footer implements OnInit {
+export class Footer {
   private readonly company = inject(CompanyFacade);
 
   readonly navLinks: NavLink[] = NAV_LINKS;
@@ -47,9 +47,5 @@ export class Footer implements OnInit {
     }
     result.push({ label: 'Samedi', time: '09:00 - 12:30' });
     return result;
-  }
-
-  ngOnInit(): void {
-    this.company.fetchCompanyInfo();
   }
 }

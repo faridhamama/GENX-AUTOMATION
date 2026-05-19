@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormField, form } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { CompanyFacade } from '../../../core/company.facade';
@@ -38,6 +38,11 @@ export class CompanyEditorComponent implements OnInit {
   readonly showAddService = signal(false);
   readonly editingValueId = signal<string | null>(null);
 
+  // Loading states
+  readonly savingCompanyInfo = signal(false);
+  readonly savingService = signal(false);
+  readonly savingValue = signal(false);
+
   // Company Info Form - Signal Form
   private companyInfoModel = signal({
     contact_email: '',
@@ -48,16 +53,19 @@ export class CompanyEditorComponent implements OnInit {
   });
   readonly companyInfoForm = form(this.companyInfoModel);
 
-  readonly serviceForm = { label: '', description: '' };
-  readonly valueForm = { icon: '', title: '', description: '' };
+  readonly serviceForm = signal({ label: '', description: '' });
+  readonly valueForm = signal({ icon: '', title: '', description: '' });
 
   ngOnInit(): void {
     this.company.fetchCompanyInfo();
     this.company.fetchServices();
     this.company.fetchCompanyValues();
-    setTimeout(() => {
-      this.syncCompanyInfoForm();
-    }, 500);
+    effect(() => {
+      const info = this.companyInfoData();
+      if (info) {
+        this.syncCompanyInfoForm();
+      }
+    });
   }
 
   syncCompanyInfoForm(): void {
@@ -74,57 +82,64 @@ export class CompanyEditorComponent implements OnInit {
   }
 
   async saveCompanyInfo(): Promise<void> {
-    const { error } = await this.company.updateCompanyInfo(this.companyInfoModel());
-    if (error) {
-      this.toast.error('Erreur lors de la sauvegarde');
-    } else {
-      this.toast.success('Modifications enregistrées');
+    this.savingCompanyInfo.set(true);
+    try {
+      const { error } = await this.company.updateCompanyInfo(this.companyInfoModel());
+      if (error) {
+        this.toast.error('Erreur lors de la sauvegarde');
+      } else {
+        this.toast.success('Modifications enregistrées');
+      }
+    } finally {
+      this.savingCompanyInfo.set(false);
     }
   }
 
   showAddServiceForm(): void {
-    this.serviceForm.label = '';
-    this.serviceForm.description = '';
+    this.serviceForm.set({ label: '', description: '' });
     this.showAddService.set(true);
   }
 
   startEditService(id: string): void {
     const service = this.services().find((s) => s.id === id);
     if (!service) return;
-    this.serviceForm.label = service.label;
-    this.serviceForm.description = service.description;
+    this.serviceForm.set({ label: service.label, description: service.description });
     this.editingServiceId.set(id);
   }
 
   cancelEditService(): void {
     this.editingServiceId.set(null);
     this.showAddService.set(false);
-    this.serviceForm.label = '';
-    this.serviceForm.description = '';
+    this.serviceForm.set({ label: '', description: '' });
   }
 
   async saveService(): Promise<void> {
-    const label = this.serviceForm.label.trim();
-    const description = this.serviceForm.description.trim();
-    if (!label) return;
+    const { label, description } = this.serviceForm();
+    const trimmedLabel = label.trim();
+    if (!trimmedLabel) return;
 
-    const editingId = this.editingServiceId();
-    if (editingId) {
-      const { error } = await this.company.updateService(editingId, label, description);
-      if (error) {
-        this.toast.error();
-        return;
+    this.savingService.set(true);
+    try {
+      const editingId = this.editingServiceId();
+      if (editingId) {
+        const { error } = await this.company.updateService(editingId, trimmedLabel, description.trim());
+        if (error) {
+          this.toast.error('Erreur lors de la mise a jour du service');
+          return;
+        }
+        this.toast.success('Service mis à jour');
+      } else {
+        const { error } = await this.company.createService(trimmedLabel, description.trim());
+        if (error) {
+          this.toast.error('Erreur lors de la creation du service');
+          return;
+        }
+        this.toast.success('Service ajouté');
       }
-      this.toast.success('Service mis à jour');
-    } else {
-      const { error } = await this.company.createService(label, description);
-      if (error) {
-        this.toast.error();
-        return;
-      }
-      this.toast.success('Service ajouté');
+      this.cancelEditService();
+    } finally {
+      this.savingService.set(false);
     }
-    this.cancelEditService();
   }
 
   async deleteService(id: string): Promise<void> {
@@ -151,37 +166,38 @@ export class CompanyEditorComponent implements OnInit {
   startEditValue(id: string): void {
     const value = this.companyValues().find((v) => v.id === id);
     if (!value) return;
-    this.valueForm.icon = value.icon;
-    this.valueForm.title = value.title;
-    this.valueForm.description = value.description;
+    this.valueForm.set({ icon: value.icon, title: value.title, description: value.description });
     this.editingValueId.set(id);
   }
 
   cancelEditValue(): void {
     this.editingValueId.set(null);
-    this.valueForm.icon = '';
-    this.valueForm.title = '';
-    this.valueForm.description = '';
+    this.valueForm.set({ icon: '', title: '', description: '' });
   }
 
   async saveValue(): Promise<void> {
     const id = this.editingValueId();
     if (!id) return;
-    const icon = this.valueForm.icon.trim();
-    const title = this.valueForm.title.trim();
-    const description = this.valueForm.description.trim();
-    if (!icon || !title) return;
+    const { icon, title, description } = this.valueForm();
+    const trimmedIcon = icon.trim();
+    const trimmedTitle = title.trim();
+    if (!trimmedIcon || !trimmedTitle) return;
 
-    const { error } = await this.company.updateCompanyValue(id, icon, title, description);
-    if (error) {
-      this.toast.error('Erreur lors de la sauvegarde');
-      return;
+    this.savingValue.set(true);
+    try {
+      const { error } = await this.company.updateCompanyValue(id, trimmedIcon, trimmedTitle, description.trim());
+      if (error) {
+        this.toast.error('Erreur lors de la sauvegarde');
+        return;
+      }
+      this.toast.success('Valeur mise à jour');
+      this.cancelEditValue();
+    } finally {
+      this.savingValue.set(false);
     }
-    this.toast.success('Valeur mise à jour');
-    this.cancelEditValue();
   }
 
   onIconChange(icon: string): void {
-    this.valueForm.icon = icon;
+    this.valueForm.update(f => ({ ...f, icon }));
   }
 }

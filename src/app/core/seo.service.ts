@@ -1,9 +1,10 @@
-import { Injectable, inject } from '@angular/core';
+import { DestroyRef, Injectable, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { Meta } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { COMPANY } from './company.config';
 
 export interface PageSeo {
@@ -27,6 +28,7 @@ export class SeoService {
   private readonly meta = inject(Meta);
   private readonly router = inject(Router);
   private readonly doc = inject(DOCUMENT);
+  private readonly _destroyRef = inject(DestroyRef);
 
   private readonly siteName = COMPANY.name;
 
@@ -36,7 +38,10 @@ export class SeoService {
 
   init(): void {
     this.router.events
-      .pipe(filter((e) => e instanceof NavigationEnd))
+      .pipe(
+        filter((e) => e instanceof NavigationEnd),
+        takeUntilDestroyed(this._destroyRef)
+      )
       .subscribe(() => {
         const seo = this.getSeoFromRoute();
         this.apply(seo);

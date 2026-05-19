@@ -81,6 +81,13 @@ export class ReferencesDbService {
     return { error: error ? error.message : null };
   }
 
+  async insertReferencesSideProject(project: Omit<ReferencesSideProjectRow, 'updated_at'>): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.client
+      .from('references_side_projects')
+      .insert({ ...project, updated_at: new Date().toISOString() });
+    return { error: error ? error.message : null };
+  }
+
   async deleteReferencesSideProject(id: string): Promise<{ error: string | null }> {
     const { error } = await this.supabase.client
       .from('references_side_projects')
@@ -110,6 +117,13 @@ export class ReferencesDbService {
       .from('references_quality_points')
       .update({ ...point, updated_at: new Date().toISOString() })
       .eq('id', id);
+    return { error: error ? error.message : null };
+  }
+
+  async insertReferencesQualityPoint(point: Omit<ReferencesQualityPointRow, 'updated_at'>): Promise<{ error: string | null }> {
+    const { error } = await this.supabase.client
+      .from('references_quality_points')
+      .insert({ ...point, updated_at: new Date().toISOString() });
     return { error: error ? error.message : null };
   }
 

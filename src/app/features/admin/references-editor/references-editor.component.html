@@ -12,8 +12,12 @@
       <app-form-field label="Body" helper="Descriptive text below the headline">
         <textarea [formField]="referencesHeroForm.body" rows="3" placeholder="Texte descriptif..." class="w-full bg-transparent border-2 border-outline-variant focus:border-primary transition-colors py-2 px-3 text-sm outline-none resize-none"></textarea>
       </app-form-field>
-      <button type="button" (click)="saveReferencesHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-primary-fixed-variant transition-colors cursor-pointer">
-        <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+      <button type="button" (click)="saveReferencesHero()" [disabled]="savingHero()" class="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-primary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+        @if (savingHero()) {
+          <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+        } @else {
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+        }
         Enregistrer
       </button>
     </div>
@@ -47,10 +51,14 @@
         <input [formField]="featuredProjectForm.result" type="text" placeholder="+40% de productivite" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-secondary transition-colors py-2 px-0 text-sm outline-none" />
       </app-form-field>
     </div>
-    <button type="button" (click)="saveFeaturedProject()" class="flex items-center gap-1.5 mt-4 bg-secondary text-on-secondary px-5 py-2.5 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-secondary-fixed-variant transition-colors cursor-pointer">
-      <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
-      Enregistrer
-    </button>
+    <button type="button" (click)="saveFeaturedProject()" [disabled]="savingFeaturedProject()" class="flex items-center gap-1.5 mt-4 bg-secondary text-on-secondary px-5 py-2.5 text-xs font-headline font-bold uppercase tracking-widest hover:bg-on-secondary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+        @if (savingFeaturedProject()) {
+          <span class="material-symbols-outlined text-base animate-spin" aria-hidden="true">progress_activity</span>
+        } @else {
+          <span class="material-symbols-outlined text-base" aria-hidden="true">check</span>
+        }
+        Enregistrer
+      </button>
   </app-section-card>
 
   <!-- Performance Stats Section -->
@@ -61,16 +69,20 @@
           @if (editingPerfStatId() === stat.id) {
             <div class="flex-1">
               <app-form-field label="Valeur" helper="Number or percentage to display">
-                <input [(ngModel)]="perfStatForm.value" type="text" placeholder="Valeur" class="w-full bg-transparent border-b-2 border-tertiary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="perfStatForm().value" (ngModelChange)="perfStatForm.update(f => ({ ...f, value: $event }))" type="text" placeholder="Valeur" class="w-full bg-transparent border-b-2 border-tertiary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
             </div>
             <div class="flex-1">
               <app-form-field label="Libellé" helper="Description of the metric">
-                <input [(ngModel)]="perfStatForm.label" type="text" placeholder="Label" class="w-full bg-transparent border-b-2 border-tertiary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="perfStatForm().label" (ngModelChange)="perfStatForm.update(f => ({ ...f, label: $event }))" type="text" placeholder="Label" class="w-full bg-transparent border-b-2 border-tertiary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
             </div>
-            <button type="button" (click)="savePerfStat()" class="text-tertiary hover:text-on-tertiary-fixed-variant transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-lg">check</span>
+            <button type="button" (click)="savePerfStat()" [disabled]="savingPerfStat()" class="text-tertiary hover:text-on-tertiary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+              @if (savingPerfStat()) {
+                <span class="material-symbols-outlined text-lg animate-spin" aria-hidden="true">progress_activity</span>
+              } @else {
+                <span class="material-symbols-outlined text-lg">check</span>
+              }
             </button>
             <button type="button" (click)="cancelEditPerfStat()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
               <span class="material-symbols-outlined text-lg">close</span>
@@ -92,26 +104,60 @@
   <!-- Side Projects Section -->
   <app-section-card icon="directory" title="Projets Paralleles" description="Manage additional reference projects shown on the page">
     <div class="space-y-3">
+      @if (addingSideProject()) {
+        <div class="p-4 bg-surface-container-high rounded border-2 border-primary">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+            <app-form-field label="Secteur" helper="Industry sector">
+              <input [ngModel]="sideProjectForm().sector" (ngModelChange)="sideProjectForm.update(f => ({ ...f, sector: $event }))" type="text" placeholder="Secteur" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
+            </app-form-field>
+            <app-form-field label="Titre" helper="Project title">
+              <input [ngModel]="sideProjectForm().title" (ngModelChange)="sideProjectForm.update(f => ({ ...f, title: $event }))" type="text" placeholder="Titre" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
+            </app-form-field>
+            <app-form-field label="Specification cle" helper="Key specification or highlight">
+              <input [ngModel]="sideProjectForm().key_spec" (ngModelChange)="sideProjectForm.update(f => ({ ...f, key_spec: $event }))" type="text" placeholder="Specification cle" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
+            </app-form-field>
+            <app-form-field label="Description" helper="Brief description of the project">
+              <input [ngModel]="sideProjectForm().description" (ngModelChange)="sideProjectForm.update(f => ({ ...f, description: $event }))" type="text" placeholder="Description" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
+            </app-form-field>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" (click)="saveNewSideProject()" [disabled]="savingSideProject()" class="text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+              @if (savingSideProject()) {
+                <span class="material-symbols-outlined text-lg animate-spin" aria-hidden="true">progress_activity</span>
+              } @else {
+                <span class="material-symbols-outlined text-lg">check</span>
+              }
+            </button>
+            <button type="button" (click)="cancelAddSideProject()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+          </div>
+        </div>
+      }
       @for (project of referencesSideProjects(); track project.id) {
         <div class="p-4 bg-surface-container-high rounded">
           @if (editingSideProjectId() === project.id) {
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
               <app-form-field label="Secteur" helper="Industry sector">
-                <input [(ngModel)]="sideProjectForm.sector" type="text" placeholder="Secteur" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="sideProjectForm().sector" (ngModelChange)="sideProjectForm.update(f => ({ ...f, sector: $event }))" type="text" placeholder="Secteur" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
               <app-form-field label="Titre" helper="Project title">
-                <input [(ngModel)]="sideProjectForm.title" type="text" placeholder="Titre" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="sideProjectForm().title" (ngModelChange)="sideProjectForm.update(f => ({ ...f, title: $event }))" type="text" placeholder="Titre" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
               <app-form-field label="Specification cle" helper="Key specification or highlight">
-                <input [(ngModel)]="sideProjectForm.key_spec" type="text" placeholder="Specification cle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="sideProjectForm().key_spec" (ngModelChange)="sideProjectForm.update(f => ({ ...f, key_spec: $event }))" type="text" placeholder="Specification cle" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
               <app-form-field label="Description" helper="Brief description of the project">
-                <input [(ngModel)]="sideProjectForm.description" type="text" placeholder="Description" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="sideProjectForm().description" (ngModelChange)="sideProjectForm.update(f => ({ ...f, description: $event }))" type="text" placeholder="Description" class="w-full bg-transparent border-b-2 border-outline-variant focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
             </div>
             <div class="flex gap-2">
-              <button type="button" (click)="saveSideProject()" class="text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer">
-                <span class="material-symbols-outlined text-lg">check</span>
+              <button type="button" (click)="saveSideProject()" [disabled]="savingSideProject()" class="text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+                @if (savingSideProject()) {
+                  <span class="material-symbols-outlined text-lg animate-spin" aria-hidden="true">progress_activity</span>
+                } @else {
+                  <span class="material-symbols-outlined text-lg">check</span>
+                }
               </button>
               <button type="button" (click)="cancelEditSideProject()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
                 <span class="material-symbols-outlined text-lg">close</span>
@@ -141,28 +187,65 @@
       } @empty {
         <app-empty-state icon="directory" message="Aucun projet parallel disponible"></app-empty-state>
       }
+      @if (!addingSideProject()) {
+        <button type="button" (click)="startAddSideProject()" class="w-full py-3 border-2 border-dashed border-outline-variant hover:border-primary rounded text-sm text-outline hover:text-primary transition-colors cursor-pointer flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">add</span>
+          Ajouter un projet parallel
+        </button>
+      }
     </div>
   </app-section-card>
 
   <!-- Quality Points Section -->
   <app-section-card icon="verified" title="Points Qualite" description="Highlight your company's key strengths and quality commitments" accentColor="primary">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      @if (addingQualityPoint()) {
+        <div class="p-4 bg-surface-container-high rounded border-2 border-primary">
+          <div class="space-y-3">
+            <app-form-field label="Icone" helper="Select a Material Symbols icon">
+              <app-icon-select [value]="qualityPointForm().icon" (valueChange)="qualityPointForm.update(f => ({ ...f, icon: $event }))"></app-icon-select>
+            </app-form-field>
+            <app-form-field label="Titre" helper="Title of the quality point">
+              <input [ngModel]="qualityPointForm().title" (ngModelChange)="qualityPointForm.update(f => ({ ...f, title: $event }))" type="text" placeholder="Titre" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
+            </app-form-field>
+            <app-form-field label="Description" helper="Brief explanation of this quality point">
+              <textarea [ngModel]="qualityPointForm().description" (ngModelChange)="qualityPointForm.update(f => ({ ...f, description: $event }))" rows="2" placeholder="Description" class="w-full bg-transparent border-2 border-primary focus:border-outline-variant transition-colors py-1 px-2 text-sm outline-none resize-none"></textarea>
+            </app-form-field>
+            <div class="flex gap-2">
+              <button type="button" (click)="saveNewQualityPoint()" [disabled]="savingQualityPoint()" class="text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+                @if (savingQualityPoint()) {
+                  <span class="material-symbols-outlined text-lg animate-spin" aria-hidden="true">progress_activity</span>
+                } @else {
+                  <span class="material-symbols-outlined text-lg">check</span>
+                }
+              </button>
+              <button type="button" (click)="cancelAddQualityPoint()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
       @for (point of referencesQualityPoints(); track point.id) {
         <div class="p-4 bg-surface-container-high rounded">
           @if (editingQualityPointId() === point.id) {
             <div class="space-y-3">
               <app-form-field label="Icone" helper="Select a Material Symbols icon">
-                <app-icon-select [value]="qualityPointForm.icon" (valueChange)="onQualityPointIconChange($event)"></app-icon-select>
+                <app-icon-select [value]="qualityPointForm().icon" (valueChange)="onQualityPointIconChange($event)"></app-icon-select>
               </app-form-field>
               <app-form-field label="Titre" helper="Title of the quality point">
-                <input [(ngModel)]="qualityPointForm.title" type="text" placeholder="Titre" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="qualityPointForm().title" (ngModelChange)="qualityPointForm.update(f => ({ ...f, title: $event }))" type="text" placeholder="Titre" class="w-full bg-transparent border-b-2 border-primary focus:border-outline-variant transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
               <app-form-field label="Description" helper="Brief explanation of this quality point">
-                <textarea [(ngModel)]="qualityPointForm.description" rows="2" placeholder="Description" class="w-full bg-transparent border-2 border-primary focus:border-outline-variant transition-colors py-1 px-2 text-sm outline-none resize-none"></textarea>
+                <textarea [ngModel]="qualityPointForm().description" (ngModelChange)="qualityPointForm.update(f => ({ ...f, description: $event }))" rows="2" placeholder="Description" class="w-full bg-transparent border-2 border-primary focus:border-outline-variant transition-colors py-1 px-2 text-sm outline-none resize-none"></textarea>
               </app-form-field>
               <div class="flex gap-2">
-                <button type="button" (click)="saveQualityPoint()" class="text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer">
-                  <span class="material-symbols-outlined text-lg">check</span>
+                <button type="button" (click)="saveQualityPoint()" [disabled]="savingQualityPoint()" class="text-primary hover:text-on-primary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+                  @if (savingQualityPoint()) {
+                    <span class="material-symbols-outlined text-lg animate-spin" aria-hidden="true">progress_activity</span>
+                  } @else {
+                    <span class="material-symbols-outlined text-lg">check</span>
+                  }
                 </button>
                 <button type="button" (click)="cancelEditQualityPoint()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
                   <span class="material-symbols-outlined text-lg">close</span>
@@ -189,6 +272,12 @@
           <app-empty-state icon="verified" message="Aucun point qualite disponible"></app-empty-state>
         </div>
       }
+      @if (!addingQualityPoint()) {
+        <button type="button" (click)="startAddQualityPoint()" class="p-4 border-2 border-dashed border-outline-variant hover:border-primary rounded text-sm text-outline hover:text-primary transition-colors cursor-pointer flex items-center justify-center gap-2 min-h-[120px]">
+          <span class="material-symbols-outlined text-lg">add</span>
+          Ajouter un point qualite
+        </button>
+      }
     </div>
   </app-section-card>
 
@@ -200,7 +289,7 @@
           @if (editingRefImageKey() === image.image_key) {
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
               <app-form-field label="Clé" helper="Identifiant unique de l'image (ne pas modifier)">
-                <input [(ngModel)]="refImageForm.key" type="text" class="w-full bg-transparent border-b-2 border-secondary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="refImageForm().key" (ngModelChange)="refImageForm.update(f => ({ ...f, key: $event }))" type="text" class="w-full bg-transparent border-b-2 border-secondary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
               <div class="sm:col-span-2">
                 <label class="block font-label text-[10px] font-bold tracking-[0.15em] text-outline uppercase mb-1">Fichier</label>
@@ -210,12 +299,16 @@
             </div>
             <div class="mb-3">
               <app-form-field label="Alt Text" helper="Description of the image for accessibility">
-                <input [(ngModel)]="refImageForm.alt_text" type="text" placeholder="Description de l'image" class="w-full bg-transparent border-b-2 border-secondary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
+                <input [ngModel]="refImageForm().alt_text" (ngModelChange)="refImageForm.update(f => ({ ...f, alt_text: $event }))" type="text" placeholder="Description de l'image" class="w-full bg-transparent border-b-2 border-secondary focus:border-primary transition-colors py-1 px-0 text-sm outline-none" />
               </app-form-field>
             </div>
             <div class="flex gap-2">
-              <button type="button" (click)="uploadRefImage()" class="text-secondary hover:text-on-secondary-fixed-variant transition-colors cursor-pointer">
-                <span class="material-symbols-outlined text-lg">check</span>
+              <button type="button" (click)="uploadRefImage()" [disabled]="uploadingImage()" class="text-secondary hover:text-on-secondary-fixed-variant transition-colors cursor-pointer disabled:opacity-50">
+                @if (uploadingImage()) {
+                  <span class="material-symbols-outlined text-lg animate-spin" aria-hidden="true">progress_activity</span>
+                } @else {
+                  <span class="material-symbols-outlined text-lg">check</span>
+                }
               </button>
               <button type="button" (click)="cancelEditRefImage()" class="text-outline hover:text-on-surface transition-colors cursor-pointer">
                 <span class="material-symbols-outlined text-lg">close</span>

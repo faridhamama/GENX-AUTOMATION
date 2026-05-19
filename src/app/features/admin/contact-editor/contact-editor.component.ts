@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormField, form } from '@angular/forms/signals';
 import { CompanyFacade } from '../../../core/company.facade';
 import { ContactFacade } from '../../../core/contact.facade';
@@ -18,6 +18,13 @@ export class ContactEditorComponent implements OnInit {
   readonly contact = inject(ContactFacade);
   readonly company = inject(CompanyFacade);
   readonly toast = inject(ToastService);
+
+  // Loading states
+  readonly savingContactHero = signal(false);
+  readonly savingContactStat = signal(false);
+  readonly savingProjectType = signal(false);
+  readonly savingContactFormContent = signal(false);
+  readonly savingFormLabels = signal(false);
 
   // Forms
   private contactHeroModel = signal({
@@ -59,12 +66,24 @@ export class ContactEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.contact.fetchContactContent();
-    // Sync forms once data is loaded
-    setTimeout(() => {
-      this.syncContactHero();
-      this.syncContactFormContent();
-      this.syncFormLabels();
-    }, 300);
+    effect(() => {
+      const hero = this.contact.contactPageHero();
+      if (hero) {
+        this.syncContactHero();
+      }
+    });
+    effect(() => {
+      const content = this.contact.contactFormContent();
+      if (content) {
+        this.syncContactFormContent();
+      }
+    });
+    effect(() => {
+      const labels = this.contact.formLabels();
+      if (labels) {
+        this.syncFormLabels();
+      }
+    });
   }
 
   private syncContactHero(): void {
@@ -119,60 +138,85 @@ export class ContactEditorComponent implements OnInit {
   async saveContactHero(): Promise<void> {
     const hero = this.contact.contactPageHero();
     if (!hero) return;
-    const { error } = await this.contact.updateContactPageHero({
-      ...hero,
-      ...this.contactHeroModel(),
-    });
-    if (error) {
-      this.toast.error();
-    } else {
-      this.toast.success('En-tête contact enregistré.');
+    this.savingContactHero.set(true);
+    try {
+      const { error } = await this.contact.updateContactPageHero({
+        ...hero,
+        ...this.contactHeroModel(),
+      });
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour de l\'en-tete contact');
+      } else {
+        this.toast.success('En-tête contact enregistré.');
+      }
+    } finally {
+      this.savingContactHero.set(false);
     }
   }
 
   async saveContactStat(stat: { id: string; value: string; label: string }): Promise<void> {
-    const { error } = await this.contact.updateContactStat(stat.id, { value: stat.value, label: stat.label });
-    if (error) {
-      this.toast.error();
-    } else {
-      this.toast.success('Statistique enregistrée.');
+    this.savingContactStat.set(true);
+    try {
+      const { error } = await this.contact.updateContactStat(stat.id, { value: stat.value, label: stat.label });
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour de la statistique');
+      } else {
+        this.toast.success('Statistique enregistrée.');
+      }
+    } finally {
+      this.savingContactStat.set(false);
     }
   }
 
   async saveProjectType(pt: { id: string; label: string }): Promise<void> {
-    const { error } = await this.contact.updateProjectType(pt.id, pt.label);
-    if (error) {
-      this.toast.error();
-    } else {
-      this.toast.success('Type de projet enregistré.');
+    this.savingProjectType.set(true);
+    try {
+      const { error } = await this.contact.updateProjectType(pt.id, pt.label);
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour du type de projet');
+      } else {
+        this.toast.success('Type de projet enregistré.');
+      }
+    } finally {
+      this.savingProjectType.set(false);
     }
   }
 
   async saveContactFormContent(): Promise<void> {
     const content = this.contact.contactFormContent();
     if (!content) return;
-    const { error } = await this.contact.updateContactFormContent({
-      ...content,
-      ...this.contactFormContentModel(),
-    });
-    if (error) {
-      this.toast.error();
-    } else {
-      this.toast.success('Contenu du formulaire enregistré.');
+    this.savingContactFormContent.set(true);
+    try {
+      const { error } = await this.contact.updateContactFormContent({
+        ...content,
+        ...this.contactFormContentModel(),
+      });
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour du contenu du formulaire');
+      } else {
+        this.toast.success('Contenu du formulaire enregistré.');
+      }
+    } finally {
+      this.savingContactFormContent.set(false);
     }
   }
 
   async saveFormLabels(): Promise<void> {
     const labels = this.contact.formLabels();
     if (!labels) return;
-    const { error } = await this.contact.updateFormLabels({
-      ...labels,
-      ...this.formLabelsModel(),
-    });
-    if (error) {
-      this.toast.error();
-    } else {
-      this.toast.success('Libellés du formulaire enregistrés.');
+    this.savingFormLabels.set(true);
+    try {
+      const { error } = await this.contact.updateFormLabels({
+        ...labels,
+        ...this.formLabelsModel(),
+      });
+      if (error) {
+        this.toast.error('Erreur lors de la mise a jour des libelles du formulaire');
+      } else {
+        this.toast.success('Libellés du formulaire enregistrés.');
+      }
+    } finally {
+      this.savingFormLabels.set(false);
     }
   }
 }
