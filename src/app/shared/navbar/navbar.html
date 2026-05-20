@@ -14,28 +14,29 @@
 </a>
 
 <header class="fixed top-0 w-full z-50 bg-[#f7f9fb] border-b border-outline-variant/10">
-  <nav class="flex justify-between items-center w-full px-4 sm:px-8 py-4 font-headline tracking-tight">
-
+  <nav
+    class="flex justify-between items-center w-full px-4 sm:px-8 py-4 font-headline tracking-tight"
+  >
     <!-- Logo -->
-    <a routerLink="/" (click)="closeMenu()" class="flex items-center gap-2 shrink-0 min-w-0 cursor-pointer">
-      <img src="GENX AUTOMATION FAVICON.svg" alt="GENX AUTOMATION" class="navbar-logo-icon">
-      <span class="flex flex-col leading-tight min-w-0">
-        <span class="text-lg sm:text-xl font-bold tracking-tighter whitespace-nowrap">GENX</span>
-        <span class="text-s sm:text-m font-bold uppercase tracking-widest text-slate-700 whitespace-nowrap overflow-hidden">AUTOMATION</span>
-      </span>
+    <a
+      routerLink="/"
+      (click)="closeMenu()"
+      class="flex items-center gap-2 shrink-0 min-w-0 cursor-pointer"
+    >
+      <img src="assets/GENX_LOGO.svg" alt="GENX AUTOMATION" class="navbar-logo-icon" />
     </a>
 
     <!-- Desktop nav links -->
     <div class="hidden md:flex items-center gap-6 lg:gap-8 text-sm uppercase tracking-widest">
       @for (link of navLinks(); track link.path) {
-        <a
-          [routerLink]="link.path"
-          routerLinkActive="!text-primary border-b-2 border-tertiary-container pb-1"
-          [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
-          class="text-slate-600 hover:text-slate-900 hover:bg-surface-container px-2 py-1 transition-colors duration-100 whitespace-nowrap cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-        >
-          {{ link.label }}
-        </a>
+      <a
+        [routerLink]="link.path"
+        routerLinkActive="!text-primary border-b-2 border-tertiary-container pb-1"
+        [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
+        class="text-slate-600 hover:text-slate-900 hover:bg-surface-container px-2 py-1 transition-colors duration-100 whitespace-nowrap cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      >
+        {{ link.label }}
+      </a>
       }
     </div>
 
@@ -58,9 +59,9 @@
         [attr.aria-label]="menuOpen() ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'"
       >
         @if (menuOpen()) {
-          <span class="material-symbols-outlined text-2xl">close</span>
+        <span class="material-symbols-outlined text-2xl">close</span>
         } @else {
-          <span class="material-symbols-outlined text-2xl">menu</span>
+        <span class="material-symbols-outlined text-2xl">menu</span>
         }
       </button>
     </div>
@@ -73,17 +74,17 @@
   >
     <ul class="flex flex-col py-2">
       @for (link of navLinks(); track link.path) {
-        <li>
-          <a
-            [routerLink]="link.path"
-            (click)="closeMenu()"
-            routerLinkActive="text-primary bg-surface-container font-bold"
-            [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
-            class="flex items-center px-6 py-4 text-sm font-label uppercase tracking-widest text-slate-600 hover:bg-surface-container hover:text-slate-900 transition-colors duration-100 border-b border-outline-variant/10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          >
-            {{ link.label }}
-          </a>
-        </li>
+      <li>
+        <a
+          [routerLink]="link.path"
+          (click)="closeMenu()"
+          routerLinkActive="text-primary bg-surface-container font-bold"
+          [routerLinkActiveOptions]="{ exact: link.exact ?? false }"
+          class="flex items-center px-6 py-4 text-sm font-label uppercase tracking-widest text-slate-600 hover:bg-surface-container hover:text-slate-900 transition-colors duration-100 border-b border-outline-variant/10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        >
+          {{ link.label }}
+        </a>
+      </li>
       }
       <li class="p-4">
         <a

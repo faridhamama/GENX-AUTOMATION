@@ -62,10 +62,10 @@ export class ContactComponent implements OnInit {
 
   readonly submitStatus = signal<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.company.fetchCompanyInfo();
-    this.contact.fetchContactContent();
-    // Set default project type
+    await this.contact.fetchContactContent();
+    // Set default project type after data is loaded
     const firstType = this.firstProjectType();
     if (firstType) {
       this.contactModel.update(m => ({ ...m, projectType: firstType }));
@@ -89,7 +89,7 @@ export class ContactComponent implements OnInit {
       const { error } = await this.supabase.insertQuoteRequest(payload);
 
       if (error) {
-        this.submitStatus.set('idle');
+        this.submitStatus.set('error');
         this.toast.error();
       } else {
         this.submitStatus.set('success');

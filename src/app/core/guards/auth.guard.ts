@@ -10,6 +10,5 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  // Redirect to home - the main app will show normally, user can navigate to admin from there
-  return router.createUrlTree(['/']);
+  return router.createUrlTree(['/admin']);
 };

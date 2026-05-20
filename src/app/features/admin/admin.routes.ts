@@ -34,12 +34,4 @@ export const adminRoutes: Routes = [
     path: 'about',
     loadComponent: () => import('./about-editor/about-editor.component').then((m) => m.AboutEditorComponent),
   },
-  {
-    path: 'contact-content',
-    loadComponent: () => import('./contact-editor/contact-editor.component').then((m) => m.ContactEditorComponent),
-  },
-  {
-    path: 'homepage-hero',
-    loadComponent: () => import('./home-editor/home-editor.component').then((m) => m.HomeEditorComponent),
-  },
 ];
