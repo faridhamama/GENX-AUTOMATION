@@ -21,7 +21,7 @@ export class Navbar {
   readonly navLinks = computed<NavLink[]>(() => {
     const links = [...NAV_LINKS];
     if (this.auth.isAuthenticated()) {
-      links.push({ label: 'Admin', path: '/admin' });
+      links.push({ label: 'Admin', path: '/admin/emails' });
     }
     return links;
   });

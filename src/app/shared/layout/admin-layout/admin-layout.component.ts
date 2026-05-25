@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/auth.service';
 import { QuoteRequestsService } from '../../../core/quote-requests.service';
 import { COMPANY } from '../../../core/company.config';
+import { EmailEditorComponent } from '../../../features/admin/email-editor/email-editor.component';
 
 @Component({
   selector: 'app-admin-layout',
-  imports: [RouterLink, RouterOutlet, FormsModule],
+  imports: [RouterLink, FormsModule, EmailEditorComponent],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,7 +16,6 @@ import { COMPANY } from '../../../core/company.config';
 export class AdminLayoutComponent implements OnInit {
   private readonly auth = inject(AuthService);
   readonly quoteRequests = inject(QuoteRequestsService);
-  private readonly router = inject(Router);
 
   readonly companyName = COMPANY.name;
   readonly user = this.auth.user;
@@ -35,16 +35,10 @@ export class AdminLayoutComponent implements OnInit {
     const { error } = await this.auth.signIn(this.loginEmail, this.loginPassword);
     if (!error) {
       this.quoteRequests.fetchRequests();
-      this.router.navigate(['/admin/emails']);
     }
   }
 
   async signOut(): Promise<void> {
     await this.auth.signOut();
-    this.router.navigate(['/']);
-  }
-
-  navigateTo(section: string): void {
-    this.router.navigate(['/admin', section]);
   }
 }
