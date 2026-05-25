@@ -126,6 +126,17 @@ export class ReferencesFacade {
     if (!error && data) this.referencesImages.set(data);
   }
 
+  async restore(): Promise<void> {
+    await Promise.all([
+      this.fetchReferencesHero(),
+      this.fetchReferencesFeaturedProject(),
+      this.fetchReferencesPerformanceStats(),
+      this.fetchReferencesSideProjects(),
+      this.fetchReferencesQualityPoints(),
+      this.fetchReferencesImages(),
+    ]);
+  }
+
   async upsertReferencesImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
     const { error } = await this.db.upsertReferencesImage(key, url, alt);
     if (!error) await this.fetchReferencesImages();

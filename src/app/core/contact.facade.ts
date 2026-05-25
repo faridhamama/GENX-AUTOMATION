@@ -80,6 +80,16 @@ export class ContactFacade {
     return { error };
   }
 
+  async restore(): Promise<void> {
+    await Promise.all([
+      this.fetchContactPageHero(),
+      this.fetchContactStats(),
+      this.fetchProjectTypes(),
+      this.fetchContactFormContent(),
+      this.fetchFormLabels(),
+    ]);
+  }
+
   async updateFormLabels(labels: FormLabelsRow): Promise<{ error: string | null }> {
     const { error } = await this.db.upsertFormLabels(labels);
     if (!error) await this.fetchFormLabels();

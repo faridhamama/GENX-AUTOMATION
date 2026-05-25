@@ -68,6 +68,15 @@ export class HomeFacade {
     if (!error && data) this.homepageImages.set(data);
   }
 
+  async restore(): Promise<void> {
+    await Promise.all([
+      this.fetchHomepageHeroStats(),
+      this.fetchHomepageExpertiseCards(),
+      this.fetchHomepageImages(),
+      this.fetchHomepageHeroContent(),
+    ]);
+  }
+
   async upsertHomepageImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
     const { error } = await this.db.upsertHomepageImage(key, url, alt);
     if (!error) await this.fetchHomepageImages();

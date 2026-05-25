@@ -74,6 +74,15 @@ export class ServicesPageFacade {
     if (!error && data) this.servicesImages.set(data);
   }
 
+  async restore(): Promise<void> {
+    await Promise.all([
+      this.fetchServicesPageHero(),
+      this.fetchServicesMethodology(),
+      this.fetchMethodologySteps(),
+      this.fetchServicesImages(),
+    ]);
+  }
+
   async upsertServicesImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
     const { error } = await this.db.upsertServicesImage(key, url, alt);
     if (!error) await this.fetchServicesImages();

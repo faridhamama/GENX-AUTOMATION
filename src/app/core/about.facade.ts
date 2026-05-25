@@ -130,6 +130,19 @@ export class AboutFacade {
     if (!error && data) this.aboutImages.set(data);
   }
 
+  async restore(): Promise<void> {
+    await Promise.all([
+      this.fetchAboutHero(),
+      this.fetchAboutAvailability(),
+      this.fetchAboutMission(),
+      this.fetchAboutCompany(),
+      this.fetchAboutServicesSection(),
+      this.fetchAboutValuesSection(),
+      this.fetchAboutCtaSection(),
+      this.fetchAboutImages(),
+    ]);
+  }
+
   async upsertAboutImage(key: string, url: string, alt: string): Promise<{ error: string | null }> {
     const { error } = await this.db.upsertAboutImage(key, url, alt);
     if (!error) await this.fetchAboutImages();
