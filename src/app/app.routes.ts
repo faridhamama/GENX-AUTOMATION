@@ -13,10 +13,10 @@ export const routes: Routes = [
     path: 'services',
     loadComponent: () => import('./features/services/services.component').then((m) => m.ServicesComponent),
   },
-  {
-    path: 'references',
-    loadComponent: () => import('./features/references/references.component').then((m) => m.ReferencesComponent),
-  },
+  // {
+  //   path: 'references',
+  //   loadComponent: () => import('./features/references/references.component').then((m) => m.ReferencesComponent),
+  // },
   {
     path: 'contact',
     loadComponent: () => import('./features/contact/contact.component').then((m) => m.ContactComponent),
